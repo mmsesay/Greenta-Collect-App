@@ -1,5 +1,23 @@
 var express = require('express');
 var app = express();
+var firebase = require('firebase-admin');
+
+// getting the sevicekey
+var serviceAccount = require('./greentaCollectServiceAccountKey.json')
+
+// initializing the app
+firebase.initializeApp({
+    credential: firebase.credential.cert(serviceAccount),
+    databaseURL: "https://greenta-collect.firebaseio.com"
+});
+
+// getting access to the database
+var db = firebase.database();
+var ref = db.ref('greenta-collect'); //making a reference of the database
+
+// app.set('varRef',ref);
+var usersRef = ref.child("farmers");
+usersRef.set({});
 
 
 //setting an environment variable

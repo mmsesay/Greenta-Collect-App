@@ -4,7 +4,7 @@
         <h4 class="center">GREENTA COLLECT</h4>
     </div> -->
     <!-- <div class="divider"></div> -->
-    <form id="farmersForm">
+    <form method="POST" action="/" id="farmersForm">
         <div class="row">
             <!-- capturing the data -->
             <div class="col s12 ">
@@ -18,16 +18,16 @@
                         <input type="text" name="farmerName" id="farmerName" required>
                     </div>
                     <div class="input-field">
-                        <label for="address">Location</label>
+                        <label for="location">Location</label>
                         <input type="text" name="farmerLocation" id="farmerLocation" required>
                     </div>
                     <div class="input-field">
-                        <label for="tele">Sex</label>
+                        <label for="sex">Sex</label>
                         <input type="text" name="farmerSex" id="farmerSex" required>
                     </div>  
                     <div class="input-field">
-                        <label for="email">Crop</label>
-                        <input type="email" name="farmerCrop" id="farmerCrop" required>
+                        <label for="crop">Crop</label>
+                        <input type="text" name="farmerCrop" id="farmerCrop" required>
                     </div>
                 </div>
                 <button class="btn blue lighten-2 center" type="submit">Submit
