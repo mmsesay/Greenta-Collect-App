@@ -14,3 +14,32 @@
     margin-bottom: 10px;
     display: none;
 }
+
+.displayData_section{
+    background-color: #dddddd;
+    height: 100vh;
+}
+
+.displayData_section .content{
+    padding: 10vh 0;
+}
+
+.displayData_section .content .container table{
+    margin-top: 50px;
+    border: 5px solid #79c879 ;
+}
+
+#farmerTitle {
+    display: flex;
+    flex-direction: row;
+    font-size: 26px;
+    color: rgb(150, 150, 150);
+}
+#farmerTitle:before, #farmerTitle:after{
+    content: "";
+    flex: 1 1;
+    border-bottom: 2px solid rgb(226, 226, 226);
+    margin: auto;
+}
+
+

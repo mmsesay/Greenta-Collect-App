@@ -1,0 +1,25 @@
+<html lang="en">
+<head>
+    <% include partials/templates/head.ejs %>
+</head>
+<body id="<%= pageID %>">
+
+    <!-- inclduing the displayData_page template -->
+    <% include partials/contents/displayData_page.ejs %>
+
+
+    <!-- firebase script -->
+    <script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
+    
+    <!-- including the js scripts template -->
+    <% include partials/templates/jsscripts.ejs %>
+    
+    <!-- main  -->
+    <!-- <script src="/js/main.js"></script> -->
+    <!-- farmers data script -->
+    <script src="/js/fetchFarmersData.js"></script>
+
+
+    
+</body>
+</html>

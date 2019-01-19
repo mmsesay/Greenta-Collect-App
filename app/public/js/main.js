@@ -29,6 +29,8 @@ function submitFarmersForm(e){
 
     //calling the send and save message
     savefarmersData(farmerName,farmerLocation,farmerSex,farmerCrop);
+    // calling the fetch data  function after every insertion
+    // fetchfarmersData();
 
     // show submitAlert
     document.querySelector('.submitAlert').style.display = 'block';
@@ -49,11 +51,15 @@ function getInptValue(id){
 
 // SEND AND SAVE MESSAGE TO FIREBASE FUNCTION
 function savefarmersData(name,location,sex,crop){
-    var newFarmersRef = farmersRef.push();
+    var newFarmersRef = farmersRef.push()
+    // .then(function(){
+    //     window.location.reload()
+    // });
     newFarmersRef.set({
         name: name,
         location: location,
         sex: sex,
-        crop: crop
+        crop: crop,
+        time: (new Date()).getTime()
     });
 }

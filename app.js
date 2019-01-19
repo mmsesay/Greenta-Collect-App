@@ -34,6 +34,9 @@ app.use(express.static('./app/public'));
 
 //creating access to the routes
 app.use(require('./app/routes/index'));
+app.use(require('./app/routes/displayData'));
+
+
 
 //listening to the 3000 port
 var server = app.listen(app.get('port'), function(){

@@ -1,7 +1,7 @@
 {
   "name": "greenliving-datacollectiontool",
   "version": "1.0.0",
-  "description": "this application is a data collection tool customized for Sierra Leone by Muhammad Sesay, Ibrahim Turay and Abu-Bakarr Bangura",
+  "description": "this application is a data collection tool customized for Sierra Leone by the Green Living Team",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
