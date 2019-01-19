@@ -1,0 +1,17 @@
+{
+  "name": "greenliving-datacollectiontool",
+  "version": "1.0.0",
+  "description": "this application is a data collection tool customized for Sierra Leone by Muhammad Sesay, Ibrahim Turay and Abu-Bakarr Bangura",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon -e css, ejs, js, json app"
+  },
+  "author": "Muhammd Sesay",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "nodemon": "^1.18.9"
+  }
+}

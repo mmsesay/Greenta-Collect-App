@@ -1,0 +1,16 @@
+.section .farmer_section {
+    height: 100vh;
+}
+
+.section .farmer_section form{
+    height: 100vh;
+}
+
+.submitAlert{
+    text-align: center;
+    padding: 10px;
+    background-color: #79c879;
+    color: #fff;
+    margin-bottom: 10px;
+    display: none;
+}
