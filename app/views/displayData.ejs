@@ -4,21 +4,28 @@
 </head>
 <body id="<%= pageID %>">
 
+    <!-- chart data page -->
+    <% include partials/contents/charts_page.ejs %>
+
     <!-- inclduing the displayData_page template -->
     <% include partials/contents/displayData_page.ejs %>
 
 
     <!-- firebase script -->
     <script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
-    
+
+    <!-- chart js link -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+
     <!-- including the js scripts template -->
     <% include partials/templates/jsscripts.ejs %>
     
-    <!-- main  -->
-    <!-- <script src="/js/main.js"></script> -->
+    <!-- 
+    <script src="/js/chartscript.js"></script>
+     -->
     <!-- farmers data script -->
     <script src="/js/fetchFarmersData.js"></script>
-
+    
 
     
 </body>

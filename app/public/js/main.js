@@ -29,8 +29,6 @@ function submitFarmersForm(e){
 
     //calling the send and save message
     savefarmersData(farmerName,farmerLocation,farmerSex,farmerCrop);
-    // calling the fetch data  function after every insertion
-    // fetchfarmersData();
 
     // show submitAlert
     document.querySelector('.submitAlert').style.display = 'block';
@@ -63,3 +61,4 @@ function savefarmersData(name,location,sex,crop){
         time: (new Date()).getTime()
     });
 }
+

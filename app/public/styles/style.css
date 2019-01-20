@@ -42,4 +42,10 @@
     margin: auto;
 }
 
+#barChart{
+    border: 2px solid black;
+}
 
+/* .charts_section canvas{
+    margin-left: 100px;
+} */
