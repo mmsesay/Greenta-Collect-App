@@ -3,6 +3,20 @@
     height: 55px;
 }
 
+.sidenav img{
+    margin-top: 5%;
+    margin-left: 35%;
+}
+
+.sidenav h4{
+    font-size: 18px;
+}
+
+.sidenav .container h6{
+    font-size: 1.1em;
+    text-align: center;
+}
+
 .section .farmer_section {
     height: 100vh;
 }
