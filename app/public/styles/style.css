@@ -17,6 +17,11 @@
     text-align: center;
 }
 
+#devHeadingText{
+    margin-left: 20px !important;
+    padding-bottom: 20px !important;
+}
+
 .section .farmer_section {
     height: 100vh;
 }
