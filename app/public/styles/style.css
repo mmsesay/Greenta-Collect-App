@@ -1,3 +1,8 @@
+.main-header .nav-wrapper img{
+    padding-top: -2px;
+    height: 55px;
+}
+
 .section .farmer_section {
     height: 100vh;
 }
@@ -17,7 +22,7 @@
 
 .displayData_section{
     background-color: #dddddd;
-    height: 100vh;
+    min-height: 100% !important;
 }
 
 .displayData_section .content{

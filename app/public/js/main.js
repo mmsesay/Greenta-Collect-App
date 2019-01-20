@@ -24,11 +24,15 @@ function submitFarmersForm(e){
     // getting the values
     var farmerName = getInptValue('farmerName');
     var farmerLocation = getInptValue('farmerLocation');
-    var farmerSex = getInptValue('farmerSex');
-    var farmerCrop = getInptValue('farmerCrop');
+    var farmerChiefdom = getInptValue('farmerChiefdom');
+    var farmerDistrict = getInptValue('farmerDistrict');
+    var farmerGender = getInptValue('farmerGender');
+    var farmerEstDate = getInptValue('farmerEstDate');
+    var farmerProduct = getInptValue('farmerProduct');
+
 
     //calling the send and save message
-    savefarmersData(farmerName,farmerLocation,farmerSex,farmerCrop);
+    savefarmersData(farmerName,farmerLocation,farmerChiefdom,farmerDistrict,farmerGender,farmerEstDate,farmerProduct);
 
     // show submitAlert
     document.querySelector('.submitAlert').style.display = 'block';
@@ -48,7 +52,7 @@ function getInptValue(id){
 }
 
 // SEND AND SAVE MESSAGE TO FIREBASE FUNCTION
-function savefarmersData(name,location,sex,crop){
+function savefarmersData(name,location,chiefdom,district,gender,establish_Date,product){
     var newFarmersRef = farmersRef.push()
     // .then(function(){
     //     window.location.reload()
@@ -56,8 +60,11 @@ function savefarmersData(name,location,sex,crop){
     newFarmersRef.set({
         name: name,
         location: location,
-        sex: sex,
-        crop: crop,
+        chiefdom: chiefdom,
+        district: district,
+        gender: gender,
+        establish_Date: establish_Date,
+        product: product,
         time: (new Date()).getTime()
     });
 }
