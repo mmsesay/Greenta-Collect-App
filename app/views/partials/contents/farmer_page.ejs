@@ -2,7 +2,7 @@
 <section class="section farmer_section hide-on-large-only">
     <!-- <div class="divider"></div> -->
     <form method="POST" action="/" id="farmersForm">
-        <div class="row">
+        <div class="row center">
             <!-- capturing the data -->
             <div class="col s12 ">
                 <h5 class="center green-text text-darken-1">Please fill in the form</h5>
@@ -52,18 +52,14 @@
                     </div>  
                     <div class="input-field">
                         <label for="estDate">Established On</label>
-                        <input type="text" name="farmerEstDate" id="farmerEstDate" required>
+                        <input type="text" class="datepicker" name="farmerEstDate" id="farmerEstDate" required>
                     </div>
                     <div class="input-field">
                         <label for="product">Product</label>
                         <input type="text" name="farmerProduct" id="farmerProduct" required>
                     </div>
-                    
-                    
                 </div>
-                <button class="btn blue lighten-2" type="submit">Submit
-                    <i class="material-icons right">send</i>
-                </button>
+                <input class="btn btn-extend blue lighten-2" type="submit" value="send">
             </div>
         </div>
     </form>

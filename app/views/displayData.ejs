@@ -5,27 +5,67 @@
 <body id="<%= pageID %>">
 
     <!-- chart data page -->
-    <% include partials/contents/charts_page.ejs %>
+
+    <!-- dashboard sidenav -->
+    <ul id="slide-out" class="sidenav sidenav-fixed">
+        <li>
+            <div class="user-view">
+                <div class="bashboard-sidenav-background">
+                    <!-- <img src="images/mo4.jpg"> -->
+                </div>
+                <a href="#!"><img class="circle" src="images/Sierra_Leone_Coat_Of_Arms.png"></a>
+                <a href="#!">
+                    <h5 class="white-text">MINISTRY OF AGRICULTRE SIERRA LEONE</h5>
+                </a>
+            </div>
+        </li>
+        <li><a class="subheader">Select links</a></li>
+        <li><a href="#dispChart"><i class="material-icons">cloud</i>Charts</a></li>
+        <li><a href="#dispFarmersTable"><i class="material-icons">cloud</i>Farmers</a></li>
+        <li><a href="#dispMarket"><i class="material-icons">cloud</i>Market</a></li>
+        <li><a href="#dispTradeFlow"><i class="material-icons">cloud</i>Trade Flow</a></li>
+    
+        <!-- <li><a class="waves-effect" href="#!">Third Link With Waves</a></li> -->
+    </ul>
+    <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+
+    <!-- content section -->
+    <section class="section section-dashboard-contents">
+        <div id="dispChart">
+            <% include partials/contents/dispCharts_page.ejs %>
+        </div>
+        <div id="dispFarmersTable">
+            <% include partials/contents/dispFarmers_page.ejs %>
+        </div>
+        <div id="dispMarket">
+            <% include partials/contents/dispMarket_page.ejs %>
+        </div>
+        <div id="dispTradeFlow">
+            <% include partials/contents/dispTradeFlow_page.ejs %>
+        </div>
+    </section>
+        
 
     <!-- inclduing the displayData_page template -->
-    <% include partials/contents/displayData_page.ejs %>
 
 
     <!-- firebase script -->
     <script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
+    <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script> -->
+    <!-- including the js scripts template -->
+    <% include partials/templates/jsscripts.ejs %>
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script> -->
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script> -->
 
     <!-- chart js link -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
-
-    <!-- including the js scripts template -->
-    <% include partials/templates/jsscripts.ejs %>
+    
+    
     
     <script src="/js/chartscript.js"></script>
     
     <!-- farmers data script -->
     <script src="/js/fetchFarmersData.js"></script>
-    
-
     
 </body>
 </html>

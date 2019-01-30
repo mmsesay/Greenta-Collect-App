@@ -3,6 +3,24 @@
     height: 55px;
 }
 
+.sidenav .user-view {
+    background-image: url(../images/mo4.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 30%;
+}
+
+.section-dashboard-contents {
+    padding-left: 250px !important;
+}
+
+
+.sidenav .user-view h5{
+    text-align: center;
+    font-size: 18px;
+}
+
 .sidenav img{
     margin-top: 5%;
     margin-left: 35%;
@@ -39,37 +57,151 @@
     display: none;
 }
 
-.displayData_section{
-    background-color: #dddddd;
-    min-height: 100% !important;
+.errorAlert{
+    text-align: center;
+    padding: 10px;
+    background-color: #e28787;
+    color: #fff;
+    margin-bottom: 10px;
+    display: none;
 }
 
-.displayData_section .content{
-    padding: 10vh 0;
+/* FARMERS TABLE SECTION */
+.dispFarmers_section{
+    display: none;
 }
 
-.displayData_section .content .container table{
-    margin-top: 50px;
-    border: 5px solid #79c879 ;
-}
-
-#farmerTitle {
+.dispFarmers_section h4 {
     display: flex;
     flex-direction: row;
-    font-size: 26px;
+    font-size: 18px;
+    margin-top: -20px;
     color: rgb(150, 150, 150);
 }
-#farmerTitle:before, #farmerTitle:after{
+.dispFarmers_section h4:before, .dispFarmers_section h4:after{
     content: "";
     flex: 1 1;
-    border-bottom: 2px solid rgb(226, 226, 226);
+    border-bottom: 2px solid rgb(214, 214, 214);
     margin: auto;
 }
 
-#barChart{
-    border: 2px solid black;
+.dispFarmers_section h5{
+    font-size: 18px;
+    padding: 10px 0;
 }
+
+.dispFarmers_section .container table thead{
+    border: 2px solid #79c879 ;
+}
+
+/* CHART SECTION */
+
+.dispCharts_section {
+    display: none;
+}
+
+.dispCharts_section h4 {
+    display: flex;
+    flex-direction: row;
+    font-size: 18px;
+    margin-top: -20px;
+    color: rgb(150, 150, 150);
+}
+.dispCharts_section h4:before, .dispCharts_section h4:after{
+    content: "";
+    flex: 1 1;
+    border-bottom: 2px solid rgb(214, 214, 214);
+    margin: auto;
+}
+
+.dispCharts_section h5{
+    font-size: 17px;
+}
+
+/* MARKET SECTION */
+.dispMarket_section {
+    /* display: none; */
+    margin-left: -80px;
+}
+
+.dispMarket_section h4 {
+    display: flex;
+    flex-direction: row;
+    font-size: 18px;
+    margin-top: -20px;
+    color: rgb(150, 150, 150);
+}
+.dispMarket_section h4:before, .dispMarket_section h4:after{
+    content: "";
+    flex: 1 1;
+    border-bottom: 2px solid rgb(214, 214, 214);
+    margin: auto;
+}
+
+.dispMarket_section h5{
+    font-size: 17px;
+}
+
+.dispMarket_section .container table thead{
+    border: 2px solid #79c879 ;
+}
+
+/* TRADE FLOW SECTION */
+.dispTradeFlow_section {
+    display: none;
+    margin-left: -100px;
+}
+
+.dispTradeFlow_section h4 {
+    display: flex;
+    flex-direction: row;
+    font-size: 18px;
+    margin-top: -20px;
+    color: rgb(150, 150, 150);
+}
+.dispTradeFlow_section h4:before, .dispTradeFlow_section h4:after{
+    content: "";
+    flex: 1 1;
+    border-bottom: 2px solid rgb(214, 214, 214);
+    margin: auto;
+}
+
+.dispTradeFlow_section h5{
+    font-size: 17px;
+}
+
+.dispTradeFlow_section .container table thead{
+    border: 2px solid #79c879 ;
+}
+
+
+/* #barChart{
+    border: 2px solid black;
+} */
 
 /* .charts_section canvas{
     margin-left: 100px;
 } */
+
+.btn-extend{
+    display: block;
+    width: 100%;
+}
+
+.section #productMarketForm h4{
+    font-size: 18px !important;
+}   
+
+.section #productMarketForm h5{
+    font-size: 18px !important;
+    margin-bottom: 25px;
+}
+
+.product_trade_flow_section #productTradeFlowForm h4{
+    font-size: 18px !important;
+}
+
+.product_trade_flow_section #productTradeFlowForm h5{
+    font-size: 18px !important;
+    margin-bottom: 25px;
+}

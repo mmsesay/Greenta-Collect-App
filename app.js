@@ -35,7 +35,8 @@ app.use(express.static('./app/public'));
 //creating access to the routes
 app.use(require('./app/routes/index'));
 app.use(require('./app/routes/displayData'));
-
+app.use(require('./app/routes/prodMarket'));
+app.use(require('./app/routes/prodTradeFlow'));
 
 
 //listening to the 3000 port

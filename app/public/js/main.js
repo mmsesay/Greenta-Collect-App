@@ -54,9 +54,7 @@ function getInptValue(id){
 // SEND AND SAVE MESSAGE TO FIREBASE FUNCTION
 function savefarmersData(name,location,chiefdom,district,gender,establish_Date,product){
     var newFarmersRef = farmersRef.push()
-    // .then(function(){
-    //     window.location.reload()
-    // });
+
     newFarmersRef.set({
         name: name,
         location: location,
@@ -65,7 +63,7 @@ function savefarmersData(name,location,chiefdom,district,gender,establish_Date,p
         gender: gender,
         establish_Date: establish_Date,
         product: product,
-        time: (new Date()).getTime()
+        time: Date.now()
     });
 }
 

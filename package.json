@@ -10,6 +10,7 @@
   "author": "Muhammd Sesay",
   "license": "ISC",
   "dependencies": {
+    "chartjs-plugin-streaming": "^1.7.1",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "firebase": "^5.8.0",
