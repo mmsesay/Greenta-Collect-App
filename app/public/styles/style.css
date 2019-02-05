@@ -66,9 +66,18 @@
     display: none;
 }
 
+.section-dashboard-contents{
+    /* position: fixed; */
+    /* overflow: scroll; */
+}
+
+table{
+    overflow: scroll;
+}
+
 /* FARMERS TABLE SECTION */
 .dispFarmers_section{
-    display: none;
+    /* display: none; */
 }
 
 .dispFarmers_section h4 {
@@ -94,10 +103,11 @@
     border: 2px solid #79c879 ;
 }
 
+
 /* CHART SECTION */
 
 .dispCharts_section {
-    display: none;
+    /* display: none; */
 }
 
 .dispCharts_section h4 {
@@ -148,7 +158,7 @@
 
 /* TRADE FLOW SECTION */
 .dispTradeFlow_section {
-    display: none;
+    /* display: none; */
     margin-left: -100px;
 }
 

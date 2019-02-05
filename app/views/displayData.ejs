@@ -34,12 +34,18 @@
         <div id="dispChart">
             <% include partials/contents/dispCharts_page.ejs %>
         </div>
+        <br>
+        <br>
         <div id="dispFarmersTable">
             <% include partials/contents/dispFarmers_page.ejs %>
         </div>
+        <br>
+        <br>
         <div id="dispMarket">
             <% include partials/contents/dispMarket_page.ejs %>
         </div>
+        <br>
+        <br>
         <div id="dispTradeFlow">
             <% include partials/contents/dispTradeFlow_page.ejs %>
         </div>
@@ -51,6 +57,7 @@
 
     <!-- firebase script -->
     <script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
+    <script src="/js/firebaseConfig.js"></script>
     <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script> -->
     <!-- including the js scripts template -->
     <% include partials/templates/jsscripts.ejs %>
@@ -66,6 +73,12 @@
     
     <!-- farmers data script -->
     <script src="/js/fetchFarmersData.js"></script>
+
+    <!-- market data script -->
+    <script src="/js/fetchMarketData.js"></script>
+
+    <!-- tradeflow data script -->
+    <script src="/js/fetchTradeFlowData.js"></script>
     
 </body>
 </html>

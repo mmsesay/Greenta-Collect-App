@@ -1,14 +1,3 @@
-// Initialize Firebase
-var config = {
-    apiKey: "AIzaSyBiMV702UYhViyDhOjD00e4WfuB1N9sv-w",
-    authDomain: "greenta-collect.firebaseapp.com",
-    databaseURL: "https://greenta-collect.firebaseio.com",
-    projectId: "greenta-collect",
-    storageBucket: "greenta-collect.appspot.com",
-    messagingSenderId: "353204517088"
-};
-firebase.initializeApp(config);
-
 // INITALIZING FARMERS DATA TABLE / COLLECTION REFERENCE
 var marketRef = firebase.database().ref().child('productMarketData');
 
@@ -24,12 +13,12 @@ function getMarketData(){
         var fetchedRegion = snap.child("region").val();
         var fetchedEnumerator = snap.child("enumerator").val();
         var fetchedDate = snap.child("date").val();
-        var fetchedWHS_Unit = snap.child("WHS_Unit").val();
-        var fetchedWHS_Weight = snap.child("WHS_Weight").val();
-        var fetchedWHS_Price = snap.child("WHS_Price").val();
-        var fetchedRET_Unit = snap.child("RET_Unit").val();
-        var fetchedRET_Weight = snap.child("RET_Weight").val();
-        var fetchedRET_Price = snap.child("RET_Price").val();
+        var fetchedWHS_Unit = snap.child("wholesale_unit").val();
+        var fetchedWHS_Weight = snap.child("wholesale_weight").val();
+        var fetchedWHS_Price = snap.child("wholesale_price").val();
+        var fetchedRET_Unit = snap.child("retail_unit").val();
+        var fetchedRET_Weight = snap.child("retail_weight").val();
+        var fetchedRET_Price = snap.child("retail_price").val();
 
         var row = document.createElement("tr");
 
@@ -93,7 +82,7 @@ function getMarketData(){
         row.appendChild(cell_11);
         row.appendChild(cell_12);
 
-        console.log(row);
+        // console.log(row);
        
         // getting the table ID and appending the row
         document.getElementById("marketTableBody").appendChild(row);

@@ -1,14 +1,3 @@
-// Initialize Firebase
-var config = {
-    apiKey: "AIzaSyBiMV702UYhViyDhOjD00e4WfuB1N9sv-w",
-    authDomain: "greenta-collect.firebaseapp.com",
-    databaseURL: "https://greenta-collect.firebaseio.com",
-    projectId: "greenta-collect",
-    storageBucket: "greenta-collect.appspot.com",
-    messagingSenderId: "353204517088"
-};
-firebase.initializeApp(config);
-
 // INITALIZING FARMERS DATA TABLE / COLLECTION REFERENCE
 var tradeFlowRef = firebase.database().ref().child('productTradeFlowData');
 
@@ -110,5 +99,5 @@ function getTradeFlowData(){
     
 }
 
-// calling the farmersData\
- getFarmersData();
+// calling the tradeFlowData\
+getTradeFlowData();
