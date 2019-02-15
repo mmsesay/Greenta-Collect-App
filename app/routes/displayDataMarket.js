@@ -2,13 +2,13 @@ var express =  require('express');
 var router = express.Router();
 
 //get request for the index
-router.get('/displayData', function(req, res){
+router.get('/displayData/market', function(req, res){
 
 
     // rendering the page
-    res.render('displayData', {
-        pageTitle: "dispData",
-        pageID: "dispData",
+    res.render('displayData_market', {
+        pageTitle: "displayData_market",
+        pageID: "displayData_market",
         // fetchedFarmersData: data
     });
 

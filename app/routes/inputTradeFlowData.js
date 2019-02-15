@@ -7,17 +7,17 @@ var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 //get request for the index
-router.get('/productMarket', function(req, res){
+router.get('/inputTradeFlowData', function(req, res){
 
     // rendering the page
-    res.render('productMarket', {
-        pageTitle: "productMarket",
-        pageID: "productMarket"
+    res.render('inputTradeFlowView', {
+        pageTitle: "inputTradeFlowData",
+        pageID: "inputTradeFlowData"
     });
 });
 
 // post request for the index
-router.post('/productMarket',urlencodedParser,function(req,res){
+router.post('/inputTradeFlowData',urlencodedParser,function(req,res){
 
     var data = req.body;
 

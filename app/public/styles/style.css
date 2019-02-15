@@ -3,6 +3,13 @@
     height: 55px;
 }
 
+.brand-logo{
+    height: 60%;
+    width: 5%;
+    margin-top: 1%;
+    margin-left: -5%;
+}
+
 .sidenav .user-view {
     background-image: url(../images/mo4.jpg);
     background-position: center;
@@ -77,7 +84,7 @@ table{
 
 /* FARMERS TABLE SECTION */
 .dispFarmers_section{
-    /* display: none; */
+    display: none;
 }
 
 .dispFarmers_section h4 {
@@ -107,7 +114,7 @@ table{
 /* CHART SECTION */
 
 .dispCharts_section {
-    /* display: none; */
+    display: none;
 }
 
 .dispCharts_section h4 {
@@ -130,15 +137,14 @@ table{
 
 /* MARKET SECTION */
 .dispMarket_section {
-    /* display: none; */
-    margin-left: -80px;
+    margin-left: -10% !important;
 }
 
 .dispMarket_section h4 {
     display: flex;
     flex-direction: row;
     font-size: 18px;
-    margin-top: -20px;
+    margin-top: 20px;
     color: rgb(150, 150, 150);
 }
 .dispMarket_section h4:before, .dispMarket_section h4:after{
@@ -152,21 +158,31 @@ table{
     font-size: 17px;
 }
 
-.dispMarket_section .container table thead{
-    border: 2px solid #79c879 ;
+.mdl-data-table{
+    margin-top: 30% !important;
+}
+
+.dispMarket_section table {
+    width: 90% !important;
+    margin-left: 9.5%;
+    height: 100%;
+    display: block;
+}
+
+.dispMarket_section table thead{
+    border: 2px solid #79c879;
 }
 
 /* TRADE FLOW SECTION */
 .dispTradeFlow_section {
-    /* display: none; */
-    margin-left: -100px;
+    margin-left: -10% !important;
 }
 
 .dispTradeFlow_section h4 {
     display: flex;
     flex-direction: row;
     font-size: 18px;
-    margin-top: -20px;
+    margin-top: 20px;
     color: rgb(150, 150, 150);
 }
 .dispTradeFlow_section h4:before, .dispTradeFlow_section h4:after{
@@ -180,8 +196,17 @@ table{
     font-size: 17px;
 }
 
-.dispTradeFlow_section .container table thead{
-    border: 2px solid #79c879 ;
+.dispTradeFlow_section table {
+    width: 90% !important;
+    margin-left: 9.5%;
+    overflow-y: scroll;
+    height: 100%;
+    display: block;
+ }
+
+.dispTradeFlow_section table thead{
+    border: 2px solid #79c879;
+    position: fixed;
 }
 
 

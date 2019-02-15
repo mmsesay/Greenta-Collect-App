@@ -84,8 +84,8 @@ function getMarketData(){
 
         // console.log(row);
        
-        // getting the table ID and appending the row
-        document.getElementById("marketTableBody").appendChild(row);
+        // getting the table ID and prepending the row
+        document.getElementById("marketTableBody").prepend(row);
 
     }); 
     

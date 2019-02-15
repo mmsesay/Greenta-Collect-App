@@ -92,8 +92,8 @@ function getTradeFlowData(){
         row.appendChild(cell_13);
         row.appendChild(cell_14);
        
-        // getting the table ID and appending the row
-        document.getElementById("tradeFlowTableBody").appendChild(row);
+        // getting the table ID and prepending the row
+        document.getElementById("tradeFlowTableBody").prepend(row);
     });
     
     

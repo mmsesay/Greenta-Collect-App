@@ -1,8 +1,13 @@
 <!-- scripts -->
 <!-- <script src="https://github.com/nagix/chartjs-plugin-streaming/releases/download/v1.7.1/chartjs-plugin-streaming.min.js"></script> -->
 <script src="js/jquery-3.3.1.min.js"></script>
+
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.material.min.js"></script>
 <script src="js/materialize.min.js"></script>
 <script src="js/wow.min.js"></script>
+
 
 <script>
     $(function(){
@@ -11,85 +16,8 @@
         $('select').formSelect();
         $('.collapsible').collapsible();
         $('.datepicker').datepicker();
+        $('#example').DataTable();
 
-
-        // sidenav script
-        // $('#dispChart').show();
-        // $('#dispFarmersTable').hide();
-        // $('#dispMarket').hide();
-        // $('#dispTradeFlow').hide();
-
-        // $('.dispCharts_section').show();
-        // $('.dispFarmers_section').hide();
-        // $('.dispMarket_section').hide();
-        // $('.dispTradeFlow_section').hide();
-
-        // $('#dispChart').click(function(){
-        //     $('.dispCharts_section').show();
-        //     $('.dispFarmers_section').hide();
-        //     $('.dispMarket_section').hide();
-        //     $('.dispTradeFlow_section').hide();
-        // });
-        
-        // $('#dispFarmersTable').click(function(){
-        //     $('.dispFarmers_section').show();
-        //     $('.dispCharts_section').hide();
-        //     $('.dispMarket_section').hide();
-        //     $('.dispTradeFlow_section').hide();
-        // });
-        // $('#dispMarket').click(function(){
-        //     $('.dispMarket_section').show();
-        //     $('.dispCharts_section').hide();
-        //     $('.dispFarmers_section').hide();
-        //     $('.dispTradeFlow_section').hide();
-        // });
-        // $('#dispTradeFlow').click(function(){
-        //     $('.dispTradeFlow_section').show();
-        //     $('.dispMarket_section').hide();
-        //     $('.dispCharts_section').hide();
-        //     $('.dispFarmers_section').hide();
-        // });
-
-        // dispCharts_section
-        // dispFarmers_section
-        // dispMarket_section
-        // dispTradeFlow_section
-
-        $('#dispChart').click(function(){
-            // check if others pages are shown
-            $('#dispFarmersTable').hide();
-            $('#dispMarket').hide();
-            $('#dispTradeFlow').hide();
-            $('#dispChart').show();
-        });
-
-        $('#dispFarmersTable').click(function(){
-            // check if others pages are shown
-            $('#dispChart').hide();
-            $('#dispMarket').hide();
-            $('#dispTradeFlow').hide();
-            $('#dispFarmersTable').show();
-        });
-
-        $('#dispMarket').click(function(){
-            // check if others pages are shown
-            $('#dispFarmersTable').hide();
-            $('#dispChart').hide();
-            $('#dispTradeFlow').hide();
-            $('#dispMarket').show();
-            
-        });
-
-        $('#dispTradeFlow').click(function(){
-            // check if others pages are shown
-            $('#dispFarmersTable').hide();
-            $('#dispChart').hide();
-            $('#dispMarket').hide();
-            $('#dispTradeFlow').show();
-            
-        });
-    
-        
     });
 
 </script>
