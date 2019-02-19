@@ -4,11 +4,12 @@
 </head>
 <body id="<%= pageID %>">
 
-    <section class="section index-login-form">
-        <div class="container ">
+    <section class="section admin-login-section">
+        <div class="container">
             <img src="/images/Sierra_Leone_Coat_Of_Arms.png" class="avt"/>
             <h4 class="center green-text lighten-2">Please Login</h4>
-            <form method="POST" action="/">
+            <!-- LOGIN FORM -->
+            <form method="POST" action="/admin">
                 <div class="input-field">
                     <i class="material-icons prefix">account_circle</i>
                     <label for="icon_prefix">Username or Email</label>
@@ -19,13 +20,17 @@
                     <label for="icon_telephone">Password</label>
                     <input id="loginPassword" type="password" class="validate" name="loginPassword">
                 </div>
-                <input class="btn btn-large btn-extend green white-text" type="submit" value="login" name="loginButton">
+                    <input class="btn btn-large btn-extend green white-text" type="submit" value="login" name="loginButton">
             </form>
         </div>
     </section>
-    
-    
+
+    <!-- firebase script -->
+    <script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
+    <!-- main script -->
+    <script src="/js/main.js"></script>
+
+    <!-- including the js scripts template -->
     <% include partials/templates/jsscripts.ejs %>
 </body>
 </html>
-

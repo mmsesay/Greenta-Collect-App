@@ -95,8 +95,7 @@ function getTradeFlowData(){
         // getting the table ID and prepending the row
         document.getElementById("tradeFlowTableBody").prepend(row);
     });
-    
-    
+
 }
 
 // calling the tradeFlowData\

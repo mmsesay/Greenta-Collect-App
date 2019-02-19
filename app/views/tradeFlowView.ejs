@@ -8,7 +8,7 @@
     <!-- display data page -->
     <section class="section dispTradeFlow_section">
             <div class="col s12 m12">
-                <h4 class="center green-text">GREEN LIVING DATA COLLECTION TOOL</h4>
+                <h4 class="center green-text">AMIS DATA COLLECTION TOOL</h4>
                 <h5 class="center">Realtime Trade Flow Data</h5>
 
                 <!-- chart section -->
@@ -21,7 +21,7 @@
                             <!-- <div id="myfirstchart" height="250"></div> -->
                         </div>
                         <!--  polar charts -->
-                        <div class="col s12 m6 ">
+                        <div class="col s12 m6 push-l1">
                             <h5 class="center">Polar Farmer Data</h5>
                             <canvas id="polarChart" height="250" width="300"></canvas>
                         </div>
@@ -31,7 +31,7 @@
                 <!-- table section -->
                 <!-- <div class="container"> -->
                     <h5 class="center">TRADE FLOW DATA TABLE</h5>
-                    <table class="responsive-table striped centered" >
+                    <table class="responsive-table striped centered mdl-data-table display" id="example">
                         <thead>
                             <tr>
                                 <th>Locality</th>
@@ -53,6 +53,24 @@
                         <tbody id="tradeFlowTableBody">
                             <!-- display realtime database here -->
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Locality</th>
+                                <th>Chiefdom</th>
+                                <th>District</th>
+                                <th>Region</th>
+                                <th>Enumerator</th>
+                                <th>Date</th>
+                                <th>Location-F</th>
+                                <th>Chiefdom-F</th>
+                                <th>District-F</th>
+                                <th>Country-F</th>
+                                <th>Location-T</th>
+                                <th>Chiefdom-T</th>
+                                <th>District-T</th>
+                                <th>Country-T</th>
+                            </tr>
+                        </tfoot>
                     </table>
                 <!-- </div> -->
             </div>

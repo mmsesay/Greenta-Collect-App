@@ -13,10 +13,43 @@
     $(function(){
         new WOW().init(); 
         $('.sidenav').sidenav();
-        $('select').formSelect();
+        $('.select').formSelect();
         $('.collapsible').collapsible();
         $('.datepicker').datepicker();
-        $('#example').DataTable();
+        // $('#example').DataTable();
+
+        // let datatable = $('#example').DataTable({
+        //     "ajax": {
+        //         "type": "get",
+        //         "url": "/market",
+        //         "dataType": "json",
+        //         "dataSrc": "rent",
+        //         "data": {
+        //         "json": JSON.stringify(jsonData)
+        //         }
+        //     },
+        //     "columns": [{
+        //         "title": "Locality",
+        //         "data": "locality",
+        //         "render": function(d) {
+        //         return moment(d).format("DD-MMM-YYYY")
+        //         }
+        //     }, {
+        //         "title": "Cheifdom",
+        //         "data": "chiefdom"
+        //     }, {
+        //         "title": "District",
+        //         "data": "district",
+        //         "render": function(d) {
+        //         return "$" + d
+        //         }
+        //     }, {
+        //         "title": "Region",
+        //         "render": function() {
+        //         return "$0.00"
+        //         }
+        //     }]
+        //  });
 
     });
 
