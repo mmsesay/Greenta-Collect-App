@@ -13,7 +13,10 @@
     $(function(){
         new WOW().init(); 
         $('.sidenav').sidenav();
-        $('.select').formSelect();
+        $('select').formSelect();
+
+        // for HTML5 "required" attribute
+        $("select[required]").css({display: "inline", height: 0, padding: 0, width: 0});
         $('.collapsible').collapsible();
         $('.datepicker').datepicker();
         // $('#example').DataTable();
@@ -52,5 +55,6 @@
         //  });
 
     });
+
 
 </script>
