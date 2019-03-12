@@ -34,7 +34,7 @@ app.use(express.static('./app/public'));
 
 //creating access to the routes
 app.use(require('./app/routes/index'));
-app.use(require('./app/routes/admin'));
+// app.use(require('./app/routes/admin'));
 app.use(require('./app/routes/displayTradeFlow'));
 app.use(require('./app/routes/displayMarket'));
 app.use(require('./app/routes/displayEnumerator'));

@@ -4,68 +4,69 @@
 </head>
 <body id="<%= pageID %>">
 
+    <% include partials/templates/web-header.ejs %>
+
     <section class="section enumerator-registration-section">
-        <!-- <div class="container"> -->
+        <div class="container">
             <!-- REGISTRATON FORM -->
             <form method="POST" action="#">
                 <div class="row">
-                    <div class="input-field col m6">
+                    <div class="input-field col s12 m6">
                         <i class="material-icons prefix">account_circle</i>
                         <label for="firstName">First Name</label>
                         <input id="firstName" type="text" class="validate" name="regFirstName" required>
                     </div>
-                    <div class="input-field col m6">
+                    <div class="input-field col s12 m6">
                         <i class="material-icons prefix"></i>
                         <label for="lastName">Last Name</label>
                         <input id="lastName" type="text" class="validate" name="regLastName" required>
                     </div>
-                    <div class="input-field col m4">
-                        <!-- <i class="material-icons prefix"></i> -->
+                    <div class="input-field col s12 m6">
+                        <i class="material-icons prefix">account_circle</i>
                         <label for="username">Username</label>
                         <input id="username" type="text" class="validate" name="username" required>
                     </div>
-                    <div class="input-field col m4">
-                        <i class="material-icons prefix">email</i>
+                    <div class="input-field col s12 m6">
                         <label for="regEmail">Email</label>
                         <input id="regEmail" type="email" class="validate" name="regEmail" required>
                     </div>
                 </div>
                 <div class="row">
                     <h6 class="center white-text reSubHeading">Residential Address</h6>
-                    <div class="input-field col m3">
+                    <div class="input-field col s12 m3">
                         <i class="material-icons prefix">location_on</i>
                         <label for="regStAddress">Street Address</label>
                         <input id="regStAddress" type="text" class="validate" name="regStAddress" required>
                     </div>
-                    <div class="input-field col m3">
+                    <div class="input-field col s12 m3">
                         <label for="regCity">City</label>
                         <input id="regCity" type="text" class="validate" name="regCity" required>
                     </div>
-                    <div class="input-field col m3">
+                    <div class="input-field col s12 m3">
                         <label for="regState">State/Province</label>
                         <input id="regState" type="text" class="validate" name="regState" required>
                     </div>
-                    <div class="input-field col m3">
+                    <div class="input-field col s12 m3">
                         <label for="regZip">Postal/ZIP Code</label>
                         <input id="regZip" type="text" class="validate" name="regZip" required>
                     </div>
                 </div>
                 <div class="row">
                     <h6 class="center white-text reSubHeading">Password Section</h6>
-                    <div class="input-field col m6">
+                    <div class="input-field col s12 m6">
                         <i class="material-icons prefix">lock</i>
                         <label for="regPassword">Create Password</label>
                         <input id="regPassword" type="password" class="validate" name="regPassword" required>
                     </div>
-                    <div class="input-field col m6">
+                    <div class="input-field col s12 m6">
                         <!-- <i class="material-icons prefix"></i> -->
                         <label for="regConfirmPassword">Confirm Password</label>
                         <input id="regConfirmPassword" type="password" class="validate" name="regConfirmPassword" required>
                     </div>
                 </div>  
-                <input class="btn-small blue" type="submit" name="register" value="Register">
+                <input class="btn-large btn-enum blue" type="submit" name="register" value="Register">
             </form>
-        <!-- </div> -->
+        </div>
     </section>
 
     <!-- firebase script -->

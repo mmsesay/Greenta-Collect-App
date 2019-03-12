@@ -322,3 +322,9 @@ table thead, tbody, tfoot tr th{
     font-size: 18px !important;
     margin-bottom: 25px;
 }
+
+.btn-enum{
+    /* margin: 0 350px 0 350px; */
+    width: 200px;
+    height: 50px !important;
+}

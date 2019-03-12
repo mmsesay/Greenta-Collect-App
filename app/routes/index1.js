@@ -10,18 +10,18 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 router.get('/', function(req, res){
 
     // rendering the page
-    res.render('adminView', {
-        pageTitle: "admin",
-        pageID: "admin"
+    res.render('index', {
+        pageTitle: "index",
+        pageID: "index"
     });
 });
 
 // post request for the index
 router.post('/',urlencodedParser,function(req,res){
 
-    res.render('marketView',{
-        pageTitle: "market",
-        pageID: "market",
+    res.render('inputMarketView',{
+        pageTitle: "inputMarket",
+        pageID: "inputMarket"
     });
 
     var data = req.body;
