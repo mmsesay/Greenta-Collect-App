@@ -328,3 +328,9 @@ table thead, tbody, tfoot tr th{
     width: 200px;
     height: 50px !important;
 }
+
+#enumerator, #market, #tradeFlow{
+    background-color: #f5f6fa !important;
+}
+
+

@@ -3,22 +3,24 @@
     <% include partials/templates/head.ejs %>
 </head>
 <body id="<%= pageID %>">
-
     <section class="section admin-login-section">
+        <!-- <% if (locals.error_msg) {%>
+            <div class="card-panel orange lighten-1 black-text text-darken-4 z-depth-1 alertCard"><%= error_msg %></div>
+        <% } %> -->
         <div class="container">
             <img src="/images/Sierra_Leone_Coat_Of_Arms.png" class="avt"/>
-            <h4 class="center green-text lighten-2">Please Login</h4>
+            <h4 class="center green-text lighten-2">Admin Login</h4>
             <!-- LOGIN FORM -->
             <form method="POST" action="/">
                 <div class="input-field">
                     <i class="material-icons prefix">account_circle</i>
-                    <label for="icon_prefix">Username or Email</label>
-                    <input id="loginUsername" type="email" class="validate" name="loginUsername">
+                    <label for="icon_prefix">Username</label>
+                    <input id="loginUsername" type="text" class="validate" name="username">
                 </div>
                 <div class="input-field">
                     <i class="material-icons prefix">lock</i>
                     <label for="icon_telephone">Password</label>
-                    <input id="loginPassword" type="password" class="validate" name="loginPassword">
+                    <input id="loginPassword" type="password" class="validate" name="password">
                 </div>
                     <input class="btn btn-large btn-extend green white-text" type="submit" value="login" name="loginButton">
             </form>

@@ -10,6 +10,15 @@
         <div class="container">
             <!-- REGISTRATON FORM -->
             <form method="POST" action="#">
+                <% if (locals.success_msg) {%>
+                    <div class="card-panel green lighten-4 green-text text-darken-4 z-depth-1 alertCard"><%= success_msg %></div>
+                <% } %>
+                <% if (locals.error_msg) {%>
+                    <div class="alert alert-danger"><%= error_msg %></div>
+                <% } %>
+                <% if (locals.error) {%>
+                    <div class="alert alert-danger"><%= error %></div>
+                <% } %>
                 <div class="row">
                     <div class="input-field col s12 m6">
                         <i class="material-icons prefix">account_circle</i>
@@ -24,7 +33,7 @@
                     <div class="input-field col s12 m6">
                         <i class="material-icons prefix">account_circle</i>
                         <label for="username">Username</label>
-                        <input id="username" type="text" class="validate" name="username" required>
+                        <input id="username" type="text" class="validate" name="regUsername" required>
                     </div>
                     <div class="input-field col s12 m6">
                         <label for="regEmail">Email</label>
@@ -72,7 +81,7 @@
     <!-- firebase script -->
     <script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
     <!-- main script -->
-    <script src="/js/main.js"></script>
+    <!-- <script src="/js/main.js"></script> -->
 
     <!-- including the js scripts template -->
     <% include partials/templates/jsscripts.ejs %>

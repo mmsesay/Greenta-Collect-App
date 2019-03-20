@@ -6,6 +6,7 @@
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.material.min.js"></script>
 <script src="js/materialize.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 <script src="js/wow.min.js"></script>
 
 
@@ -19,6 +20,9 @@
         $("select[required]").css({display: "inline", height: 0, padding: 0, width: 0});
         $('.collapsible').collapsible();
         $('.datepicker').datepicker();
+
+        setTimeout(function(){ $('.alertCard').show(); }, 3000);
+
         // $('#example').DataTable();
 
         // let datatable = $('#example').DataTable({
