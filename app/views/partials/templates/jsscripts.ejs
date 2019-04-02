@@ -1,18 +1,22 @@
 <!-- scripts -->
 <!-- <script src="https://github.com/nagix/chartjs-plugin-streaming/releases/download/v1.7.1/chartjs-plugin-streaming.min.js"></script> -->
-<script src="js/jquery-3.3.1.min.js"></script>
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 
-<!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pusher/4.4.0/pusher.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
+
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.material.min.js"></script>
-<script src="js/materialize.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/wow.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/wow.min.js"></script>
 
 
 <script>
     $(function(){
-        new WOW().init(); 
+        new WOW().init();
         $('.sidenav').sidenav();
         $('select').formSelect();
 
@@ -20,6 +24,11 @@
         $("select[required]").css({display: "inline", height: 0, padding: 0, width: 0});
         $('.collapsible').collapsible();
         $('.datepicker').datepicker();
+        $('.slider').slider({indicators : false, interval: 5000, height: 600});
+        $('.dropdown-trigger').dropdown({hover: true});
+        $('.parallax').parallax();
+        $('.materialboxed').materialbox();
+        $('.modal').modal();
 
         setTimeout(function(){ $('.alertCard').show(); }, 3000);
 

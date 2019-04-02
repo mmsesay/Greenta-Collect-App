@@ -1,98 +1,70 @@
 //importing the modules
-var express = require('express'); 
-var router = express.Router(); 
+var express = require('express');
+var router = express.Router();
 var bodyParser = require('body-parser');
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
+var MakeOrder = require('../models/make_order.js');
+var fs = require('fs');
 
-//importing the enumerator model
-var Enumerators = require('../models/enumerator_model');
+
+//body parse middle ware
+router.use(bodyParser.urlencoded({ extended:false }));
 
 //body parse middle ware
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-//get request for the index
+//products route
 router.get('/', function(req, res){
 
-    // rendering the page
-    res.render('adminView', {
-        pageTitle: "admin",
-        pageID: "admin"
+    var info = req.app.get('info'); // getting access to the availableProducts variable from the app.js
+    var productData = req.app.get('availableProducts'); // getting access to the availableProducts variable from the app.js
+
+    var fetchedCashCrops = productData.products.cash_crops; //getting the cash_crops only from the products list
+    var fetchedInfo = info.info;
+
+    res.render('index', {
+        pageTitle: "Products",
+        cashCrops: fetchedCashCrops,
+        info: fetchedInfo,
+        pageID: "home"
     });
+
 });
 
-// Passport Middleware
-router.use(passport.initialize());
-router.use(passport.session());
+//product post request
+router.post('/', urlencodedParser, function(req, res){
 
-passport.use(new LocalStrategy(
-    function(username, password, done) {
-        Enumerators.getEnumeratorByUsername(username, function(err, enumerator){
-            if(err) throw err;
-            if(!enumerator){
-                return done(null, false, {message: 'Unknown Enumerator'});
-            }
+    //get data from the form and save it in the database
+    var FormData = MakeOrder(req.body).save(function(err, data){
+        if(err) throw err; //throw and error if found
 
-        // checking if the password matches
-        Enumerators.comparePassword(password, enumerator.password, function(err, isMatch){
-            if(err) throw err;
-            if(isMatch){
-                return done(null, enumerator);
-            }else{
-                return done(null, false, {message: 'Invalid Password'});
-            }
-        });
-       });
-    }
-));
-
-passport.serializeUser(function(enumerator, done){
-    done(null, enumerator.id);
-});
-
-passport.deserializeUser(function(id, done){
-    Enumerators.getEnumeratorById(id, function(err, enumerator){
-        done(err, enumerator);
+        // console.log(req.body);
+    //    res.render('contact-success', {data: req.body});
+       console.log('data saved');
     });
-});
 
-// post request for the login 
-router.post('/',urlencodedParser,
+    //var orderData = req.body;
+    // var orderDataFile = JSON.stringify(orders, null, 2);
+    // fs.writeFile('app/data/product_order.json', JSON.stringify(orderData, null, 2), 'utf8', finished);
 
-    passport.authenticate('local', {
-        successRedirect: '/market',
-        failureRedirect: '/',
-        failureFlash: true
-    }),
-    function(req,res) {
-        res.redirect('/market'); 
-    }
+    // function finished(err){
+    //     console.log(' yeah data saved  ');
+    // }
 
-);
+    // var makeOrder = new MakeOrder(req.body);
+    // makeOrder.save(); //saving the data in database
 
-//logout request
-router.get('/logout', function(req, res){
+    // //creating and saving the data in the database
+    // MakeOrder.create(req.body).then(function(order){
+    //     res.send(order);
+    //     console.log('the data was saved sucessfully');
+    // });
 
-    req.logout();
-    req.flash('success_msg', 'You have logged out');
-    res.redirect('/'); //redirecting to the login page
-
-    // rendering the page
-    // res.render('index', {
-    //     pageTitle: "index",
-    //     pageID: "index"
+    // MakeOrder(req.body).save(function(err, data){
+    //     if(err) throw err;
+    //     console.log('the data was saved sucessfully');
     // });
 });
 
-// this function will ensure user authenticate before accessing the interface
-function ensureAuthentication(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }else{
-        req.flash('error_msg', 'You need to login');
-        res.redirect('/');
-    }
-}
 
-//exporting the module 
+//exporting the module
 module.exports = router;

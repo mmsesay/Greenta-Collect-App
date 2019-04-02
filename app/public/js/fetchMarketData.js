@@ -1,7 +1,6 @@
 // INITALIZING FARMERS DATA TABLE / COLLECTION REFERENCE
 var marketRef = firebase.database().ref().child('productMarketData');
 
-
 function getMarketData(){
 
     var rootRef = marketRef;
@@ -19,6 +18,8 @@ function getMarketData(){
         var fetchedRET_Unit = snap.child("retail_unit").val();
         // var fetchedRET_Weight = snap.child("retail_weight").val();
         var fetchedRET_Price = snap.child("retail_price").val();
+
+        // console.log(fetchedDistrict+ ' ' + fetchedWHS_Price);
 
         var row = document.createElement("tr");
 
@@ -88,8 +89,69 @@ function getMarketData(){
         document.getElementById("marketTableBody").prepend(row);
 
     }); 
-    
 }
 
 // calling the marketData function
 getMarketData();
+
+
+// new Morris.Line({
+//     // ID of the element in which to draw the chart.
+//     element: 'myfirstchart',
+//     // Chart data records -- each entry in this array corresponds to a point on
+//     // the chart.
+//     data: dataPoints,
+//     // The name of the data record attribute that contains x-values.
+//     xkey: 'year',
+//     // A list of names of data record attributes that contain y-values.
+//     ykeys: ['value'],
+//     // Labels for the ykeys -- will be displayed when you hover over the
+//     // chart.
+//     labels: ['Value']
+// });
+
+
+// let dataPoints = [
+//     { label: 'Urban', Value: 10 },
+//     { label: 'Rural', Value: 30 },
+//     { label: 'Falaba', Value: 15 },
+//     { label: 'Bombali', Value: 5 },
+//     { label: 'Tonkolili', Value: 50 }
+// ];
+
+ 
+
+
+    // let barChart = new Chart(BARCHART, {
+    //     type: 'bar',
+    //     data: {
+    //         labels: ["", "", "", "", "", "", "", ""],
+    //         datasets: [{
+    //             label: "My First dataset",
+    //             backgroundColor: [
+    //                 'rgb(255, 99, 132)',
+    //                 'rgba(255, 99, 132)',
+    //                 'rgba(54, 162, 235)',
+    //                 'rgba(255, 206, 86)',
+    //                 'rgba(75, 192, 192)',
+    //                 'rgba(153, 102, 255)',
+    //                 'rgba(255, 159, 64)',
+    //                 'rgb(255, 99, 132)',
+    //                 'rgba(255, 99, 132)',
+    //                 'rgba(54, 162, 235)',
+    //                 'rgba(255, 206, 86)',
+    //                 'rgba(75, 192, 192)',
+    //                 'rgba(153, 102, 255)',
+    //                 'rgba(255, 159, 64)',
+    //                 'rgb(255, 99, 132)',
+    //                 'rgba(255, 99, 132)'
+    //             ],
+    //             borderColor: 'rgb(255, 99, 132)',
+    //             data: [fetchedWHS_Unit, fetchedWHS_Unit, fetchedWHS_Unit, fetchedWHS_Unit, fetchedWHS_Unit, fetchedWHS_Unit, fetchedWHS_Unit, fetchedWHS_Unit, fetchedWHS_Unit,fetchedWHS_Unit, fetchedWHS_Unit, fetchedWHS_Unit],
+                
+    //         }]
+    //     }
+
+    // });
+
+

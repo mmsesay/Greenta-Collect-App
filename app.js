@@ -6,6 +6,12 @@ var cookieParser = require('cookie-parser');
 var flash = require('connect-flash');
 var session = require('express-session');
 var expressValidator = require('express-validator');
+var bodyParser = require('body-parser');
+var farmerDataFile = require('./app/data/farmers_data.json');
+var availableProductData = require('./app/data/available_products.json');
+var sponsoredData = require('./app/data/sponsored_farmers.json');
+var unsponsoredData = require('./app/data/unsponsored_farmers.json');
+var info = require('./app/data/infos.json');
 
 
 // getting the sevicekey
@@ -21,14 +27,14 @@ firebase.initializeApp({
 // OFFLINE CONNECTION
 mongoose.connect('mongodb://localhost/amisapp', { useNewUrlParser: true } );
 
-//database 
+//database
 var db = mongoose.connection;
 
 // ONLINE CONNECTION
-// mongoose.connect('mongodb+srv://milton:'+ 
+// mongoose.connect('mongodb+srv://milton:'+
 //     process.env.MONGO_ADMIN_PW +
 //     '@amis-cluster-fsefr.mongodb.net/test?retryWrites=true',
-//     { useNewUrlParser: true } 
+//     { useNewUrlParser: true }
 // );
 
 // getting access to the database
@@ -51,6 +57,14 @@ app.locals.siteTitle = 'GREENTA COLLECT';
 
 //accessing the static files
 app.use(express.static('./app/public'));
+
+app.use(bodyParser.json())
+
+app.set('appData', farmerDataFile);
+app.set('availableProducts', availableProductData);
+app.set('info', info);
+app.set('appData_3', sponsoredData);
+app.set('appData_4', unsponsoredData);
 
 // Express Validator Middleware
 // app.use(expressValidator());
@@ -95,12 +109,18 @@ app.use( function (req, res, next) {
 
 // Creating access to the routes
 app.use(require('./app/routes/index'));
-app.use(require('./app/routes/displayTradeFlow'));
-app.use(require('./app/routes/displayMarket'));
-app.use(require('./app/routes/displayEnumerator'));
+app.use(require('./app/routes/farmers'));
+app.use(require('./app/routes/about'));
+app.use(require('./app/routes/admin'));
+// app.use(require('./app/routes/adminRoute'));
+app.use(require('./app/routes/tradeFlowRoute'));
+app.use(require('./app/routes/marketRoute'));
+app.use(require('./app/routes/enumeratorRoute'));
+app.use(require('./app/routes/registerFarmerRoute'));
+app.use(require('./app/routes/chartsRoute'));
+app.use(require('./app/routes/marketDataApiRoute'));
 
 //listening to the 3000 port
 var server = app.listen(app.get('port'), function(){
     console.log('listening on port ' + app.get ('port'));
-}); 
- 
+});

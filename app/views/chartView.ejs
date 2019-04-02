@@ -1,0 +1,81 @@
+<html lang="en">
+<head>
+    <% include partials/templates/head.ejs %>
+
+</head>
+<body id="<%= pageID %>">
+
+    <% include partials/templates/web-header.ejs %>
+    <!-- display data page -->
+
+    <!-- display data page -->
+    <section class="section dispMarket_section">
+        <div class="col s12 m12">
+            <h5 class="center">Realtime Charts</h5>
+
+            <!-- chart section -->
+            <div class="container">
+                <div class="row">
+                    <!-- bar charts -->
+                    <div class="col s12 m6">
+                        <h5 class="center">Farmers Data</h5>
+                        <!-- <canvas id="barChart" height="250" width="300"></canvas> -->
+                        <div id="farmerschart" height="250px" width="100%"></div>
+                    </div>
+                    <!--  polar charts -->
+                    <div class="col s12 m6 push-l1">
+                        <h5 class="center">Crop Data</h5>
+                        <div id="cropchart" height="250px" width="100%"></div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <div class="row">
+                     <!-- bar charts -->
+                     <div class="col s12 m6 ">
+                        <h5 class="center">District Data</h5>
+                        <!-- <canvas id="barChart" height="250" width="300"></canvas> -->
+                        <div id="districtchart" height="250px" width="100%"></div>
+                    </div>
+                    <!--  polar charts -->
+                    <div class="col s12 m6 push-l1">
+                        <h5 class="center">Crop Data</h5>
+                        <div id="chiefdom" height="250px" width="100%"></div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <br>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- firebase script -->
+    <script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
+    <script src="/js/firebaseConfig.js"></script>
+    <!-- including the js scripts template -->
+    <% include partials/templates/jsscripts.ejs %>
+
+    <!-- chart js link -->
+    <script src="/js/charts.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>chartContainer -->
+
+</body>
+</html>

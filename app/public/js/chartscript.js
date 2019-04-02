@@ -1,4 +1,4 @@
-var BARCHART = document.getElementById('barChart');
+// var BARCHART = document.getElementById('barChart');
 var POLARCHART = document.getElementById('polarChart');
 var PIECHART = document.getElementById('pieChart');
 var LINECHART = document.getElementById('lineChart');
@@ -9,39 +9,38 @@ var LINECHART = document.getElementById('lineChart');
 // var yArray = [];
 
 
-
-
-let barChart = new Chart(BARCHART, {
-    type: 'bar',
-    data: {
-        labels: ["Urban", "Rural", "Falaba", "Bombali", "Tonkolili", "Kambia", "Karene", "Porto Loko", "Bo", "Bonthe", "Pujehun", "Moyamba", "Kenema", "Kaliahun", "Kono"],
-        datasets: [{
-            label: "My First dataset",
-            backgroundColor: [
-                'rgb(255, 99, 132)',
-                'rgba(255, 99, 132)',
-                'rgba(54, 162, 235)',
-                'rgba(255, 206, 86)',
-                'rgba(75, 192, 192)',
-                'rgba(153, 102, 255)',
-                'rgba(255, 159, 64)',
-                'rgb(255, 99, 132)',
-                'rgba(255, 99, 132)',
-                'rgba(54, 162, 235)',
-                'rgba(255, 206, 86)',
-                'rgba(75, 192, 192)',
-                'rgba(153, 102, 255)',
-                'rgba(255, 159, 64)',
-                'rgb(255, 99, 132)',
-                'rgba(255, 99, 132)'
-            ],
-            borderColor: 'rgb(255, 99, 132)',
-            data: [15, 10, 5, 2, 20, 30, 45, 60, 20,42, 33, 46],
+// let barChart = new Chart(BARCHART, {
+//     type: 'bar',
+//     data: {
+//         labels: ["Urban", "Rural", "Falaba", "Bombali", "Tonkolili", "Kambia", "Karene", "Porto Loko", "Bo", "Bonthe", "Pujehun", "Moyamba", "Kenema", "Kaliahun", "Kono"],
+//         datasets: [{
+//             label: "My First dataset",
+//             backgroundColor: [
+//                 'rgb(255, 99, 132)',
+//                 'rgba(255, 99, 132)',
+//                 'rgba(54, 162, 235)',
+//                 'rgba(255, 206, 86)',
+//                 'rgba(75, 192, 192)',
+//                 'rgba(153, 102, 255)',
+//                 'rgba(255, 159, 64)',
+//                 'rgb(255, 99, 132)',
+//                 'rgba(255, 99, 132)',
+//                 'rgba(54, 162, 235)',
+//                 'rgba(255, 206, 86)',
+//                 'rgba(75, 192, 192)',
+//                 'rgba(153, 102, 255)',
+//                 'rgba(255, 159, 64)',
+//                 'rgb(255, 99, 132)',
+//                 'rgba(255, 99, 132)'
+//             ],
+//             borderColor: 'rgb(255, 99, 132)',
+//             data: [15, 10, 5, 2, 20, 30, 45, 60, 20,42, 33, 46],
             
-        }]
-    }
+//         }]
+//     }
 
-});
+// });
+
 
 let polarChart = new Chart(POLARCHART, {
     type: 'polarArea',
