@@ -386,11 +386,20 @@ table thead, tbody, tfoot tr th{
   opacity: 0.5;
 }
 
-
 /* chart style */
 #chartView{
     /* background-image: linear-gradient(#0f2027 ,#203a43 ,#2c5364 ) !important; */
 }
+
+/* order form style */
+.modal .modal-content h5{
+    font-size: 18px !important;
+    margin: 10px auto;
+}
+.btn-order{
+    margin-bottom: 20px;
+}
+
 
 /* --------------------------- */
 #pw{

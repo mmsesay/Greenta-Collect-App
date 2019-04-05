@@ -4,25 +4,23 @@
 </head>
 <body id="<%= pageID %>">
     <section class="section admin-login-section">
-        <!-- <% if (locals.error_msg) {%>
-            <div class="card-panel orange lighten-1 black-text text-darken-4 z-depth-1 alertCard"><%= error_msg %></div>
-        <% } %> -->
         <div class="container">
             <img src="/images/Sierra_Leone_Coat_Of_Arms.png" class="avt"/>
             <h4 class="center green-text lighten-2">Admin Login</h4>
+            <% include partials/templates/messages.ejs %>
             <!-- LOGIN FORM -->
-            <form method="POST" action="/admin">
+            <form method="POST" action="/admin/login">
                 <div class="input-field">
                     <i class="material-icons prefix">account_circle</i>
                     <label for="icon_prefix">Username</label>
-                    <input id="loginUsername" type="text" class="validate" name="username">
+                    <input id="loginUsername" type="text" class="validate" name="username" required value="<%= typeof username != 'undefined' ? username: '' %>">
                 </div>
                 <div class="input-field">
                     <i class="material-icons prefix">lock</i>
                     <label for="icon_telephone">Password</label>
-                    <input id="loginPassword" type="password" class="validate" name="password">
+                    <input id="loginPassword" type="password" class="validate" name="password" required value="<%= typeof password != 'undefined' ? password: '' %>">
                 </div>
-                    <input class="btn btn-large btn-extend green white-text" type="submit" value="login" name="loginButton">
+                <input class="btn btn-large btn-extend green white-text" type="submit" value="login" name="loginButton">
             </form>
         </div>
     </section>

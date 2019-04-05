@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var flash = require('connect-flash');
 var session = require('express-session');
 var expressValidator = require('express-validator');
+var passport = require('passport');
 var bodyParser = require('body-parser');
 var farmerDataFile = require('./app/data/farmers_data.json');
 var availableProductData = require('./app/data/available_products.json');
@@ -25,17 +26,15 @@ firebase.initializeApp({
 
 //connecting to mongodb
 // OFFLINE CONNECTION
-mongoose.connect('mongodb://localhost/amisapp', { useNewUrlParser: true } );
+// mongoose.connect('mongodb://localhost/amisapp', { useNewUrlParser: true })
+//     .then(() => console.log('MongoDB Local Connection Successful'))
+//     .catch(err => console.log(err));
 
-//database
-var db = mongoose.connection;
-
-// ONLINE CONNECTION
-// mongoose.connect('mongodb+srv://milton:'+
-//     process.env.MONGO_ADMIN_PW +
-//     '@amis-cluster-fsefr.mongodb.net/test?retryWrites=true',
-//     { useNewUrlParser: true }
-// );
+// ONLINE CONNECTION TO MONGO
+mongoose.connect('mongodb+srv://milton:'+ process.env.MONGO_ADMIN_PW+'@amis-cluster-fsefr.mongodb.net/test?retryWrites=true',
+    { useNewUrlParser: true })
+    .then(() => console.log('MongoDB Connection Successful'))
+    .catch(err => console.log(err));
 
 // getting access to the database
 var db = firebase.database();
@@ -53,12 +52,25 @@ app.set('port', process.env.PORT || 3000);
 app.set('view engine', 'ejs');
 app.set('views', './app/views'); //specifying the view folder location
 
-app.locals.siteTitle = 'GREENTA COLLECT';
+app.locals.siteTitle = 'AMIS-WEB-APP';
 
 //accessing the static files
 app.use(express.static('./app/public'));
 
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
+
+// setting the headers
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Acess-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorized");
+     
+    if (req.method == 'OPTIONS') {
+        res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
+        return res.status(200).json({});
+    }
+    next();
+});
 
 app.set('appData', farmerDataFile);
 app.set('availableProducts', availableProductData);
@@ -88,18 +100,22 @@ app.use(expressValidator({
 // Body parser Middleware
 app.use(cookieParser());
 
-// Express Session MIddleware
+// Express Session Middleware
 app.use(session({
     secret: 'secret-key',
     saveUninitialized: true,
     resave: true
 }));
 
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Connect Flash Middleware
 app.use(flash());
 
 // Flash Middleware Global Variables
-app.use( function (req, res, next) {
+app.use(function(req, res, next) {
     res.locals.success_msg =  req.flash('success_msg');
     res.locals.error_msg = req.flash('error_msg');
     res.locals.error =  req.flash('error');
@@ -112,7 +128,7 @@ app.use(require('./app/routes/index'));
 app.use(require('./app/routes/farmers'));
 app.use(require('./app/routes/about'));
 app.use(require('./app/routes/admin'));
-// app.use(require('./app/routes/adminRoute'));
+app.use(require('./app/routes/makerOrderRoute'));
 app.use(require('./app/routes/tradeFlowRoute'));
 app.use(require('./app/routes/marketRoute'));
 app.use(require('./app/routes/enumeratorRoute'));

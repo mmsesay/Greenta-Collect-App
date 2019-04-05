@@ -7,12 +7,8 @@ var mongoose = require('mongoose');
 //importing the model
 const Enumerators = require('../models/enumerator_model');
 
-//body parse middle ware
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
-
-
 //get request for the enumerator
-router.get('/registerFarmer', function(req, res){
+router.get('/registerFarmer',(req, res) => {
 
     // rendering the page
     res.render('registerFarmersView', {
@@ -22,7 +18,7 @@ router.get('/registerFarmer', function(req, res){
 });
 
 // post request for the enumerator
-router.post('/registerFarmer',urlencodedParser,function(req,res){
+router.post('/registerFarmer',(req,res) => {
 
     // collecting the data sent from the form
     var firstName = req.body.regFirstName;

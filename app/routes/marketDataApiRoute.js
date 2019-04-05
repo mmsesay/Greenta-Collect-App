@@ -4,7 +4,6 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 var marketAPIData = require('../data/marketData.json');
 var fs = require('fs');
-var url = require('url');
 
 //body parse middle ware
 var urlencodedParser = bodyParser.urlencoded({ extended: true });

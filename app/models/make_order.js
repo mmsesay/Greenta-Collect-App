@@ -2,7 +2,7 @@ const mongoose = require('mongoose'); //requiring mongoose model
 const Schema = mongoose.Schema; //creating a variable to hold the mongoose schema
 
 //connecting to the mongoose db
-mongoose.connect('mongodb://Maej:maejdb1@ds141932.mlab.com:41932/agric-biz');
+// mongoose.connect('mongodb://Maej:maejdb1@ds141932.mlab.com:41932/agric-biz');
 
 //create make or pre-order schema 
 const makeOrderSchema = new Schema({
