@@ -1,0 +1,83 @@
+<% include ../admin-head %>
+<body class="theme-blue">
+    <!-- Page Loader -->
+    <% include ../admin-page-loader %>
+    <!-- #END# Page Loader -->
+    <!-- Overlay For Sidebars -->
+    <div class="overlay"></div>
+    <!-- #END# Overlay For Sidebars -->
+    <!-- Top Bar -->
+    <% include ../top-nav %>
+    <!-- #Top Bar -->
+    <section>
+        <!-- Left Sidebar -->
+        <% include ../admin-left-sidebar %>
+        <!-- #END# Left Sidebar -->
+        <!-- Right Sidebar -->
+        <% include ../admin-right-sidebar %>
+        <!-- #END# Right Sidebar -->
+    </section>
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="container">
+               <h4 class="center">Edit Post</h4>
+               <div class="row">
+                 <div class="col s12 m10">
+                   <form class="col s12" method="post" action="/admin/posts/create">
+                       <div class="row">
+                         <div class="input-field col s6">
+                           <input placeholder="Title" id="title" name="title" type="text" class="validate" value=<%= fetchedPost.title %> >
+                           <label for="title">Title</label>
+                         </div>
+                         <div class="form-group">
+                           <!-- <label>Status</label> -->
+                           <select class="form-control" name="status">
+                               <option value="" disabled selected>Choose a Status</option>
+                               <option value="public">Public</option>
+                               <option value="private">Private</option>
+                               <option value="draft">Draft</option>
+                           </select>
+                         </div>
+                       </div>
+
+                       <!-- <div class="input-field col s6">
+                         <label for="category">Category</label>
+                         <select name="category" id="category">
+                            <% select fetchedPost.category %>
+                                <% fetchedCategories.forEach(cate => {%>
+                                    <option value="<%= cate._id %>"><%= cate.title %></option>
+                                <% }); %>
+                            <% select %>
+                         </select>
+                       </div> -->
+
+                       <div class="row">
+                         <div class="input-field col s12">
+                           <p>
+                             <label>
+                               <input type="checkbox" id="allowComments" name="allowComments"/>
+                               <span>Allow Comments</span>
+                             </label>
+                           </p>
+                         </div>
+                       </div>
+                       <div class="row">
+                         <div class="input-field col s12">
+                           <textarea id="description" name="description" placeholder="Enter your content here..." class="materialize-textarea"><%= fetchedPost.description %>
+                           </textarea>
+                           <label for="description">Content</label>
+                         </div>
+                       </div>
+                       <button class="btn waves-effect waves-light" type="submit" >Update Post</button>
+                     </form>
+                 </div>
+               </div>
+            </div>
+          </div>
+    </section>
+
+    <% include ../admin-jslinks.ejs %>
+  </body>
+
+  </html>

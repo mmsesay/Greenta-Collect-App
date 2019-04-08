@@ -127,7 +127,10 @@ app.use(function(req, res, next) {
 app.use(require('./app/routes/index'));
 app.use(require('./app/routes/farmers'));
 app.use(require('./app/routes/about'));
-app.use(require('./app/routes/admin'));
+// app.use(require('./app/routes/admin'));
+// this routes consists of the admin-end-views-routes
+const adminRoutes = require('./app/routes/adminRoutes');
+app.use('/admin', adminRoutes);
 app.use(require('./app/routes/makerOrderRoute'));
 app.use(require('./app/routes/tradeFlowRoute'));
 app.use(require('./app/routes/marketRoute'));

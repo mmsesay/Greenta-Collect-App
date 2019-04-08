@@ -10,12 +10,22 @@ var LocalStrategy = require('passport-local').Strategy;
 var Enumerators = require('../models/enumerator_model');
 
 //get request for the index
+router.get('/admin/login', (req, res) => {
+
+    // rendering the page
+    res.render('adminLogin', {
+        pageTitle: "admin",
+        pageID: "admin"
+    });
+});
+
+//get request for the index
 router.get('/admin', (req, res) => {
 
     // rendering the page
-    res.render('adminView', {
-        pageTitle: "admin",
-        pageID: "admin"
+    res.render('adminIndex', {
+        pageTitle: "adminIndex",
+        pageID: "adminIndex"
     });
 });
 
@@ -50,36 +60,6 @@ passport.deserializeUser((id, done) => {
     });
 });
 
-// passport.use(new LocalStrategy(
-//     function(username, password, done){
-//         Admins.getAdminByUsername(username, (err, adminUser) => {
-//             if(err) throw err;
-//             if(!adminUser){
-//                 return done(null, false, {message: 'That username is not registered '});
-//             }
-
-//         // checking if the password matches
-//         Admins.comparePassword(password, adminUser.password, (err, isMatch) => {
-//             if(err) throw err;
-//             if(isMatch){
-//                 return done(null, adminUser);
-//             }else{
-//                 return done(null, false, {message: 'Incorrect Password'});
-//             }
-//         });
-//        });
-//     }
-// ));
-
-// passport.serializeUser((adminUser, done) => {
-//     done(null, adminUser.id);
-// });
-
-// passport.deserializeUser((id, done) => {
-//     Admins.getAdminById(id, function(err, adminUser){
-//         done(err, adminUser);
-//     });
-// });
 
 // post request for the login
 router.post('/admin/login', (req, res, next) => {
@@ -92,7 +72,7 @@ router.post('/admin/login', (req, res, next) => {
     } 
 
     if(errors.length > 0){
-        res.render('adminView',{
+        res.render('adminLogin',{
             errors,
             username,
             password
@@ -100,8 +80,8 @@ router.post('/admin/login', (req, res, next) => {
     }
     // authenticating the user
     passport.authenticate('local', {
-        successRedirect: '/market',
-        failureRedirect: '/admin',
+        successRedirect: '/admin',
+        failureRedirect: '/admin/login',
         failureFlash: true
     })(req, res, next);
 
