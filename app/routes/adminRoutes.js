@@ -23,6 +23,21 @@ router.route('/market')
 router.route('/tradeFlow')
     .get(adminController.getTradeFlowDataTable);
 
+// enumerator registration route
+router.route('/register/enumerator')
+    .get(adminController.enumeratorGet)
+    .post(adminController.enumeratorPost);
+
+// farmer registration route
+router.route('/register/farmer')
+    .get(adminController.farmerGet)
+    .post(adminController.farmerPost);
+ 
+// creat market data route
+router.route('/createMarketData')
+    .get(adminController.marketDataGet)
+    .post(adminController.markerDataPost);
+
 // admin edit route
 // router.route('/posts/edit/:id')
 //     .get(adminController.editPost);

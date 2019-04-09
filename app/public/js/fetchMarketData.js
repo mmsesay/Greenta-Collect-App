@@ -93,8 +93,32 @@ function getMarketData(){
         // getting the table ID and prepending the row
         document.getElementById("marketTableBody").prepend(row);
 
-        /*DataTables instantiation.*/
-        document.getElementById("marketTableBody").DataTable();
+        // var data = row;
+
+        // $(".js-exportable'").DataTable().row.add([data]).draw();
+
+         $(function () {
+
+            //Exportable table
+            $('.js-exportable').DataTable({
+                dom: 'Bfrtip',
+                responsive: true,
+                bJQueryUI: true,
+                destroy: true,
+                aaData: data,
+                Columns: [
+                    { data: 'locality' },
+                    { data: 'district' },
+                    { data: 'product' },
+                    { data: 'date' },
+                    { data: 'wholesale_price' },
+                    { data: 'retail_price' }
+                ],
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
 
     }); 
 

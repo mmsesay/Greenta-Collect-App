@@ -124,20 +124,12 @@ app.use(function(req, res, next) {
 });
 
 // Creating access to the routes
-app.use(require('./app/routes/index'));
-app.use(require('./app/routes/farmers'));
-app.use(require('./app/routes/about'));
-// app.use(require('./app/routes/admin'));
-// this routes consists of the admin-end-views-routes
 const adminRoutes = require('./app/routes/adminRoutes');
+const defaultRoutes = require('./app/routes/defaultRoutes');
+
+app.use('/', defaultRoutes);
 app.use('/admin', adminRoutes);
-app.use(require('./app/routes/makerOrderRoute'));
-app.use(require('./app/routes/tradeFlowRoute'));
-app.use(require('./app/routes/marketRoute'));
-app.use(require('./app/routes/enumeratorRoute'));
-app.use(require('./app/routes/registerFarmerRoute'));
-app.use(require('./app/routes/chartsRoute'));
-app.use(require('./app/routes/marketDataApiRoute'));
+
 
 //listening to the 3000 port
 var server = app.listen(app.get('port'), function(){

@@ -1,12 +1,12 @@
 //importing the modules
-var express = require('express');
-var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 // importing the models
 // var Admins = require('../models/admin_model');
 var Enumerators = require('../models/enumerator_model');
+var marketAPIData = require('../data/marketData.json');
+var fs = require('fs');
 
 passport.use(new LocalStrategy(
   function(username, password, done) {
@@ -94,7 +94,225 @@ module.exports = {
     // dashboard view
     getTradeFlowDataTable: (req, res) => {
       res.render('partials/admin/tables/tradeFlowDataTable');
-    }
+    },
+
+    // enumerator get request
+    enumeratorGet: (req, res) => {
+        // rendering the page
+        res.render('partials/admin/main/enumeratorForm', {
+            pageTitle: "enumerator",
+            pageID: "enumerator"
+        });
+    },
+
+    // enumeratorPost request
+    enumeratorPost: (req,res) => {
+
+      const { regFirstName, regLastName, regUsername, regEmail, regStAddress, regCity, regState, regPassword, regConfirmPassword} = req.body;
+  
+      // error arrays
+      let errors = [];
+  
+      // check required fields
+      if(!regFirstName || !regLastName || !regUsername || !regEmail || !regStAddress || !regCity || !regState || !regPassword || !regConfirmPassword){
+          errors.push({ msg: 'Please fill in all fields' });
+      }
+  
+      // check if password match
+      if(regPassword != regConfirmPassword){
+          errors.push({ msg: 'Passwords do not match' });
+      }
+  
+      // check password length
+      if(regPassword.length < 6){
+          errors.push({ msg: 'Passwords should be at least 6 characters' });
+      }
+  
+      // check if we do have some errors
+      if(errors.length > 0){
+          // re-render the page
+          res.render('partials/admin/main/enumeratorForm',{
+              pageTitle: "enumerator",
+              pageID: "enumerator",
+              errors,
+              regFirstName,
+              regLastName,
+              regUsername,
+              regEmail,
+              regStAddress,
+              regCity,
+              regState,
+              regPassword,
+              regConfirmPassword
+           });
+      }else{
+        // if validation passed run the following below
+        Enumerator.findOne({ email: regEmail })
+          .then(enumerator => {
+              if (enumerator) {
+                  errors.push({ msg: 'A user with that email is already registered'});
+                  res.render('partials/admin/main/enumeratorForm',{
+                      pageTitle: "enumerator",
+                      pageID: "enumerator",
+                      errors,
+                      regFirstName,
+                      regLastName,
+                      regUsername,
+                      regEmail,
+                      regStAddress,
+                      regCity,
+                      regState,
+                      regPassword,
+                      regConfirmPassword
+                  });
+              } else {
+                   var newEnumerator = new Enumerator({
+                      _id: new mongoose.Types.ObjectId(),
+                      firstName: regFirstName,
+                      lastName: regLastName,
+                      username: regUsername,
+                      email: regEmail,
+                      address: regStAddress,
+                      city: regCity,
+                      state: regState,
+                      password: regPassword
+                  });
+                  // making reference to the createEnumerator function in the enumerator model
+                  Enumerator.createEnumerator(newEnumerator, (err, enumerator) => {
+                      if(err) throw err; //throw an error
+                      req.flash('success_msg', 'You have just registered a new enumerator');
+                      res.redirect('/admin/enumerator');
+                      console.log(enumerator);
+                  });
+              }
+          })
+          .catch(err => {
+              console.log(err);
+          });
+      }
+  
+    },
+
+    // farmer get request
+    farmerGet: (req, res) => {
+      // rendering the page
+      res.render('partials/admin/main/farmerForm', {
+          pageTitle: "enumerator",
+          pageID: "enumerator"
+      });
+    },
+
+    // farmerPost request
+    farmerPost: (req,res) => {
+
+      // collecting the data sent from the form
+      var firstName = req.body.regFirstName;
+      var lastName = req.body.regLastName;
+      var username = req.body.regUsername;
+      var email = req.body.regEmail;
+      var address = req.body.regStAddress;
+      var city = req.body.regCity;
+      var state = req.body.regState;
+      var zipCode = req.body.regZip;
+      var password = req.body.regPassword;
+
+      // validating the inputs
+      req.checkBody('regFirstName', 'First name is required').notEmpty();
+      req.checkBody('regLastName', 'Last name is required').notEmpty();
+      req.checkBody('regUsername', 'Username is required').notEmpty();
+      req.checkBody('regEmail', 'Email is required').notEmpty();
+      req.checkBody('regStAddress', 'An addredd is required').notEmpty();
+      req.checkBody('regCity', 'A city is required').notEmpty();
+      req.checkBody('regState', 'A state or province is required').notEmpty();
+      req.checkBody('regZip', 'A zip code is required').notEmpty();
+      req.checkBody('regPassword', 'A password name is required').notEmpty();
+      req.checkBody('regConfirmPassword', 'Passwords donot match').equals(req.body.regPassword);
+
+      // this variable will be used to validate 
+      var errors = req.validationErrors();
+
+      // checking if an error occurs
+      if(errors){
+          res.render('enumeratorView',{
+              errors:errors
+          });
+      }else{
+          var newEnumerator = new Enumerators({
+              _id: new mongoose.Types.ObjectId(),
+              firstName: firstName,
+              lastName: lastName,
+              username: username,
+              email: email,
+              address: address,
+              city: city,
+              state: state,
+              zipCode: zipCode,
+              password: password
+
+              // firstName: req.body.regFirstName,
+              // lastName: req.body.regLastName,
+              // username: req.body.regUsername,
+              // email: req.body.regEmail,
+              // address: req.body.regStAddress,
+              // city: req.body.regCity,
+              // state: req.body.regState,
+              // zipCode: req.body.regZip,
+              // password: req.body.regPassword
+          });
+
+          // making reference to the createEnumerator function in the enumerator model
+          Enumerators.createEnumerator(newEnumerator, function(err, enumerator){
+              if(err) throw err; //throw an error
+              console.log(enumerator);
+          });
+          console.log('new enumerator record save');
+
+          req.flash('success_msg', 'You have registered a new farmer');
+          res.redirect('/enumerator'); //redirecting to the enumerator's page
+      } //error closing else brace
+
+    },
+
+    // create market data get request
+    marketDataGet: (req, res) => {
+
+      // rendering the page
+      res.render('partials/admin/main/marketForm', {
+          pageTitle: "postMarketData",
+          pageID: "postMarketData"
+      });
+    }, 
+
+    // create market data post route
+    markerDataPost: (req,res) => {
+
+      // this variable will be used to validate
+      var errors = req.validationErrors();
+  
+      // checking if an error occurs
+      if(errors){
+          res.render('partials/admin/main/marketForm',{
+              errors:errors
+          });
+      }else{
+  
+          var district = req.body.district;
+          var product = req.body.product;
+          var price = parseInt(req.body.price);
+  
+          marketAPIData.unshift({district,product,price}); //posting the data into the api
+  
+          fs.writeFile('app/data/marketData.json', JSON.stringify(marketAPIData), 'utf8',
+          function(err){
+              console.log(err);
+          })
+  
+          // req.flash('success_msg', 'You have posted a new market data');
+          // res.redirect('/admin/createMarketData'); //redirecting to the create market page
+          res.render('partials/admin/main/marketForm');
+        } //error closing else brace
+  
+    },
 
     // // submit post view
     // submitPosts: (req, res) => {

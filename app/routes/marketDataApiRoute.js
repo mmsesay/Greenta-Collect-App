@@ -23,14 +23,6 @@ router.get('/createMarketData', function(req, res){
 router.get('/api/market_data_api', function(req, res){
     // responsing with the data
     res.json(marketAPIData);
-
-    // res.jsonp(req.query)
-
-    // {district: req.params.district,
-    //           product: req.params.product,
-    //           price: req.params.price
-    // }
-
 });
 
 // post request for the marketData
