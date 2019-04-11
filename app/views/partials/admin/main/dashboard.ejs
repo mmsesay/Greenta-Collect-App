@@ -1,5 +1,5 @@
 <% include ../admin-head %>
-<body class="theme-blue">
+<body class="theme-green">
     <!-- Page Loader -->
     <% include ../admin-page-loader %>
     <!-- #END# Page Loader -->
@@ -22,23 +22,77 @@
         <div class="container-fluid">
             <div class="block-header">
                 <h2>DASHBOARD</h2>
+                <h5>Welcome <%= adminUserName.name %></h5>
             </div>
             <!-- Widgets -->
             <!-- <% include ../admin-widgets %> -->
             <!-- #END# Widgets -->
-            <!-- CPU Usage -->
-            <!-- <% include ../admin-cpu-usage %> -->
-            <!-- #END# CPU Usage -->
+            <!-- Order Table -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                Product Orders
+                                <small>Showing the list of product orders</small>
+                            </h2>
+                        </div>
+                        <div class="body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                    <thead>
+                                        <tr class="center-text">
+                                            <!-- <th>#</th> -->
+                                            <th>NAME</th>
+                                            <th>ADDRESS</th>
+                                            <th>PHONE</th>
+                                            <th>EMAIL</th>
+                                            <th>PRODUCT</th>
+                                            <th>QTY</th>
+                                            <th>ACTION</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr class="center-text">
+                                            <!-- <th>#</th> -->
+                                            <th>NAME</th>
+                                            <th>ADDRESS</th>
+                                            <th>PHONE</th>
+                                            <th>EMAIL</th>
+                                            <th>PRODUCT</th>
+                                            <th>QTY</th>
+                                            <th>ACTION</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <% orders.forEach(order => {%>
+                                            <tr>
+                                                <!-- <th scope="row"><%= order.index %></th> -->
+                                                <td><%= order.name %></td>
+                                                <td><%= order.address %></td>
+                                                <td><%= order.tele %></td>
+                                                <td><%= order.email %></td>
+                                                <td><%= order.productName %></td>
+                                                <td><%= order.quantity %></td>
+                                                <td>
+                                                    <form action="/admin/order/delete/<%= order._id %>">
+                                                        <button class="btn btn-danger" type="submit">Delete Order</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        <%});%>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Order Table -->
             <!-- <div class="row clearfix"> -->
                 <!-- Visitors -->
                 <!-- <% include ../admin-visitors %> -->
                 <!-- #END# Visitors -->
-                <!-- Latest Social Trends -->
-                <!-- <% include ../admin-social-trends %> -->
-                <!-- #END# Latest Social Trends -->
-                <!-- Answered Tickets -->
-                <!-- <% include ../admin-answered-tickets %> -->
-                <!-- #END# Answered Tickets -->
             <!-- </div> -->
 
             <!-- <div class="row clearfix"> -->

@@ -5,7 +5,6 @@ const defaultController = require('../controllers/defaultControllers');
 // homepage requests
 router.route('/')
     .get(defaultController.indexGet)
-    .post(defaultController.indexPost);
 
 // farmers page requests
 router.route('/farmers')
@@ -31,7 +30,5 @@ router.route('/order')
 router.route('/api/market_data_api')
     .get(defaultController.getMarketApi);
     
-
-
 
 module.exports = router;

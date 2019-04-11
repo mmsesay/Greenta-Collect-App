@@ -1,47 +1,23 @@
 //importing the modules
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcrypt');
 
-// importing the models
-// var Admins = require('../models/admin_model');
-var Enumerators = require('../models/enumerator_model');
+// models
+var adminModel = require('../models/admin_model');
+var enumeratorsModel = require('../models/enumerator_model');
+var farmerModel = require('../models/farmerModel');
+var make_orderModel = require('../models/make_order');
+
+// json data
 var marketAPIData = require('../data/marketData.json');
+var availableProductData = require('../data/ava_prod_by_district.json');
 var fs = require('fs');
 
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-      Enumerators.getEnumeratorByUsername(username, (err, enumerator) => {
-          if(err) throw err;
-          if(!enumerator){
-              return done(null, false, {message: 'Incorrect Username'});
-          }
-
-      // checking if the password matches
-      Enumerators.comparePassword(password, enumerator.password, (err, isMatch) => {
-          if(err) throw err;
-          if(isMatch){
-              return done(null, enumerator);
-          }else{
-              return done(null, false, {message: 'Incorrect Password'});
-          }
-      });
-     });
-  }
-));
-
-passport.serializeUser((enumerator, done) => {
-  done(null, enumerator.id);
-});
-
-passport.deserializeUser((id, done) => {
-  Enumerators.getEnumeratorById(id, function(err, enumerator){
-      done(err, enumerator);
-  });
-});
+// custom functions 
+var {isEmpty} = require('../config/customFunction');
 
 module.exports = {
 
-    // index
+    // index page get controller
     index: (req, res) => {
       res.render('adminLogin', {
         pageTitle: "admin",
@@ -49,72 +25,171 @@ module.exports = {
       });
     },
 
-    // login page view
+    // login page post controller
     postLogin: (req, res) => {
-      const { username, password } = req.body;
-      let errors = [];
+      res.send('login successful');
+    },
 
-      //check required fields
-      if(!username || !password){
-          errors.push({ msg: 'Please fill in all fields'});
-      } 
+    // admin registrartion form  get contoller
+    adminRegFormGet: (req, res) => {
+      res.render('partials/admin/forms/signup');
+    },
+    
+    // admin registrartion form  post contoller
+    adminRegFormPost: (req, res) => {
 
-      if(errors.length > 0){
-          res.render('adminLogin',{
-              errors,
-              username,
-              password
+        // fetching the data from the form
+        const {fullName, email, password, password2, uploadedFile} = req.body;
+
+        let errors = []; // will hold the errors
+
+        // check reqiured fields
+        if(!fullName || !email || !password || !password2 || !uploadedFile) {
+          errors.push({msg: 'Please fill in all fileds'});
+        }
+
+        // check if password match
+        if(password != password2){
+          errors.push({msg: 'Passwords do not match'});
+        }
+
+        // check password length
+        if(password.length < 6){
+          errors.push({msg: 'Password should be at least 6 character'});
+        }
+
+        // check if an error is found
+        if(errors.length > 0){
+          res.render('partials/admin/forms/signup',{
+            errors,
+            fullName,
+            email,
+            password,
+            password2,
+            uploadedFile
           });
-      }
-      // authenticating the user
-      passport.authenticate('local', {
-        successRedirect: '/dashboard',
-        failureRedirect: '/',
-        failureFlash: true
-      })(req, res, next);
+        }else{
+
+          // check if the user already exists
+          adminModel.findOne({email: email})
+              .then(adminUser => {
+                  if(adminUser) {
+                    req.flash('error_msg', 'Email already exist');
+                    res.redirect('/admin/register/admin');
+                  }else{
+
+                    let filename = ''; // will hold the uploaded file
+                    
+                    if(!isEmpty(req.files)){
+                        let file = req.files.uploadedFile;
+                        filename = file.name;
+                        let uploadDir = '../public/images/adminsProfilePhotos/';
+              
+                        file.mv(uploadDir+filename, (err) => {
+                            if(err) 
+                              console.log(err);
+                        });
+                    }
+                    // instantiating a new admin model
+                    var newAdmin = new adminModel({
+                      fullname: req.body.fullName,
+                      email: req.body.email,
+                      password: req.body.password,
+                      photo: `/adminsProfilePhotos/${filename}`
+                    });
+
+                    // hashing the password
+                    bcrypt.genSalt(10, function(err, salt){
+                      bcrypt.hash(newAdmin.password, salt, (err, hash) => {
+                          if(err) throw err;
+                          // set password to hash
+                          newAdmin.password = hash;
+                          newAdmin.save()
+                            .then(admin => {
+                                req.flash('success_msg', 'You have just registered a new administrator');
+                                res.redirect('/admin/register/admin');
+                                console.log(admin +'=>'+'registration successful');
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            });
+                      });
+                  });
+                }
+              })
+              .catch(err => {
+                console.log(err);
+              });
+        }
     },
 
-    // dashboard view
+    // dashboard get controller
     getDashboard: (req, res) => {
-      res.render('partials/admin/main/dashboard');
+
+      adminModel.find()
+          .then(adminUser => {
+              make_orderModel.find().sort({'_id':-1})
+                .then(orders => {
+                    res.render('partials/admin/main/dashboard', {adminUserName: adminUser, orders: orders});
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+          })
+          .catch(err => {
+            console.log(err);
+          });
     },
 
-    // admin logout 
+    // order delete  controller
+    deleteOrder: (req, res) => {
+      const id = req.params.id;
+      make_orderModel.findByIdAndDelete(id)
+          .then(deletedOrder => {
+              req.flash('success_msg', `The order from ${deletedOrder.name} has been deleted.`);
+              res.redirect('/admin/dashboard');
+          })
+          .catch(err => {
+            console.log(err);
+          });
+    },
+
+    // admin logout controller
     getLogout: (req, res) => {
       req.logout(); //passport middleware
       req.flash('success_msg', 'You have logged out');
       res.redirect('/'); //redirecting to the login page
     },
 
-    // dashboard view
+    // dashboard vie controller
     getMarketDataTable: (req, res) => {
       res.render('partials/admin/tables/marketDataTable');
     },
 
-    // dashboard view
+    // tradeflow get controller
     getTradeFlowDataTable: (req, res) => {
       res.render('partials/admin/tables/tradeFlowDataTable');
     },
 
-    // enumerator get request
-    enumeratorGet: (req, res) => {
+    // enumerator get  controller
+    enumeratorRegFormGet: (req, res) => {
         // rendering the page
-        res.render('partials/admin/main/enumeratorForm', {
+        res.render('partials/admin/forms/enumeratorForm', {
             pageTitle: "enumerator",
             pageID: "enumerator"
         });
     },
 
-    // enumeratorPost request
-    enumeratorPost: (req,res) => {
+    // enumeratorPost  controller
+    enumeratorRegFormPost: (req,res) => {
 
-      const { regFirstName, regLastName, regUsername, regEmail, regStAddress, regCity, regState, regPassword, regConfirmPassword} = req.body;
+      const { regFirstName, regLastName, regUsername, regEmail, regStAddress, regPhone, regCity, regState, regPassword, regConfirmPassword} = req.body;
   
       // error arrays
       let errors = [];
   
       // check required fields
-      if(!regFirstName || !regLastName || !regUsername || !regEmail || !regStAddress || !regCity || !regState || !regPassword || !regConfirmPassword){
+      if(!regFirstName || !regLastName || !regUsername || !regEmail || !regStAddress || !regPhone || !regCity || !regState || !regPassword || !regConfirmPassword){
           errors.push({ msg: 'Please fill in all fields' });
       }
   
@@ -131,7 +206,7 @@ module.exports = {
       // check if we do have some errors
       if(errors.length > 0){
           // re-render the page
-          res.render('partials/admin/main/enumeratorForm',{
+          res.render('partials/admin/forms/enumeratorForm',{
               pageTitle: "enumerator",
               pageID: "enumerator",
               errors,
@@ -140,6 +215,7 @@ module.exports = {
               regUsername,
               regEmail,
               regStAddress,
+              regPhone,
               regCity,
               regState,
               regPassword,
@@ -147,11 +223,11 @@ module.exports = {
            });
       }else{
         // if validation passed run the following below
-        Enumerator.findOne({ email: regEmail })
+        enumeratorsModel.findOne({ email: regEmail })
           .then(enumerator => {
               if (enumerator) {
                   errors.push({ msg: 'A user with that email is already registered'});
-                  res.render('partials/admin/main/enumeratorForm',{
+                  res.render('partials/admin/forms/enumeratorForm',{
                       pageTitle: "enumerator",
                       pageID: "enumerator",
                       errors,
@@ -160,28 +236,30 @@ module.exports = {
                       regUsername,
                       regEmail,
                       regStAddress,
+                      regPhone,
                       regCity,
                       regState,
                       regPassword,
                       regConfirmPassword
                   });
               } else {
-                   var newEnumerator = new Enumerator({
-                      _id: new mongoose.Types.ObjectId(),
+                  // instatiating a new enumerator 
+                   var newEnumerator = new enumeratorsModel({
                       firstName: regFirstName,
                       lastName: regLastName,
                       username: regUsername,
                       email: regEmail,
                       address: regStAddress,
+                      phone: regPhone,
                       city: regCity,
                       state: regState,
                       password: regPassword
                   });
                   // making reference to the createEnumerator function in the enumerator model
-                  Enumerator.createEnumerator(newEnumerator, (err, enumerator) => {
+                  enumeratorsModel.createEnumerator(newEnumerator, (err, enumerator) => {
                       if(err) throw err; //throw an error
                       req.flash('success_msg', 'You have just registered a new enumerator');
-                      res.redirect('/admin/enumerator');
+                      res.redirect('/admin/register/enumerator');
                       console.log(enumerator);
                   });
               }
@@ -193,97 +271,121 @@ module.exports = {
   
     },
 
-    // farmer get request
-    farmerGet: (req, res) => {
+    // farmer get controller
+    farmerRegFormGet: (req, res) => {
       // rendering the page
-      res.render('partials/admin/main/farmerForm', {
+      res.render('partials/admin/forms/farmerForm', {
           pageTitle: "enumerator",
           pageID: "enumerator"
       });
     },
 
-    // farmerPost request
-    farmerPost: (req,res) => {
+    // farmerPost controller
+    farmerRegFormPost: (req,res) => {
+      // getting the variables
+      const {fboName, listOfProd, location, cheifdom, district, region, totalNoOfWorkers, 
+            briefBio, execHeadName, execHeadAddress, execHeadTele, execHeadEmail, uploadedFile} = req.body;
 
-      // collecting the data sent from the form
-      var firstName = req.body.regFirstName;
-      var lastName = req.body.regLastName;
-      var username = req.body.regUsername;
-      var email = req.body.regEmail;
-      var address = req.body.regStAddress;
-      var city = req.body.regCity;
-      var state = req.body.regState;
-      var zipCode = req.body.regZip;
-      var password = req.body.regPassword;
-
-      // validating the inputs
-      req.checkBody('regFirstName', 'First name is required').notEmpty();
-      req.checkBody('regLastName', 'Last name is required').notEmpty();
-      req.checkBody('regUsername', 'Username is required').notEmpty();
-      req.checkBody('regEmail', 'Email is required').notEmpty();
-      req.checkBody('regStAddress', 'An addredd is required').notEmpty();
-      req.checkBody('regCity', 'A city is required').notEmpty();
-      req.checkBody('regState', 'A state or province is required').notEmpty();
-      req.checkBody('regZip', 'A zip code is required').notEmpty();
-      req.checkBody('regPassword', 'A password name is required').notEmpty();
-      req.checkBody('regConfirmPassword', 'Passwords donot match').equals(req.body.regPassword);
-
-      // this variable will be used to validate 
+            // this variable will be used to validate 
       var errors = req.validationErrors();
 
-      // checking if an error occurs
+      // // checking if an error occurs
       if(errors){
-          res.render('enumeratorView',{
-              errors:errors
+          res.render('partials/admin/forms/farmerForm',{
+              errors: errors,
+              cboName,
+              listOfProd,
+              location,
+              cheifdom,
+              district,
+              region,
+              totalNoOfWorkers,
+              briefBio,
+              execHeadName,
+              execHeadAddress,
+              execHeadTele,
+              execHeadEmail
           });
       }else{
-          var newEnumerator = new Enumerators({
-              _id: new mongoose.Types.ObjectId(),
-              firstName: firstName,
-              lastName: lastName,
-              username: username,
-              email: email,
-              address: address,
-              city: city,
-              state: state,
-              zipCode: zipCode,
-              password: password
 
-              // firstName: req.body.regFirstName,
-              // lastName: req.body.regLastName,
-              // username: req.body.regUsername,
-              // email: req.body.regEmail,
-              // address: req.body.regStAddress,
-              // city: req.body.regCity,
-              // state: req.body.regState,
-              // zipCode: req.body.regZip,
-              // password: req.body.regPassword
-          });
+        farmerModel.findOne({fbo_name: fboName})
+          .then(cbo => {
+              if(cbo) {
+                req.flash('error_msg', 'A CBO with that name already exists. Please enter another CBO name.');
+                res.redirect('/admin/register/farmer');
+                errors: errors,
+                fboName,
+                listOfProd,
+                location,
+                cheifdom,
+                district,
+                region,
+                totalNoOfWorkers,
+                briefBio,
+                execHeadName,
+                execHeadAddress,
+                execHeadTele,
+                execHeadEmail
+              } else {
+                let filename = ''; // will hold the uploaded file
 
-          // making reference to the createEnumerator function in the enumerator model
-          Enumerators.createEnumerator(newEnumerator, function(err, enumerator){
-              if(err) throw err; //throw an error
-              console.log(enumerator);
-          });
-          console.log('new enumerator record save');
-
-          req.flash('success_msg', 'You have registered a new farmer');
-          res.redirect('/enumerator'); //redirecting to the enumerator's page
+                // if uploaded file is not empty
+                if(!isEmpty(req.files)){
+                    let file = req.files.uploadedFile;
+                    filename = file.name;
+                    let uploadDir = '../public/images/farmerUploads/';
+          
+                    file.mv(uploadDir+filename, (err) => {
+                        if(err) 
+                          console.log(err);
+                    });
+                }
+                // instantiating a new farerModel
+                var newFarmer = new farmerModel({
+                  cbo_name: cboName,
+                  products: listOfProd,
+                  location: location,
+                  cheifdom: cheifdom,
+                  district: district,
+                  region: region,
+                  total_no_of_staffs: totalNoOfWorkers,
+                  brief_bio: briefBio,
+                  executive_head_name: execHeadName,
+                  executive_head_address: execHeadAddress,
+                  executive_head_tele : execHeadTele,
+                  executive_head_email : execHeadEmail,
+                  photo : `/farmerUploads/${filename}`,
+                });
+                // saving the farmer detail
+                newFarmer.save() 
+                    .then(farmer => {
+                      console.log(farmer);
+                      req.flash('success_msg', 'New CBO registered successfully');
+                      res.redirect('/admin/register/farmer');
+                    })
+                    .catch(err => {
+                      console.log(err);
+                    });
+              }
+          })
+          .catch(err => {
+            console.log(err);
+          }); 
       } //error closing else brace
 
     },
 
-    // create market data get request
+    // create market data get controller
     marketDataGet: (req, res) => {
 
       // rendering the page
-      res.render('partials/admin/main/marketForm', {
+      res.render('partials/admin/forms/marketForm', {
           pageTitle: "postMarketData",
           pageID: "postMarketData"
       });
     }, 
 
-    // create market data post route
+    // create market data post  controller
     markerDataPost: (req,res) => {
 
       // this variable will be used to validate
@@ -291,7 +393,7 @@ module.exports = {
   
       // checking if an error occurs
       if(errors){
-          res.render('partials/admin/main/marketForm',{
+          res.render('partials/admin/forms/marketForm',{
               errors:errors
           });
       }else{
@@ -309,107 +411,179 @@ module.exports = {
   
           // req.flash('success_msg', 'You have posted a new market data');
           // res.redirect('/admin/createMarketData'); //redirecting to the create market page
-          res.render('partials/admin/main/marketForm');
+          res.render('partials/admin/forms/marketForm');
         } //error closing else brace
   
     },
 
-    // // submit post view
-    // submitPosts: (req, res) => {
+    // availableProductForm get  controller
+    availableProductFormGet: (req, res) => {
 
-    //   const commentsAllowed =  req.body.allowComments ? true: false;
+      // rendering the page
+      res.render('partials/admin/main/availableProductForm', {
+          pageTitle: "availableProductForm",
+          pageID: "availableProductForm"
+      });
+    }, 
 
-    //   // check for input file
-    //   let filename = '';
+    // availableProducForm post  controller
+    availableProductFormPost: (req,res) => {
 
-    //   console.log(req.files);
+      // this variable will be used to validate
+      var errors = req.validationErrors();
+  
+      // checking if an error occurs
+      if(errors){
+          res.render('partials/admin/forms/availableProductForm',{
+              pageTitle: "availableProductForm",
+              pageID: "availableProductForm",
+              errors:errors
+          });
+      }else{
+
+          // fetching the districts array
+          var districtsData = availableProductData.districts; 
+
+          // var districtDetails = [];
+
+          // fetching the data from the form
+          var district = req.body.district;
+          var product = req.body.product;
+          var quantity = parseInt(req.body.quantity);
 
 
-    //   // const newPost = new postModel({
-    //   //   title: req.body.title,
-    //   //   description: req.body.description,
-    //   //   status: req.body.status,
-    //   //   allowComment: commentsAllowed
-    //   // });
-    //   // newPost.save() // saving the post
-    //   //   .then(post => {
-    //   //     console.log(post);
-    //   //     req.flash('success_message', 'New post created Successfully');
-    //   //     res.redirect('/admin/posts');
-    //   //   })
-    //   //   .catch(err => {
-    //   //     console.log(err);
-    //   //   });
-    // },
+          districtsData.forEach((item) => {
+              //only do this is the request for the member is made
+              if(item.name == district) {
+                // districtDetails.push(item); //pushing the districts data into the districtDetails array
+                
+                districtsData.unshift({product,quantity}); 
+                fs.writeFile('app/data/ava_prod_by_district.json', JSON.stringify(districtsData), 'utf8',
+                (err) => {
+                    console.log(err);
+                });
+              
+                res.render('partials/admin/main/availableProductForm');
+              }
+          });
 
-    // // create post view
-    // createPost: (req, res) => {
-    //   res.render('partials/admin/posts/createPosts');
-    // },
+          // check for tonkolili district
+          // if(district == 'tonkolili'){
+            
+  
+          //   fs.writeFile('app/data/ava_prod-by_district.json', JSON.stringify(availableProductData), 'utf8',
+          //   function(err){
+          //       console.log(err);
+          //   });
+          // }
 
-    // // edit post view
-    // editPost: (req, res) => {
-    //   const id = req.params.id;
-    //   // findind the posts by their id's
-    //   postModel.findById(id)
-    //       .then(post => {
-    //           // res.render('partials/admin/posts/editPosts', {fetchedPosts: post});
-    //           // finding all the categories
-    //           categoriesModel.find()
-    //               .then(cats => {
-    //                 res.render('partials/admin/posts/editPosts', {
-    //                   fetchedPost: post, fetchedCategories: cats
-    //                 });
-    //               })
-    //               .catch(err => {
-    //                 console.log(err);
-    //               });
-    //       })
-    //       .catch(err => {
-    //         console.log(err);
-    //       });
-    // },
+          // req.flash('success_msg', 'You have posted a new market data');
+          // res.redirect('/admin/createMarketData'); //redirecting to the create market page
+          // res.render('partials/admin/main/availableProductForm');
+        } //error closing else brace
+  
+    },
 
-    // // delete post
-    // deletePost: (req, res) => {
-    //   const id = req.params.id;
-    //   postModel.findByIdAndDelete(id)
-    //       .then(deletedPost => {
-    //           req.flash('success_message', `The post with the ${deletedPost.title} was deleted.`);
-    //           res.redirect('partials/admin/posts/index');
-    //       })
-    //       .catch(err => {
-    //         console.log(err);
-    //       });
-    // },
+    // registered fbos get controller
+    fbosRecordsGet: (req, res) => {
+        // fetching all the cbos from the farmer model
+        farmerModel.find().sort({'_id':-1})
+          .then(fbo => {
+              res.render('partials/admin/tables/fbosRecordTable', {fbo: fbo});
+          })
+          .catch(err => {
+            console.log(err);
+          });
+    },
 
-    // // categories view_list
-    // getCategories: (req, res) => {
-    //   categoriesModel.find()
-    //       .then(category => {
-    //           res.render('partials/admin/categories/index', {categories: category});
-    //       })
-    //       .catch(err => {
-    //          console.log(err);
-    //       });
-    // },
+    // registered fbos get controller
+    fbosRecordEditGet: (req, res) => {
+      const id = req.params.id;
+      // fetching all the cbos from the farmer model
+      farmerModel.findById(id)
+        .then(fbo => {
+            res.render('partials/admin/main/editFBORecord', {fbo: fbo});
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
 
-    // // create Category
-    // createCategory: (req, res) => {
-    //     var categoryName = req.body.categoryTitle;
+    // fbos delete controller
+    fbosRecordsDelete: (req, res) => {
+      const id = req.params.id;
+      farmerModel.findByIdAndDelete(id)
+          .then(fbo => {
+              req.flash('success_msg', `FBO " ${fbo.executive_head_name} " was deleted successfully.`);
+              res.redirect('/admin/records/fbos');
+          })
+          .catch(err => {
+            console.log(err);
+          });
+    },
 
-    //     if(categoryName){
-    //       const newCategory = new categoriesModel({
-    //           title: categoryName
-    //       });
+    // enumerators get controller
+    enumeratorsRecordsGet: (req, res) => {
+      // fetching all the enumerators from the enumerators model
+      enumeratorsModel.find().sort({'_id':-1})
+        .then(enumerator => {
+            res.render('partials/admin/tables/enumeratorsRecordTable', {enumerator: enumerator});
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
 
-    //       newCategory.save()
-    //         .then(category => {
-    //             console.log(category);
-    //         })
-    //         .catch(err => {
-    //           console.log(err);
-    //         });
-    //     }
-    // }
+    // enumerators delete controller
+    enumeratorsRecordsDelete: (req, res) => {
+      const id = req.params.id;
+      enumeratorsModel.findByIdAndDelete(id)
+          .then(enumerator => {
+              req.flash('success_msg', `Enumerator " ${enumerator.username} " was deleted successfully.`);
+              res.redirect('/admin/records/enumerators');
+          })
+          .catch(err => {
+            console.log(err);
+          });
+    },
+
+    // enumerator edit get controller
+    enumeratorEditRecordGet: (req, res) => {
+      const id = req.params.id;
+      // fetching all the cbos from the farmer model
+      enumeratorsModel.findById(id)
+        .then(enumerator => {
+            res.render('partials/admin/main/editEnumeratorRecord', {enumerator: enumerator});
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+
+    // enumerator update post controller
+    enumeratorUpdateRecordPost: (req, res) => {
+      const id = req.params.id;
+      // fetching all the enumerator from the enumerators model
+      enumeratorsModel.findById(id)
+        .then(enumerator => {
+          // re-assigning the new data to the existing one
+          enumerator.firstName = req.body.regFirstName;
+          enumerator.lastName = req.body.regLastName;
+          enumerator.email = req.body.regEmail;
+          enumerator.address = req.body.regStAddress;
+          enumerator.phone = req.body.regPhone;
+          enumerator.city = req.body.regCity;
+          enumerator.state = req.body.regState;
+
+          // saving the data
+          enumerator.save(updatedEnumerator => {
+              req.flash('success_msg', `Enumerator has been updated`);
+              res.redirect('/admin/records/enumerators');
+            });
+            
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
 };

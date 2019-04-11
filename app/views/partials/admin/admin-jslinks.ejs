@@ -34,6 +34,8 @@
 <!-- Admin Custom Js -->
 <script src="/js/admin.js"></script>
 
+<script src="/js/pages/tables/jquery-datatable.js"></script>
+
 <!-- firebase script -->
 <script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
 
@@ -54,7 +56,7 @@
         // $('select').formSelect();
 
         // for HTML5 "required" attribute
-        // $("select[required]").css({display: "inline", height: 0, padding: 0, width: 0});
+        $("select[required]").css({display: "inline", height: 0, padding: 0, width: 0});
         $('.collapsible').collapsible();
         $('.datepicker').datepicker();
         $('.slider').slider({indicators : false, interval: 5000, height: 600});

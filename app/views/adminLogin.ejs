@@ -7,13 +7,13 @@
         <div class="container">
             <img src="/images/Sierra_Leone_Coat_Of_Arms.png" class="avt"/>
             <h4 class="center green-text lighten-2">Admin Login</h4>
-            <% include partials/templates/messages.ejs %>
             <!-- LOGIN FORM -->
-            <form method="POST" action="/">
+            <form method="POST" action="/admin">
+                <% include ./partials/admin/messages %>
                 <div class="input-field">
-                    <i class="material-icons prefix">account_circle</i>
-                    <label for="icon_prefix">Username</label>
-                    <input id="loginUsername" type="text" class="validate" name="username" required value="<%= typeof username != 'undefined' ? username: '' %>">
+                    <i class="material-icons prefix">email</i>
+                    <label for="icon_prefix">Email</label>
+                    <input id="loginEmail" type="email" class="validate" name="email" required value="<%= typeof username != 'undefined' ? username: '' %>">
                 </div>
                 <div class="input-field">
                     <i class="material-icons prefix">lock</i>

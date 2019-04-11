@@ -19,41 +19,8 @@ module.exports = {
         pageTitle: "Products",
         cashCrops: fetchedCashCrops,
         info: fetchedInfo,
-        pageID: "home"
+        pageID: "home",
     });
-  },
-
-  indexPost: (req, res) => {
-      //get data from the form and save it in the database
-      var FormData = MakeOrder(req.body).save(function(err, data){
-        if(err) throw err; //throw and error if found
-
-      // console.log(req.body);
-      //    res.render('contact-success', {data: req.body});
-        console.log('data saved');
-      });
-
-      //var orderData = req.body;
-      // var orderDataFile = JSON.stringify(orders, null, 2);
-      // fs.writeFile('app/data/product_order.json', JSON.stringify(orderData, null, 2), 'utf8', finished);
-
-      // function finished(err){
-      //     console.log(' yeah data saved  ');
-      // }
-
-      // var makeOrder = new MakeOrder(req.body);
-      // makeOrder.save(); //saving the data in database
-
-      // //creating and saving the data in the database
-      // MakeOrder.create(req.body).then(function(order){
-      //     res.send(order);
-      //     console.log('the data was saved sucessfully');
-      // });
-
-      // MakeOrder(req.body).save(function(err, data){
-      //     if(err) throw err;
-      //     console.log('the data was saved sucessfully');
-      // });
   },
 
   // login get request
@@ -117,20 +84,45 @@ module.exports = {
   // make order post request
   makeOrderPost: (req, res) =>{
 
-    var name = req.body.name;
-    var address = req.body.address;
-    var email = req.body.email;
-    var telephone = req.body.telephone;
-    var product = req.body.product;
-    var quantity = req.body.quantity;
+    var {name, address, email, telephone, product, quantity} = req.body;
 
-    var detail = 'New order from:'+ name +','+ address +','+email+','+telephone+','+product+','+quantity;
+    // check if fields are empty
+    if(!name || !address || !telephone || !email || !product || !quantity){
+        req.flash('error_msg', 'Please fill in all the fields');
+        res.redirect('/');
+    }
+    else {
+      // instantiating a new order
+      newOrder = new MakeOrder({
+        name : name,
+        address: address,
+        tele: telephone,
+        email : email,
+        productName : product,
+        quantity : quantity
+      });
+      // saving the order
+      newOrder.save()
+        .then(order => {
+          req.flash('success_msg', 'Your order has been placed');
+          res.redirect('/');
+          console.log(order +'=> Order placed Successful');
+        })
+        .catch(err => {
+            console.log(err);
+        });
 
-    console.log(detail);
-    // orderData.unshift({name,address,email,telephone,product,quantity}); //posting the data into the api
+    }
+
+    // var detail = 'New order from:'+ name +','+ address +','+email+','+telephone+','+product+','+quantity;
+
+    // console.log(detail);
+    // orderData.unshift({name,address,email,telephone,product,quantity}); 
 
     // writing the data
-    // fs.writeFile('../data/productOrders.json', JSON.stringify(orderData), 'utf8',function(err){});
+    // fs.writeFile('../data/productOrders.json', JSON.stringify(orderData), 'utf8',function(err){
+    //   console.log(err);
+    // });
 
   },  
 
@@ -140,21 +132,5 @@ module.exports = {
     res.json(marketAPIData);
   },
 
-  // login post request
-  loginPost: (req, res) => {
-      res.send('You have successfully post the data');
-  },
-  // register get request
-  registerGet: (req, res) => {
-    res.render('register', {
-        pageTitle: "register-page",
-        pageID: "register-page"
-    });
-  },
-
-  // register post request
-  registerPost: (req, res) => {
-      res.send('You have successfully registered');
-  },
 
 };

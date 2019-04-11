@@ -32,6 +32,7 @@
     "passport-http": "^0.3.0",
     "passport-local": "^1.0.0",
     "pusher": "^2.2.0",
+    "session-file-store": "^1.2.0",
     "sweetalert": "^2.1.2"
   },
   "devDependencies": {

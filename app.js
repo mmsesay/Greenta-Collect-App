@@ -1,3 +1,4 @@
+// modules
 var express = require('express');
 var app = express();
 var firebase = require('firebase-admin');
@@ -5,9 +6,15 @@ var mongoose = require('mongoose');
 var cookieParser = require('cookie-parser');
 var flash = require('connect-flash');
 var session = require('express-session');
+var uuid = require('uuid/v4');
 var expressValidator = require('express-validator');
 var passport = require('passport');
 var bodyParser = require('body-parser');
+var fileupload = require('express-fileupload');
+var FileStore = require('session-file-store')(session);
+
+
+// loading the json files
 var farmerDataFile = require('./app/data/farmers_data.json');
 var availableProductData = require('./app/data/available_products.json');
 var sponsoredData = require('./app/data/sponsored_farmers.json');
@@ -26,15 +33,15 @@ firebase.initializeApp({
 
 //connecting to mongodb
 // OFFLINE CONNECTION
-// mongoose.connect('mongodb://localhost/amisapp', { useNewUrlParser: true })
-//     .then(() => console.log('MongoDB Local Connection Successful'))
-//     .catch(err => console.log(err));
+mongoose.connect('mongodb://localhost/amisapp', { useNewUrlParser: true })
+    .then(() => console.log('MongoDB Local Connection Successful'))
+    .catch(err => console.log(err));
 
 // ONLINE CONNECTION TO MONGO
-mongoose.connect('mongodb+srv://milton:'+ process.env.MONGO_ADMIN_PW+'@amis-cluster-fsefr.mongodb.net/test?retryWrites=true',
-    { useNewUrlParser: true })
-    .then(() => console.log('MongoDB Connection Successful'))
-    .catch(err => console.log(err));
+// mongoose.connect('mongodb+srv://milton:'+ process.env.MONGO_ADMIN_PW+'@amis-cluster-fsefr.mongodb.net/test?retryWrites=true',
+//     { useNewUrlParser: true })
+//     .then(() => console.log('MongoDB Connection Successful'))
+//     .catch(err => console.log(err));
 
 // getting access to the database
 var db = firebase.database();
@@ -43,7 +50,6 @@ var ref = db.ref('greenta-collect'); //making a reference of the database
 // app.set('varRef',ref);
 var usersRef = ref.child("farmers");
 usersRef.set({});
-
 
 //setting an environment variable
 app.set('port', process.env.PORT || 3000);
@@ -102,9 +108,15 @@ app.use(cookieParser());
 
 // Express Session Middleware
 app.use(session({
+    // genid: (req) => {
+    //     console.log('Inside the session middleware')
+    //     console.log(req.sessionID)
+    //     return uuid() // use UUIDs for session IDs
+    // },
+    // store: new FileStore(),
     secret: 'secret-key',
     saveUninitialized: true,
-    resave: true
+    resave: false
 }));
 
 // Passport Middleware
@@ -113,6 +125,9 @@ app.use(passport.session());
 
 // Connect Flash Middleware
 app.use(flash());
+
+// fileupload middleware
+app.use(fileupload());
 
 // Flash Middleware Global Variables
 app.use(function(req, res, next) {
@@ -129,7 +144,6 @@ const defaultRoutes = require('./app/routes/defaultRoutes');
 
 app.use('/', defaultRoutes);
 app.use('/admin', adminRoutes);
-
 
 //listening to the 3000 port
 var server = app.listen(app.get('port'), function(){
