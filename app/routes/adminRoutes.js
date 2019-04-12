@@ -79,7 +79,7 @@ router.route('/')
 // admin registration request
 router.route('/register/admin')
     .get(isUserAuthenticated, adminController.adminRegFormGet)
-    .post(isUserAuthenticated, adminController.adminRegFormPost);
+    .post(adminController.adminRegFormPost);
 
 // admin homepage route
 router.route('/dashboard')
@@ -146,10 +146,9 @@ router.route('/records/fbos/:id')
 router.route('/fbo/record/edit/:id')
     .get(adminController.fbosRecordEditGet);
 
-// // admin Categories
-// router.route('/categories')
-//     .get(adminController.getCategories)
-//     .post(adminController.createCategory);
+// export flow route
+router.route('/exportFlow')
+    .get(adminController.exportFlowGet);
 
 
 module.exports = router;

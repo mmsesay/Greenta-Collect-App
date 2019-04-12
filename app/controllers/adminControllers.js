@@ -6,6 +6,7 @@ var adminModel = require('../models/admin_model');
 var enumeratorsModel = require('../models/enumerator_model');
 var farmerModel = require('../models/farmerModel');
 var make_orderModel = require('../models/make_order');
+var exportFlowModel = require('../models/exportFlowModel');
 
 // json data
 var marketAPIData = require('../data/marketData.json');
@@ -581,6 +582,18 @@ module.exports = {
               res.redirect('/admin/records/enumerators');
             });
             
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+
+    // export flow get controller
+    exportFlowGet: (req, res) => {
+      // fetching all the export data from the export flow model
+      exportFlowModel.find().sort({'_id':-1})
+        .then(exporter => {
+            res.render('partials/admin/tables/exportFlowTable', {exporter: exporter});
         })
         .catch(err => {
           console.log(err);
