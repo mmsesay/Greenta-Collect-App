@@ -78,12 +78,12 @@ router.route('/')
 
 // admin registration request
 router.route('/register/admin')
-    .get(isUserAuthenticated, adminController.adminRegFormGet)
+    .get(adminController.adminRegFormGet)
     .post(adminController.adminRegFormPost);
 
 // admin homepage route
 router.route('/dashboard')
-    .get(isUserAuthenticated, adminController.getDashboard);
+    .get(adminController.getDashboard);
 
 // admin create posts route
 router.route('/logout')
@@ -117,7 +117,7 @@ router.route('/records/enumerator/edit/:id')
 
 // farmer registration route
 router.route('/register/farmer')
-    .get(isUserAuthenticated, adminController.farmerRegFormGet)
+    .get(adminController.farmerRegFormGet)
     .post(adminController.farmerRegFormPost);
  
 // creat market data route
@@ -125,10 +125,17 @@ router.route('/createMarketData')
     .get(isUserAuthenticated, adminController.marketDataGet)
     .post(adminController.markerDataPost);
 
-// post product data route
-router.route('/post/product')
-    .get(isUserAuthenticated, adminController.availableProductFormGet)
-    .post(adminController.availableProductFormPost);
+// post request product view route
+router.route('/post/new/product')
+    .get(adminController.availableProductFormGet);
+
+// post request product by district data route
+router.route('/post/new/product-by-district')
+    .post(adminController.availableProductByDistFormPost);
+
+// post request available-for-sale product by district data route
+router.route('/post/new/product/available')
+    .post(adminController.availableProductForSaleFormPost);
 
 // delete an order route
 router.route('/order/delete/:id')
@@ -141,10 +148,12 @@ router.route('/records/fbos')
 // fbo delete route
 router.route('/records/fbos/:id')
     .get(adminController.fbosRecordsDelete);
+    
 
 // fbo edit route
 router.route('/fbo/record/edit/:id')
-    .get(adminController.fbosRecordEditGet);
+    .get(adminController.fbosRecordEditGet)
+    .put(adminController.fboUpdateRecordPost);
 
 // export flow route
 router.route('/exportFlow')

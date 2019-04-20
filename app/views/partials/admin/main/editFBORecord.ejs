@@ -32,7 +32,7 @@
                             <small>Enter the new FBO details and update</small>
                         </div>
                         <div class="body">
-                            <form method="POST" action="/fbo/record/edit" enctype="multipart/form-data">
+                            <form method="POST" action="/admin/fbo/record/edit/<%= fbo._id %>?newMethod=PUT" enctype="multipart/form-data">
                                 <!-- message -->
                                 <% include ../messages %>
                                 <!-- end of message -->
@@ -91,7 +91,7 @@
                                     <div class="file-field input-field col s12 m4">
                                         <div class="btn">
                                             <span>Upload Photo</span>
-                                            <input type="file" name="uploadedFile" value= <%= fbo.photo %> >
+                                            <input type="file" name="uploadedFile" value=<%= fbo.photo %> >
                                         </div>
                                         <div class="file-path-wrapper">
                                             <input class="file-path validate" type="text">

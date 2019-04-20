@@ -1,21 +1,24 @@
 <!-- INFO CONTENT -->
-<h5 class="center" id="header-text">Improve your agric skills</h5>
-<div class="center line green"></div>
-<div class="info">
-    <div class="row">
-        <% info.forEach(function(data){ %>
-            <div class="col s6 m3">
-                <div class="card">
-                    <i class="material-icons green-text">spa</i>
-                    <div class="card-content">
-                        <h5 class="center"><%= data.title %></h5>
-                        <p class="center"><%= data.information %></p>
-                        <div class="center">
-                            <a href="#" class="btn info-btn orange white-text">Know More</a>
+<section class="section info-section">
+    <h3 class="center">Improve your agric skills</h3>
+    <div class="center line green"></div>
+    <div class="info">
+        <div class="row">
+            <% info.forEach(function(data){ %>
+                <div class="col s12 m6 l3">
+                    <div class="card">
+                        <i class="material-icons green-text center">spa</i>
+                        <div class="card-content">
+                            <h5 class="center"><%= data.title %></h5>
+                            <p class="center"><%= data.information %></p>
+                            <div class="center">
+                                <a href="#" class="btn info-btn orange white-text">Know More</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        <%});%>
+            <%});%>
+        </div>
     </div>
-</div>
+</section>
+

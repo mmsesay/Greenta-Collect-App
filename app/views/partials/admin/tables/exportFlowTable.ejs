@@ -59,11 +59,11 @@
                                             <th>DATE</th>
                                         </tr>
                                     </tfoot>
-                                    <tbody>
-                                        <% exporter.forEach(expo => {%>
-                                            <tr>
+                                    <tbody id="expoTradeTableBody">
+                                        <!-- <% exporter.forEach(expo => {%>
+                                            <tr> -->
                                                 <!-- <th scope="row"><%= expo.index %></th> -->
-                                                <td><%= expo.name %></td>
+                                                <!-- <td><%= expo.name %></td>
                                                 <td><%= expo.phone %></td>
                                                 <td><%= expo.products %></td>
                                                 <td><%= expo.quantity %></td>
@@ -72,7 +72,7 @@
                                                 <td><%= expo.countryTO %></td>
                                                 <td><%= expo.date %></td>
                                             </tr>
-                                        <%});%>
+                                        <%});%> -->
                                     </tbody>
                                 </table>
                             </div>
@@ -83,8 +83,7 @@
             <!-- #END# Exportable Table -->
         </div>
     </section>
-    <!-- script -->
-    <script src="/js/fetchExportFlow"></script>
+    
     <% include ../admin-jslinks.ejs %>
   </body>
 

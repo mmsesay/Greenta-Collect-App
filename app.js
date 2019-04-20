@@ -12,6 +12,8 @@ var passport = require('passport');
 var bodyParser = require('body-parser');
 var fileupload = require('express-fileupload');
 var FileStore = require('session-file-store')(session);
+var method_override = require('method-override');
+var sweetalert = require('sweetalert');
 
 
 // loading the json files
@@ -67,16 +69,19 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
 // setting the headers
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Acess-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorized");
-     
-    if (req.method == 'OPTIONS') {
-        res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
-        return res.status(200).json({});
-    }
-    next();
-});
+// app.use((req, res, next) => {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Acess-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorized");
+
+//     if (req.method == 'OPTIONS') {
+//         res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
+//         return res.status(200).json({});
+//     }
+//     next();
+// });
+
+// method override
+app.use(method_override('newMethod'));
 
 app.set('appData', farmerDataFile);
 app.set('availableProducts', availableProductData);
@@ -129,6 +134,9 @@ app.use(flash());
 // fileupload middleware
 app.use(fileupload());
 
+// sweet alert middleware
+// app.use(sweetalert());
+
 // Flash Middleware Global Variables
 app.use(function(req, res, next) {
     res.locals.success_msg =  req.flash('success_msg');
@@ -137,6 +145,7 @@ app.use(function(req, res, next) {
     res.locals.user =  req.user || null;
     next();
 });
+
 
 // Creating access to the routes
 const adminRoutes = require('./app/routes/adminRoutes');

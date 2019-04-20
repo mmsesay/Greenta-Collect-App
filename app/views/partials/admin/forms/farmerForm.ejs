@@ -108,8 +108,8 @@
                                         <input id="execHeadName" type="text" class="validate" name="execHeadName" required value="<%= typeof execHeadName != 'undefined' ? execHeadName: '' %>">
                                     </div>
                                     <div class="input-field col s12 m4">
-                                        <label for="execHeadAddress">Address(optional)</label>
-                                        <input id="execHeadAddress" type="text" class="validate" name="execHeadAddress" value="<%= typeof execHeadAddress != 'undefined' ? execHeadAddress: '' %>">
+                                        <label for="execHeadAddress">Address</label>
+                                        <input id="execHeadAddress" type="text" class="validate" name="execHeadAddress" required value="<%= typeof execHeadAddress != 'undefined' ? execHeadAddress: '' %>">
                                     </div>
                                     <div class="input-field col s12 m4">
                                         <label for="execHeadTele">Telephone</label>
@@ -119,17 +119,48 @@
                                         <label for="execHeadEmail">Email(optional)</label>
                                         <input id="execHeadEmail" type="email" class="validate" name="execHeadEmail" value="<%= typeof execHeadEmail != 'undefined' ? execHeadEmail: '' %>">
                                     </div>
+                                    <div class="input-field col s3 m3">
+                                            <label for="gender">Gender</label>
+                                            <input id="gender" type="text" class="validate" name="gender" value="<%= typeof gender != 'undefined' ? gender: '' %>">
+                                        <!-- <label>Gender</label> -->
+                                        <!-- <select class="form-control">
+                                            <option value="" disabled selected>Select a gender</option>
+                                            <option value="male">male</option>
+                                            <option value="female">female</option>
+                                        </select> -->
+                                            
+                                            
+                                        <!-- <span><small>Select a gender</small></span>
+                                        <p>
+                                            <label>
+                                                <input name="sex" type="radio" checked required value="male"/>
+                                                <span>Male | </span>
+                                            </label>
+                                            <label>
+                                                <input name="sex" type="radio" checked required value="female"/>
+                                                <span>Female</span>
+                                            </label>
+                                        </p> -->
+                                    </div>
+                                    <!-- <div class="input-field col s2 m1">
+                                        <p> 
+                                            <label>
+                                                <input name="sex" type="radio" checked />
+                                                <span>Female</span>
+                                            </label>
+                                        </p>
+                                    </div>  -->
                                     <div class="file-field input-field col s12 m4">
                                         <div class="btn">
                                             <span>Upload Photo</span>
-                                            <input type="file" name="uploadedFile">
+                                            <input type="file" id="uploadedFile" name="uploadedFile">
                                         </div>
                                         <div class="file-path-wrapper">
                                             <input class="file-path validate" type="text">
                                         </div>
                                     </div>
                                 </div>
-                                <input class="btn-large btn-enum blue" type="submit" name="register" value="Register">
+                                <input class="btn-large btn-enum blue" id="register_fbo" type="submit" value="Register">
                             </form>
                         </div>
                     </div>

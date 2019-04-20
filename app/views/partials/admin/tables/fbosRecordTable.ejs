@@ -58,12 +58,12 @@
                                             <th>ACTIONS</th>
                                         </tr>
                                     </tfoot>
-                                    <tbody>
+                                    <tbody class="fbo_list">
                                         <!-- looping through the cbos -->
                                         <% fbo.forEach(fbo => {%>
                                         <tr>
                                             <td>
-                                                <img src="/images/user.png" alt="" class="circle">
+                                                <img src="<%= fbo.photo %>" alt="" width="50" height="50" class="circle">
                                                 <!-- <img src="/images/farmerUploads/<%= fbo.photo %>.png" alt="" class="circle"> -->
                                             </td>
                                             <td><%= fbo.executive_head_name %></td>

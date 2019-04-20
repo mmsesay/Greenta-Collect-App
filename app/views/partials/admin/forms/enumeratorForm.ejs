@@ -59,6 +59,29 @@
                                             <label for="regPhone">Phone</label>
                                             <input id="regPhone" type="text" class="validate" name="regPhone" required value="<%= typeof regPhone != 'undefined' ? regPhone: '' %>">
                                         </div>
+                                        <div class="input-field col s3 m3">
+                                                <label for="gender">Gender</label>
+                                                <input id="gender" type="text" class="validate" name="gender" value="<%= typeof gender != 'undefined' ? gender: '' %>">
+                                            <!-- <label>Gender</label> -->
+                                            <!-- <select class="form-control">
+                                                <option value="" disabled selected>Select a gender</option>
+                                                <option value="male">male</option>
+                                                <option value="female">female</option>
+                                            </select> -->
+                                                
+                                                
+                                            <!-- <span><small>Select a gender</small></span>
+                                            <p>
+                                                <label>
+                                                    <input name="sex" type="radio" checked required value="male"/>
+                                                    <span>Male | </span>
+                                                </label>
+                                                <label>
+                                                    <input name="sex" type="radio" checked required value="female"/>
+                                                    <span>Female</span>
+                                                </label>
+                                            </p> -->
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <h6 class="center reSubHeading green-text">Residential Address</h6>

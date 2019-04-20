@@ -113,6 +113,10 @@
     width: 100%;
 }
 
+/* --------------------- */
+
+/* --------------------- */
+
 /*THE AVARTAR*/
 .container .avt{
     width: 100px;
@@ -377,25 +381,44 @@ table thead, tbody, tfoot tr th{
 }
 
 /* info style */
-.info {
+.info-section {
+    background: linear-gradient(#34e89e, #0f3443);
+}
+
+.info-section .info {
   margin: 0 50px;
 }
 
-.info .card i{
+.info-section h3{
+    font-size: 19px;
+    margin: 50px 0 50px 0;
+    color: #fff !important; /*all h3-colors -> #ABB7B7 */;
+}
+
+.info-section .info .card{
+    transition: transform .2s; /* Animation */
+    margin: 0 auto;
+}
+
+.info-section .info .card:hover{
+    transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+.info-section .info .card i{
   font-size: 50px;
   padding: 30px 115px 0 115px;
 }
 
-.info .info-btn{
+.info-section .info .info-btn{
   margin: 20px auto;
 }
 
-.info .card-content h5{
+.info-section .info .card-content h5{
   font-size: 1.4em;
   color: #95A5A6;
 }
 
-.info .card-content p{
+.info-section .info .card-content p{
   color: #000000;
   opacity: 0.5;
 }
@@ -436,21 +459,7 @@ color: red;
 #farmer-names{
     font-size: 0.6em;
 }
-.phead{
-font-size: 2.5em;
-}
-#pimg{
-    width: 100%;
-    margin-bottom: 10%;
-    height: 40%;
-}
-#pword{
-    font-size: 1.2em;
-    margin-top: 4%;
-}
-#dpd{
-    font-size: 0.9em;
-}
+
 .farmer h4{
     /* margin-left: 130px; */
 }
@@ -491,34 +500,57 @@ font-size: 2.5em;
     color: orange;
 }
 
-#place_order_form{
+/* INDEX PAGE THRID CONTENT */
+
+/* .index-third-section{
     background: black;
     opacity: 0.7;
+} */
+
+.index-third-section img{
+    width: 100%;
+    margin-bottom: 10%;
+    height: 40%;
 }
 
-#place_order_form h3{
-    padding-top: 20px;
-    font-size: 28px;
+.index-third-section h3{
+    margin: 50px 0 0 0;
+    color: rgb(87, 87, 87);
+    font-size: 18px;
 }
 
-#place_order_form p{
-    color: #cccccc;
-    padding-bottom: 20px;
+.index-third-section h4{
+    color: rgb(132, 133, 133);
+    margin: 10px 0 30px 0;
+    font-size: 19px;
 }
 
-#about-logo{
+.index-third-section ol li{
+    color: #a3a3a3;
+    font-size: 1.2em;
+}
+
+/* END OF INDEX PAGE THIRD CONTENT */
+
+/* ABOUT SECTION STYLE */
+.about-section h3{
+    margin: 50px 0 0 0;
+    color: rgb(87, 87, 87);
     font-size: 20px;
-    margin-left: 180px;
+    font-weight: bolder
 }
 
-#about p{
-    margin-top: -50px;
-    margin-bottom: 50px;
+.about-section p{
+    color: rgb(132, 133, 133);
+    font-size: 1.2em;
 }
 
-.slider {
-    width: 100% !important;
+.about-section ul li{
+    color: rgb(132, 133, 133);
+    font-size: 1.2em;
+    margin: 5px auto;
 }
+/* END OF ABOUT SECTION STYLE */
 
 .footer {
     width: 100%;
@@ -556,3 +588,48 @@ font-size: 2.5em;
 .unav_products img{
     width: 650px;
 }
+
+/* AVALIABLE PRODUCT BY DISTRICT STYLE */
+.ava-products-by-district{
+    /* background-color: #95afc0 !important; */
+    background: linear-gradient(#34e89e, #0f3443);
+    /* background: linear-gradient(#007991, #78ffd6 ); */
+}
+
+.ava-products-by-district .container .regular{
+    height: 40% !important;
+}
+
+.ava-products-by-district h3{
+    font-size: 19px;
+    margin: 50px 0 50px 0;
+    color: #fff; /*all h3-colors -> #ABB7B7 */
+}
+
+.ava-products-by-district h4{
+    font-size: 20px;
+    font-weight: bolder;
+    margin: 5px 0 20px 15px;
+    color: black;
+}
+
+.ava-products-by-district p{
+    font-size: 20px;
+    margin-left: 15px;
+    color: #ecf0f1
+}
+
+/* .ava-products-by-district span {
+    margin-left: -150px !important;
+} */
+
+.verticalLine {
+   width:1px;
+   background-color: #bdc3c7;
+   position:absolute;
+   top:0;
+   bottom:0;
+   height: 80%;
+}
+
+/* END OF AVAILABLE PRODUCT BY DISTRICT STYLE */

@@ -46,6 +46,10 @@ const farmerSchema = mongoose.Schema({
     executive_head_email:  {
         type: String
     },
+    gender:  {
+        type: String,
+        required: true
+    },
     photo:  {
         type: String,
         default: ''

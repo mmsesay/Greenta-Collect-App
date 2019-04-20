@@ -1,5 +1,6 @@
 //importing the modules
 const bcrypt = require('bcrypt');
+var fs = require('fs');
 
 // models
 var adminModel = require('../models/admin_model');
@@ -7,13 +8,16 @@ var enumeratorsModel = require('../models/enumerator_model');
 var farmerModel = require('../models/farmerModel');
 var make_orderModel = require('../models/make_order');
 var exportFlowModel = require('../models/exportFlowModel');
+var avaProdPerDistModel = require('../models/avaProdPerDistModel');
+var avaProductForSaleModel = require('../models/avaProductsModel');
+
 
 // json data
 var marketAPIData = require('../data/marketData.json');
 var availableProductData = require('../data/ava_prod_by_district.json');
-var fs = require('fs');
 
-// custom functions 
+
+// custom functions
 var {isEmpty} = require('../config/customFunction');
 
 module.exports = {
@@ -35,7 +39,7 @@ module.exports = {
     adminRegFormGet: (req, res) => {
       res.render('partials/admin/forms/signup');
     },
-    
+
     // admin registrartion form  post contoller
     adminRegFormPost: (req, res) => {
 
@@ -80,14 +84,14 @@ module.exports = {
                   }else{
 
                     let filename = ''; // will hold the uploaded file
-                    
+
                     if(!isEmpty(req.files)){
                         let file = req.files.uploadedFile;
                         filename = file.name;
                         let uploadDir = '../public/images/adminsProfilePhotos/';
-              
+
                         file.mv(uploadDir+filename, (err) => {
-                            if(err) 
+                            if(err)
                               console.log(err);
                         });
                     }
@@ -184,26 +188,26 @@ module.exports = {
     // enumeratorPost  controller
     enumeratorRegFormPost: (req,res) => {
 
-      const { regFirstName, regLastName, regUsername, regEmail, regStAddress, regPhone, regCity, regState, regPassword, regConfirmPassword} = req.body;
-  
+      const { regFirstName, regLastName, regUsername, regEmail, regStAddress, regPhone, gender, regCity, regState, regPassword, regConfirmPassword} = req.body;
+
       // error arrays
       let errors = [];
-  
+
       // check required fields
-      if(!regFirstName || !regLastName || !regUsername || !regEmail || !regStAddress || !regPhone || !regCity || !regState || !regPassword || !regConfirmPassword){
+      if(!regFirstName || !regLastName || !regUsername || !regEmail || !regStAddress || !regPhone || !gender || !regCity || !regState || !regPassword || !regConfirmPassword){
           errors.push({ msg: 'Please fill in all fields' });
       }
-  
+
       // check if password match
       if(regPassword != regConfirmPassword){
           errors.push({ msg: 'Passwords do not match' });
       }
-  
+
       // check password length
       if(regPassword.length < 6){
           errors.push({ msg: 'Passwords should be at least 6 characters' });
       }
-  
+
       // check if we do have some errors
       if(errors.length > 0){
           // re-render the page
@@ -217,6 +221,7 @@ module.exports = {
               regEmail,
               regStAddress,
               regPhone,
+              gender,
               regCity,
               regState,
               regPassword,
@@ -238,13 +243,14 @@ module.exports = {
                       regEmail,
                       regStAddress,
                       regPhone,
+                      gender,
                       regCity,
                       regState,
                       regPassword,
                       regConfirmPassword
                   });
               } else {
-                  // instatiating a new enumerator 
+                  // instatiating a new enumerator
                    var newEnumerator = new enumeratorsModel({
                       firstName: regFirstName,
                       lastName: regLastName,
@@ -252,6 +258,7 @@ module.exports = {
                       email: regEmail,
                       address: regStAddress,
                       phone: regPhone,
+                      gender: gender,
                       city: regCity,
                       state: regState,
                       password: regPassword
@@ -269,7 +276,7 @@ module.exports = {
               console.log(err);
           });
       }
-  
+
     },
 
     // farmer get controller
@@ -284,10 +291,10 @@ module.exports = {
     // farmerPost controller
     farmerRegFormPost: (req,res) => {
       // getting the variables
-      const {fboName, listOfProd, location, cheifdom, district, region, totalNoOfWorkers, 
-            briefBio, execHeadName, execHeadAddress, execHeadTele, execHeadEmail, uploadedFile} = req.body;
+      const {fboName, listOfProd, location, cheifdom, district, region, totalNoOfWorkers,
+            briefBio, execHeadName, execHeadAddress, execHeadTele, execHeadEmail, gender, uploadedFile} = req.body;
 
-            // this variable will be used to validate 
+            // this variable will be used to validate
       var errors = req.validationErrors();
 
       // // checking if an error occurs
@@ -305,14 +312,15 @@ module.exports = {
               execHeadName,
               execHeadAddress,
               execHeadTele,
-              execHeadEmail
+              execHeadEmail,
+              gender
           });
       }else{
 
         farmerModel.findOne({fbo_name: fboName})
-          .then(cbo => {
-              if(cbo) {
-                req.flash('error_msg', 'A CBO with that name already exists. Please enter another CBO name.');
+          .then(fbo => {
+              if(fbo) {
+                req.flash('error_msg', 'An FBO with that name already exists. Please enter another CBO name.');
                 res.redirect('/admin/register/farmer');
                 errors: errors,
                 fboName,
@@ -326,7 +334,8 @@ module.exports = {
                 execHeadName,
                 execHeadAddress,
                 execHeadTele,
-                execHeadEmail
+                execHeadEmail,
+                gender
               } else {
                 let filename = ''; // will hold the uploaded file
 
@@ -334,16 +343,16 @@ module.exports = {
                 if(!isEmpty(req.files)){
                     let file = req.files.uploadedFile;
                     filename = file.name;
-                    let uploadDir = '../public/images/farmerUploads/';
-          
+                    let uploadDir = './app/public/images/fboUploads/';
+
                     file.mv(uploadDir+filename, (err) => {
-                        if(err) 
+                        if(err)
                           console.log(err);
                     });
                 }
                 // instantiating a new farerModel
                 var newFarmer = new farmerModel({
-                  cbo_name: cboName,
+                  fbo_name: fboName,
                   products: listOfProd,
                   location: location,
                   cheifdom: cheifdom,
@@ -355,13 +364,14 @@ module.exports = {
                   executive_head_address: execHeadAddress,
                   executive_head_tele : execHeadTele,
                   executive_head_email : execHeadEmail,
-                  photo : `/farmerUploads/${filename}`,
+                  gender : gender,
+                  photo : `/images/fboUploads/${filename}`
                 });
                 // saving the farmer detail
-                newFarmer.save() 
+                newFarmer.save()
                     .then(farmer => {
                       console.log(farmer);
-                      req.flash('success_msg', 'New CBO registered successfully');
+                      req.flash('success_msg', 'New FBO registered successfully');
                       res.redirect('/admin/register/farmer');
                     })
                     .catch(err => {
@@ -371,7 +381,7 @@ module.exports = {
           })
           .catch(err => {
             console.log(err);
-          }); 
+          });
       } //error closing else brace
 
     },
@@ -384,55 +394,60 @@ module.exports = {
           pageTitle: "postMarketData",
           pageID: "postMarketData"
       });
-    }, 
+    },
 
     // create market data post  controller
     markerDataPost: (req,res) => {
 
       // this variable will be used to validate
       var errors = req.validationErrors();
-  
+
       // checking if an error occurs
       if(errors){
           res.render('partials/admin/forms/marketForm',{
               errors:errors
           });
       }else{
-  
+
           var district = req.body.district;
           var product = req.body.product;
           var price = parseInt(req.body.price);
-  
+
           marketAPIData.unshift({district,product,price}); //posting the data into the api
-  
+
           fs.writeFile('app/data/marketData.json', JSON.stringify(marketAPIData), 'utf8',
           function(err){
               console.log(err);
           })
-  
-          // req.flash('success_msg', 'You have posted a new market data');
+
+          req.flash('success_msg', 'You have posted a new market data');
           // res.redirect('/admin/createMarketData'); //redirecting to the create market page
           res.render('partials/admin/forms/marketForm');
         } //error closing else brace
-  
+
     },
 
     // availableProductForm get  controller
     availableProductFormGet: (req, res) => {
 
       // rendering the page
-      res.render('partials/admin/main/availableProductForm', {
+      res.render('partials/admin/forms/availableProductForm', {
           pageTitle: "availableProductForm",
           pageID: "availableProductForm"
       });
-    }, 
+    },
 
-    // availableProducForm post  controller
-    availableProductFormPost: (req,res) => {
+    // availableProductByDistFormPost post  controller
+    availableProductByDistFormPost: (req, res) => {
+
+      // fetching the data from the form
+      var productName = req.body.product;
+      var quantity = req.body.quantity;
+      var district = req.body.district;
 
       // this variable will be used to validate
       var errors = req.validationErrors();
-  
+
       // checking if an error occurs
       if(errors){
           res.render('partials/admin/forms/availableProductForm',{
@@ -442,47 +457,110 @@ module.exports = {
           });
       }else{
 
-          // fetching the districts array
-          var districtsData = availableProductData.districts; 
+        // creating a new poject of the avaProdPerDistModel
+        newAvaProdPerDistModel = new avaProdPerDistModel({
+          district : district,
+          products:  [
+            {
+                name: productName,
+                quantity: quantity
+            }
+          ]
+        });
 
-          // var districtDetails = [];
-
-          // fetching the data from the form
-          var district = req.body.district;
-          var product = req.body.product;
-          var quantity = parseInt(req.body.quantity);
-
-
-          districtsData.forEach((item) => {
-              //only do this is the request for the member is made
-              if(item.name == district) {
-                // districtDetails.push(item); //pushing the districts data into the districtDetails array
-                
-                districtsData.unshift({product,quantity}); 
-                fs.writeFile('app/data/ava_prod_by_district.json', JSON.stringify(districtsData), 'utf8',
-                (err) => {
-                    console.log(err);
+        // check if the district name already exist
+        avaProdPerDistModel.findOne({ district: district })
+          .exec()
+          .then(district => {
+            if (district) {
+              // update the disrict with the new product and quantity
+              avaProdPerDistModel.updateOne({_id:district._id},
+                  {
+                    // Using $push with the $each modifier to append multiple values to the array field.
+                    $push: {
+                      products : {
+                        $each: [{
+                          name: productName,
+                          quantity : quantity
+                        }]
+                      }
+                    }
+                })
+                .then(product => {
+                  console.log(product);
+                  req.flash('success_msg', `New Product posted for ${product.district} district successfully`);
+                  res.render('partials/admin/forms/availableProductForm');
+                })
+                .catch(err => {
+                  console.log(err);
                 });
-              
-                res.render('partials/admin/main/availableProductForm');
-              }
+            }
+            else {
+              // saving the new record
+              newAvaProdPerDistModel.save()
+                .then(product => {
+                  console.log(product);
+                  req.flash('success_msg', `New Product posted for ${product.district} district successfully`);
+                  res.redirect('/admin/post/new/product');
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+            }
+          }) // end of then else
+          .catch(err => {
+            console.log(err);
           });
 
-          // check for tonkolili district
-          // if(district == 'tonkolili'){
-            
-  
-          //   fs.writeFile('app/data/ava_prod-by_district.json', JSON.stringify(availableProductData), 'utf8',
-          //   function(err){
-          //       console.log(err);
-          //   });
-          // }
+      } // end of esle brace
+    },
 
-          // req.flash('success_msg', 'You have posted a new market data');
-          // res.redirect('/admin/createMarketData'); //redirecting to the create market page
-          // res.render('partials/admin/main/availableProductForm');
-        } //error closing else brace
-  
+    // available product for sale Post controller
+    availableProductForSaleFormPost: (req, res) => {
+      // getting the variables
+      const {product} = req.body;
+
+            // this variable will be used to validate
+      var errors = req.validationErrors();
+
+      // // checking if an error occurs
+      if(errors){
+          res.render('partials/admin/forms/availableProductForm',{
+              errors: errors,
+              product
+          });
+      }else{
+            let filename = ''; // will hold the uploaded file
+
+            // if uploaded file is not empty
+            if(!isEmpty(req.files)){
+                let file = req.files.uploadedFile;
+                filename = file.name;
+                let uploadDir = './app/public/images/availableProducts/';
+
+                file.mv(uploadDir+filename, (err) => {
+                    if(err)
+                      console.log(err);
+                });
+            }
+            // instantiating a new avaProductForSaleModel
+            var newAvaProductForSaleModel = new avaProductForSaleModel({
+              product: product,
+              photo : `/images/availableProducts/${filename}`
+            });
+            // saving the newAvaProductForSaleModel detail
+            newAvaProductForSaleModel.save()
+                .then(product => {
+                  console.log(product);
+                  req.flash('success_msg', 'New posted successfully');
+                  res.render('partials/admin/forms/availableProductForm');
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+      }
+
+
     },
 
     // registered fbos get controller
@@ -504,6 +582,30 @@ module.exports = {
       farmerModel.findById(id)
         .then(fbo => {
             res.render('partials/admin/main/editFBORecord', {fbo: fbo});
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+
+    // enumerator update post controller
+    fboUpdateRecordPost: (req, res) => {
+      const id = req.params.id;
+      // fetching all the fbo from the farmers model
+      farmerModel.findById(id)
+        .then(fbo => {
+          // re-assigning the new data to the existing one
+          fbo.executive_head_name = req.body.execHeadName;
+          fbo.executive_head_address = req.body.execHeadAddress;
+          fbo.executive_head_tele = req.body.execHeadTele;
+          fbo.executive_head_email = req.body.execHeadEmail;
+
+          // saving the data
+          fbo.save().then(updatedEnumerator => {
+              req.flash('success_msg', `The FBO has been updated`);
+              res.redirect('/admin/records/fbos');
+            });
+
         })
         .catch(err => {
           console.log(err);
@@ -581,7 +683,7 @@ module.exports = {
               req.flash('success_msg', `Enumerator has been updated`);
               res.redirect('/admin/records/enumerators');
             });
-            
+
         })
         .catch(err => {
           console.log(err);
@@ -599,4 +701,6 @@ module.exports = {
           console.log(err);
         });
     },
+
+
 };
