@@ -10,7 +10,7 @@ var make_orderModel = require('../models/make_order');
 var exportFlowModel = require('../models/exportFlowModel');
 var avaProdPerDistModel = require('../models/avaProdPerDistModel');
 var avaProductForSaleModel = require('../models/avaProductsModel');
-
+var aboutModel = require('../models/about_model');
 
 // json data
 var marketAPIData = require('../data/marketData.json');
@@ -702,5 +702,88 @@ module.exports = {
         });
     },
 
+    // about get controllers
+    aboutGet: (req, res) => {
+
+      // fetching the about content from the about model
+      aboutModel.find()
+        .then(fetchedAbout => {
+          res.render('partials/admin/forms/aboutForm', {
+              pageTitle: "about-page",
+              pageID: "about-page",
+              fetchedAbout: fetchedAbout
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+
+    // about edit get controllers
+    aboutEditGet: (req, res) => {
+
+      // fetching the about content from the about model
+      aboutModel.find()
+        .then(fetchedAbout => {
+          res.render('partials/admin/forms/aboutEditForm', {
+            pageTitle: "about-page",
+            pageID: "about-page",
+            fetchedAbout: fetchedAbout
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+
+    // about edit post controller
+    aboutEditPost: (req, res) => {
+
+      // getting the variables
+      const { about_heading, about_content } = req.body;
+
+      // getting the id of the about
+      const id = req.params.id;
+
+      // error arrays
+      let errors = [];
+
+      // check required fields
+      if(!about_content){
+          errors.push({ msg: 'Please fill in the content field before publising' });
+      }
+
+      // check if we do have some errors
+      if(errors.length > 0){
+          // re-render the page
+          res.render('partials/admin/forms/aboutEditForm', {
+              pageTitle: "about-page",
+              pageID: "about-page",
+              errors,
+              about_heading,
+              about_content
+           });
+      } else {
+
+        // finding the about with the id
+        aboutModel.findById(id)
+          .then(about => {
+             about.title = req.body.about_heading,
+             about.content = req.body.about_content
+
+             // saving the data
+             about.save()
+               .then(about => {
+                 req.flash('success_msg', 'About Content Updated');
+                 res.redirect('/admin/about/edit/about._id');
+                 console.log(about);
+               });
+          })
+          .catch(err => {
+              console.log(err);
+          });
+      }
+
+    }
 
 };

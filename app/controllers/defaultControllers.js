@@ -4,6 +4,7 @@ var orderData = require('../data/productOrders.json');
 var marketAPIData = require('../data/marketData.json');
 var avaProductForSaleModel = require('../models/avaProductsModel');
 var avaProdPerDistModel = require('../models/avaProdPerDistModel');
+var aboutModel = require('../models/about_model');
 var fs = require('fs');
 
 
@@ -87,10 +88,18 @@ module.exports = {
 
   // about page get request
   aboutGet: (req, res) => {
-    res.render('about', {
-        pageTitle: "about",
-        pageID: "about"
-    });
+    // fetching the about content from the about model
+    aboutModel.find()
+      .then(fetchedAbout => {
+        res.render('about', {
+            pageTitle: "about-page",
+            pageID: "about-page",
+            fetchedAbout: fetchedAbout
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   },
 
   // chart page get request

@@ -40,18 +40,18 @@ passport.use(new LocalStrategy({
 
                 // if the is found and valid
                 return done(null, adminUser, req.flash('success_msg', 'Login Successful'));
-            }); 
+            });
 
         })
         .catch(err => {
             console.log(err);
         });
 }));
-  
+
   passport.serializeUser((adminUser, done) => {
     done(null, adminUser.id);
   });
-  
+
   passport.deserializeUser((id, done) => {
     adminModel.findById(id, function(err, adminUser){
         done(err, adminUser);
@@ -88,7 +88,7 @@ router.route('/dashboard')
 // admin create posts route
 router.route('/logout')
     .get(adminController.getLogout);
-    
+
 // admin marketDataTable route
 router.route('/market')
     .get(isUserAuthenticated, adminController.getMarketDataTable);
@@ -119,7 +119,7 @@ router.route('/records/enumerator/edit/:id')
 router.route('/register/farmer')
     .get(adminController.farmerRegFormGet)
     .post(adminController.farmerRegFormPost);
- 
+
 // creat market data route
 router.route('/createMarketData')
     .get(isUserAuthenticated, adminController.marketDataGet)
@@ -148,7 +148,6 @@ router.route('/records/fbos')
 // fbo delete route
 router.route('/records/fbos/:id')
     .get(adminController.fbosRecordsDelete);
-    
 
 // fbo edit route
 router.route('/fbo/record/edit/:id')
@@ -158,6 +157,15 @@ router.route('/fbo/record/edit/:id')
 // export flow route
 router.route('/exportFlow')
     .get(adminController.exportFlowGet);
+
+// about get and post routes
+router.route('/about')
+    .get(adminController.aboutGet);
+
+// about edit post and get routes
+router.route('/about/edit/:id')
+    .get(adminController.aboutEditGet)
+    .post(adminController.aboutEditPost);
 
 
 module.exports = router;
