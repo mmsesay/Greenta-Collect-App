@@ -411,7 +411,7 @@ module.exports = {
     },
 
     // create market data post  controller
-    markerDataPost: (req,res) => {
+    marketDataPost: (req,res) => {
 
       // this variable will be used to validate
       var errors = req.validationErrors();
@@ -440,6 +440,47 @@ module.exports = {
         } //error closing else brace
 
     },
+
+    // create market district data get controller
+    // marketDistrictDataGet: (req, res) => {
+
+    //   // rendering the page
+    //   res.render('partials/admin/forms/marketForm', {
+    //       pageTitle: "postMarketData",
+    //       pageID: "postMarketData"
+    //   });
+    // },
+
+    // create market district data post  controller
+    // marketDistrictDataPost: (req,res) => {
+
+    //   // this variable will be used to validate
+    //   var errors = req.validationErrors();
+
+    //   // checking if an error occurs
+    //   if(errors){
+    //       res.render('partials/admin/forms/marketForm',{
+    //           errors:errors
+    //       });
+    //   }else{
+
+    //       var district = req.body.district;
+    //       var product = req.body.product;
+    //       var price = parseInt(req.body.price);
+
+    //       marketAPIData.unshift({district,product,price}); //posting the data into the api
+
+    //       fs.writeFile('app/data/marketData.json', JSON.stringify(marketAPIData), 'utf8',
+    //       function(err){
+    //           console.log(err);
+    //       })
+
+    //       req.flash('success_msg', 'You have posted a new market data');
+    //       // res.redirect('/admin/createMarketData'); //redirecting to the create market page
+    //       res.render('partials/admin/forms/marketForm');
+    //     } //error closing else brace
+
+    // },
 
     // availableProductForm get  controller
     availableProductFormGet: (req, res) => {
@@ -616,8 +657,8 @@ module.exports = {
           fbo.executive_head_email = req.body.execHeadEmail;
 
           // saving the data
-          fbo.save().then(updatedEnumerator => {
-              req.flash('success_msg', `The FBO has been updated`);
+          fbo.save().then(updatedFbo => {
+              req.flash('success_msg', `The FBO Head ${updatedFbo.executive_head_name} details has been updated`);
               res.redirect('/admin/records/fbos');
             });
 
@@ -680,24 +721,24 @@ module.exports = {
 
     // enumerator update post controller
     enumeratorUpdateRecordPost: (req, res) => {
-      // const id = req.params.id;
+      const id = req.params.id;
       // fetching all the enumerator from the enumerators model
-      enumeratorsModel.findById(req.params.id)
+      enumeratorsModel.findById(id)
         .then(enumerator => {
           // re-assigning the new data to the existing one
           enumerator.firstName = req.body.regFirstName;
           enumerator.lastName = req.body.regLastName;
           enumerator.username = req.body.regUsername;
           enumerator.email = req.body.regEmail;
+          enumerator.gender = req.body.gender;
           enumerator.address = req.body.regStAddress;
           enumerator.phone = req.body.regPhone;
           enumerator.city = req.body.regCity;
           enumerator.state = req.body.regState;
 
           // saving the data
-          enumerator.save()
-            .then(updatedEnumerator => {
-              req.flash('success_msg', 'Enumerator has been updated');
+          enumerator.save().then(updatedEnumerator => {
+              req.flash('success_msg', `Enumerator " ${updatedEnumerator.firstName} " details has been updated`);
               res.redirect('/admin/records/enumerators');
             });
 

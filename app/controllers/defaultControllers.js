@@ -55,8 +55,6 @@ module.exports = {
       .catch(err => {
         console.log(err);
       });
-
-
   },
 
   // login get request
@@ -96,29 +94,6 @@ module.exports = {
       .catch(err => {
         console.log(err);
       });
-      // var farmerDataFile = req.app.get('appData'); // getting access to the appData variable
-      
-      // //these are array variables
-      // var pageFarmers = [];
-      // var product_produce =[];
-      
-      // //looping throught the farmer data json file
-      // farmerDataFile.farmers.forEach(item => {
-      //     //checking if the request matches the farmer name
-      //     if (item.shortname == req.params.farmerid) {
-      //         pageFarmers.push(item);
-      
-      //         product_produce =product_produce.concat(item.product_produce);
-      //     }
-      // });
-      
-      //rendering the farmers view
-      // res.render('farmers', {
-      //     pageTitle: 'Farmer Info',
-      //     farmer: pageFarmers,
-      //     farmerProduct: product_produce,
-      //     pageID: 'farmerDetail'
-      // });
   },
 
   // about page get request

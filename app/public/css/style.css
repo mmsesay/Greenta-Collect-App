@@ -458,44 +458,51 @@ table thead, tbody, tfoot tr th{
 color: red;
 }
 
+/* FARMERS DETAILS SECTION */
+
+#farmers-page .container .row h3{
+    font-size: 20px;
+    margin: 50px 0 50px 0;
+    color: rgb(179, 178, 178) !important;
+}
+
+#farmers-page .container .row p{
+    color: rgb(132, 133, 133);
+    font-size: 1.2em;
+}
 
 #farmer-names{
     font-size: 0.6em;
 }
 
-.farmers-page .container .row h3{
-    font-size: 18px;
-}
-
-.farmer h5{
-    font-size: 15px;
-    /* margin-left: 120px; */
-}
-
-.farmer p{
-    margin-top: 30px;
-}
-
 #farmer-info-img{
     width: 550px;
     height: 400px;
+    margin-top: 50px;
+}
+
+.details{
+    margin: 50px 0;
+}
+
+.details h5{
+    font-size: 18px;
+    color: rgb(132, 133, 133);
+}
+
+.details p{
+    font-size: 1.2em;
+    margin: 5px 0;
+    color: rgb(132, 133, 133);
 }
 
 #img-farmer{
     height: 150px;
     width: 150px;
-    /* margin-left: 100px; */
     border-radius: 50%;
 }
 #dis-des{
     text-align: justify;
-}
-.farmer-desc{
-    margin-top: -30%;
-    margin-left: 150px;
-    font-size: 18px;
-    color: #000;
-    opacity: 0.5;
 }
 
 .feedback-title{
@@ -654,4 +661,9 @@ color: red;
 .to-top:hover{
     background: #d7d7d7;
     color: #000;
+}
+
+/* learning info section */
+.info-section .info .card{
+    margin: 20px 0;
 }

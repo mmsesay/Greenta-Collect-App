@@ -104,7 +104,7 @@ router.route('/register/enumerator')
 
 // enumerator get router
 router.route('/records/enumerators')
-    .get(adminController.enumeratorsRecordsGet)
+    .get(adminController.enumeratorsRecordsGet);
 
 // enumerator delete route
 router.route('/records/enumerators/:id')
@@ -123,7 +123,12 @@ router.route('/register/farmer')
 // creat market data route
 router.route('/createMarketData')
     .get(adminController.marketDataGet) // isUserAuthenticated, 
-    .post(adminController.markerDataPost);
+    .post(adminController.marketDataPost);
+
+// creat market data by district route
+// router.route('/createMarketDistrictData')
+//     .get(adminController.marketDistrictDataGet) // isUserAuthenticated, 
+//     .post(adminController.marketDistrictDataPost);
 
 // post request product view route
 router.route('/post/new/product')

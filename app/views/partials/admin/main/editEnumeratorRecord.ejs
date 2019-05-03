@@ -32,7 +32,7 @@
                             <small>Enter the new details below and update</small>
                         </div>
                         <div class="body">
-                            <form action="/admin/records/enumerator/edit/<%= enumerator._id %>">
+                            <form method="POST" action="/admin/records/enumerator/edit/<%= enumerator._id %>">
                                 <!-- message -->
                                 <% include ../messages %>
                                 <!-- end of message -->
@@ -47,16 +47,20 @@
                                         <label for="lastName">Last Name</label>
                                         <input id="lastName" type="text" class="validate" name="regLastName" required value=<%= enumerator.lastName %>>
                                     </div>
-                                    <div class="input-field col s12 m4">
+                                    <div class="input-field col s12 m3">
                                         <i class="material-icons prefix">person</i>
                                         <label for="username">Username</label>
                                         <input id="username" type="text" class="validate" name="regUsername" required value=<%= enumerator.username %>>
                                     </div>
-                                    <div class="input-field col s12 m4">
+                                    <div class="input-field col s3 m3">
+                                        <label for="gender">Gender</label>
+                                        <input id="gender" type="text" class="validate" name="gender" value=<%= enumerator.gender %>>
+                                    </div>
+                                    <div class="input-field col s12 m3">
                                         <label for="regEmail">Email</label>
                                         <input id="regEmail" type="email" class="validate" name="regEmail" required value=<%= enumerator.email %>>
                                     </div>
-                                    <div class="input-field col s12 m4">
+                                    <div class="input-field col s12 m3">
                                         <label for="regPhone">Phone</label>
                                         <input id="regPhone" type="text" class="validate" name="regPhone" required value=<%= enumerator.phone %>>
                                     </div>
@@ -77,7 +81,7 @@
                                         <input id="regState" type="text" class="validate" name="regState" required value=<%= enumerator.state %>>
                                     </div>
                                 </div>
-                                <input class="btn-large btn-enum blue" type="submit" value="Update">
+                                <input class="btn-small btn-enum blue" type="submit" value="Update">
                             </form>
                         </div>
                     </div>
