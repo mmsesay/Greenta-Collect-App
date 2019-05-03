@@ -31,30 +31,30 @@
                             <small>Please fill in the form to post an about content</small>
                         </div>
                         <div class="body">
-                          <!-- messages -->
-                          <% include ../messages %>
-                          <!-- end of message -->
-                          <!-- looping through the posts -->
-                          <% fetchedAbout.forEach(about => { %>
-                            <!-- about content edit form -->
-                            <form method="POST" action="/admin/about/edit/<%= about._id %>" id="aboutDisplayForm">
-                                <div class="row">
-                                    <div class="container">
-                                      <div class="row">
-                                        <div class="input-field col s12 m10">
-                                            <label for="about_heading">About Heading(optional)</label>
-                                            <input type="text" name="about_heading" value="<%= about.title %>">
+                            <!-- messages -->
+                            <% include ../messages %>
+                            <!-- end of message -->
+                            <!-- looping through the posts -->
+                            <% fetchedAbout.forEach(about => { %>
+                                <!-- about content edit form -->
+                                <form method="POST" action="/admin/about/edit/<%= about._id %>" id="aboutDisplayForm">
+                                    <div class="row">
+                                        <div class="container">
+                                        <div class="row">
+                                            <div class="input-field col s12 m10">
+                                                <label for="about_heading">About Heading(optional)</label>
+                                                <input type="text" name="about_heading" value="<%= about.title %>">
+                                            </div>
+                                            <div class="input-field col s12 m12">
+                                                <label for="about_content">About Content goes here...</label>
+                                                <textarea class="materialize-textarea" type="text" name="about_content"><%= about.content %>
+                                                </textarea>
+                                            </div>
                                         </div>
-                                        <div class="input-field col s12 m12">
-                                            <label for="about_content">About Content goes here...</label>
-                                            <textarea class="materialize-textarea" type="text" name="about_content"><%= about.content %>
-                                            </textarea>
+                                        <input class="btn-small btn-enum blue" type="submit" value="UPDATE">
                                         </div>
-                                      </div>
-                                      <input class="btn-small btn-enum blue" type="submit" value="UPDATE">
                                     </div>
-                                </div>
-                            </form>
+                                </form>
                             <%});%>
                             <!-- end of loop -->
                         </div>

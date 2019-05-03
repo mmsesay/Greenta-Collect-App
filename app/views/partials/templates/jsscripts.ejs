@@ -57,6 +57,25 @@
         //     variableWidth: true
         // });
 
+        // for the scroll to top button
+        var offset = 2;
+        var duration = 500;
+
+        // $('.to-top').fadeOut(duration);
+
+        $(window).scroll(function(){
+            if((this).scrollTop() > offset){
+                $('.to-top').fadeIn(duration);
+            } else {
+                $('.to-top').fadeOut(duration);
+            }
+        });
+
+        $('.to-top').click(function(){
+            $('body').animate({scrollTop: 0, duration})
+        });
+
+
         setTimeout(function(){ $('.alertCard').show(); }, 3000);
 
     });

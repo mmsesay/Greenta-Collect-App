@@ -5,6 +5,11 @@ var marketAPIData = require('../data/marketData.json');
 var avaProductForSaleModel = require('../models/avaProductsModel');
 var avaProdPerDistModel = require('../models/avaProdPerDistModel');
 var aboutModel = require('../models/about_model');
+var farmerModel = require('../models/farmerModel');
+var learningModel = require('../models/learning_model');
+
+var bodyParser = require('body-parser');
+
 var fs = require('fs');
 
 
@@ -26,13 +31,22 @@ module.exports = {
         avaProdPerDistModel.find()
           .exec()
           .then(fetchedProductPerDistrict => {
-            res.render('index', {
-              pageTitle: "Products",
-              fetchedProduct: fetchedProduct,
-              fetchedProductPerDistrict: fetchedProductPerDistrict,
-              info: fetchedInfo,
-              pageID: "home",
-            });
+            // RETREVING ALL THE LEARNING MATERIALS
+            learningModel.find()
+              .then(material => {
+                res.render('index', {
+                  pageTitle: "Products",
+                  pageID: "home",
+                  fetchedProduct: fetchedProduct,
+                  fetchedProductPerDistrict: fetchedProductPerDistrict,
+                  info: fetchedInfo,
+                  material: material
+                  
+                });
+              })
+              .catch(err => {
+                console.log(err);
+              });
           })
           .catch(err => {
             console.log(err);
@@ -51,39 +65,60 @@ module.exports = {
     var farmerDataFile = req.app.get('appData'); // getting access to the appData variable from the app.js
     var pageFarmers = farmerDataFile.farmers;
 
-    //rendering the farmers view
-    res.render('farmers', {
-        pageTitle: "farmers",
-        farmer: pageFarmers,
-        pageID: "farmers"
-    });
+    // fetching all the cbos from the farmer model
+    farmerModel.find()
+      .then(fbo => {
+          res.render('farmers', {
+            pageTitle: "farmers-page",
+            pageID: "farmers-page",
+            farmer: fbo
+          });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   },
 
   // farmer specific get route
   farmerSpecificGet: (req, res) => {
-      var farmerDataFile = req.app.get('appData'); // getting access to the appData variable
 
-      //these are array variables
-      var pageFarmers = [];
-      var product_produce =[];
+    const id = req.params.id;
 
-      //looping throught the farmer data json file
-      farmerDataFile.farmers.forEach(item => {
-          //checking if the request matches the farmer name
-          if (item.shortname == req.params.farmerid) {
-              pageFarmers.push(item);
-
-              product_produce =product_produce.concat(item.product_produce);
-          }
+    // fetching all the cbos from the farmer model
+    farmerModel.findById(id)
+      .then(fetchedFbo => {
+          res.render('farmerDetailsPage', {
+            pageTitle: "farmers-details-page",
+            pageID: "farmers-details-page",
+            farmerDetail: fetchedFbo
+          });
+      })
+      .catch(err => {
+        console.log(err);
       });
-
+      // var farmerDataFile = req.app.get('appData'); // getting access to the appData variable
+      
+      // //these are array variables
+      // var pageFarmers = [];
+      // var product_produce =[];
+      
+      // //looping throught the farmer data json file
+      // farmerDataFile.farmers.forEach(item => {
+      //     //checking if the request matches the farmer name
+      //     if (item.shortname == req.params.farmerid) {
+      //         pageFarmers.push(item);
+      
+      //         product_produce =product_produce.concat(item.product_produce);
+      //     }
+      // });
+      
       //rendering the farmers view
-      res.render('farmers', {
-          pageTitle: 'Farmer Info',
-          farmer: pageFarmers,
-          farmerProduct: product_produce,
-          pageID: 'farmerDetail'
-      });
+      // res.render('farmers', {
+      //     pageTitle: 'Farmer Info',
+      //     farmer: pageFarmers,
+      //     farmerProduct: product_produce,
+      //     pageID: 'farmerDetail'
+      // });
   },
 
   // about page get request
@@ -144,16 +179,6 @@ module.exports = {
 
     }
 
-    // var detail = 'New order from:'+ name +','+ address +','+email+','+telephone+','+product+','+quantity;
-
-    // console.log(detail);
-    // orderData.unshift({name,address,email,telephone,product,quantity});
-
-    // writing the data
-    // fs.writeFile('../data/productOrders.json', JSON.stringify(orderData), 'utf8',function(err){
-    //   console.log(err);
-    // });
-
   },
 
   // market api get route
@@ -161,6 +186,24 @@ module.exports = {
     // responsing with the data
     res.json(marketAPIData);
   },
+
+  learningGet: (req, res) => {
+
+    const id = req.params.id;
+
+    learningModel.findById(id)
+      .exec()
+      .then(material => {
+        res.render('learningInfo', {
+          pageID : 'home',
+          pageTitle: 'learning-page',
+          materials: material
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 
 
 };

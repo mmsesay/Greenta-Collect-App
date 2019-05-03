@@ -91,15 +91,15 @@ router.route('/logout')
 
 // admin marketDataTable route
 router.route('/market')
-    .get(isUserAuthenticated, adminController.getMarketDataTable);
+    .get(adminController.getMarketDataTable); // isUserAuthenticated,
 
 // admin tradeFlowDataTable route
 router.route('/tradeFlow')
-    .get(isUserAuthenticated, adminController.getTradeFlowDataTable);
+    .get(adminController.getTradeFlowDataTable);
 
 // enumerator registration route
 router.route('/register/enumerator')
-    .get(isUserAuthenticated, adminController.enumeratorRegFormGet)
+    .get(adminController.enumeratorRegFormGet)
     .post(adminController.enumeratorRegFormPost);
 
 // enumerator get router
@@ -122,7 +122,7 @@ router.route('/register/farmer')
 
 // creat market data route
 router.route('/createMarketData')
-    .get(isUserAuthenticated, adminController.marketDataGet)
+    .get(adminController.marketDataGet) // isUserAuthenticated, 
     .post(adminController.markerDataPost);
 
 // post request product view route
@@ -166,6 +166,21 @@ router.route('/about')
 router.route('/about/edit/:id')
     .get(adminController.aboutEditGet)
     .post(adminController.aboutEditPost);
+
+// learning routes
+router.route('/learning-info')
+    .get(adminController.learningGet)
+    .post(adminController.learningPost);
+
+// learning delete route
+router.route('/learning-info/delete/:id')
+    .get(adminController.learningDelete);
+
+// learning edit get route
+router.route('/learning-info/edit/:id')
+    .get(adminController.learningEditRecordGet)
+    .post(adminController.learningUpdateRecordPost);
+
 
 
 module.exports = router;

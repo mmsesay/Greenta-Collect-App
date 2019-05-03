@@ -1,0 +1,44 @@
+<html lang="en">
+<head>
+    <% include partials/templates/head.ejs %> <!-- including the head template-->
+</head>
+<body id="<%= pageID %>">
+    <% include partials/templates/web-header.ejs %> <!-- including the header template -->
+    <!-- farmers section-->
+    <div class="container">
+        <div class="row">
+
+        </div>
+            <!-- looping through the farmers_data json file -->
+        <div class="row ">
+                <div class="row">
+                    <div class="col 12 m8">
+                        <img id="farmer-info-img" class="img-responsive" src="<%= farmerDetail.photo %>" alt="Farmer">
+                    </div>
+                    <div class="col s12 m4 farmer-desc">
+                        <input disabled>Name: <%= farmerDetail.executive_head_name %></textarea>
+                        <input disabled>Telephone: <%= farmerDetail.executive_head_tele %></textarea>
+                        <input disabled>Product: <%= farmerDetail.products %></textarea>
+                        <input disabled>Location: <%= farmerDetail.location %></textarea>
+                        <input disabled>Chiefdom: <%= farmerDetail.chiefdom %></textarea>
+                        <input disabled>District: <%= farmerDetail.district %></textarea>
+                        <input disabled>Region: <%= farmerDetail.region %></textarea>
+                        <input disabled>Exprience: <%= farmerDetail.exprience %></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 m12">
+                        <!-- displaying the bio in the farmer detail -->
+                        <%- farmerDetail.brief_bio %>
+                    </div>
+                </div>
+                <i class="material-icons left prefix">chevron_left</i><a href="/farmers">go back</a>
+        </div><!-- end of main row -->
+    </div><!-- end of container -->
+
+    <!-- including the js scripts template -->
+    <% include partials/templates/jsscripts.ejs %>
+
+</body>
+    <!-- including the footer template -->
+</html>

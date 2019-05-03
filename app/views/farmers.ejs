@@ -8,78 +8,79 @@
     <div class="container">
         <div class="row">
             <!-- checking if the current pageID matches farmers-->
-            <% if (pageID == 'farmers' ){ %>
-                <h5 class="center">Welcome to the farmers section</h5>
+            <% if (pageID == 'farmers-page') { %>
+                <h3 class="center">Welcome to the farmers section</h3>
                 <p class="center">Meet with Farmer who are using the AMIS Market platform to sell their agricultural comodities and their experience using it.</p>
-
             <% } else { %>
-                <h5 class="center">Farmer Info</h5>
+                <h4 class="center">Farmer Info</h4>
             <% } %>
         </div>
             <!-- looping through the farmers_data json file -->
             <div class="row ">
-             <% farmer.forEach(function(item){ %>
-
-                    <div class="col s4 push-s1 farmer">
-                        <% if (pageID == 'farmers') { %>
-                            <h4><a href="/farmers/<%= item.shortname %>" id="farmer-names"><%= item.name %></a></h4>
-                            <p>
-                                <a href="/farmers/<%= item.shortname %>">
-                                <img id="img-farmer" src="/images/farmers/<%= item.shortname %>_tc.jpg" alt="Farmer">
-                                </a>
-                            </p>
-                            <!-- displaying the datas from the farmers_data josn file -->
-                            <h5>Product: <%= item.product %></h5>
-                            <h5>Location: <%= item.location %></h5>
-                            <!-- <hr> -->
-                        <% } %>
-                    </div>
-
+             <% farmer.forEach(fbo => { %>
+                <div class="col s6 m4 farmer">
+                    <!-- <% if (pageID == 'farmers-page') { %> -->
+                        <h4 class="center">
+                          <a href="/farmers/<%= fbo._id%>" id="farmer-names">
+                            <%= fbo.executive_head_name %>
+                          </a>
+                        </h4>
+                        <p class="center">
+                            <a href="/farmers/<%= fbo._id%>">
+                              <img id="img-farmer" src="<%= fbo.photo %>" alt="<%= fbo.executive_head_name %>">
+                            </a>
+                        </p>
+                        <!-- displaying the datas from the farmers_data josn file -->
+                        <!-- <h5 class="center">Product: <%= fbo.products %></h5> -->
+                        <p class="center">Location: <%= fbo.location %></p>
+                        <p class="center">Telephone: <%= fbo.executive_head_tele %></p>
+                        <!-- <hr> -->
+                    <!-- <% } %> -->
+                </div>
+                <!-- checking if we are in the farmers page -->
+                <!-- <% if (pageID == 'farmers-page') { %> -->
                     <!-- <div class="col l7">
-                        <p><%= item.summary %></p>
-                    </div> -->
-
-                    <!-- -->
-                        <!-- checking if we are in the farmers page -->
-                        <% if (pageID == 'farmers') { %>
-                            <!-- <div class="col l7">
-                                <p><%= item.summary %></p> displaying the summary in the farmers page
-                             </div> -->
-                        <% } else { %>
-                            <div class="row">
-                                <div class="col l8">
-                                    <a href="/farmers/<%= item.shortname %>">
-                                        <img id="farmer-info-img" src="/images/farmers/<%= item.shortname %>.jpg" alt="Farmer">
-                                    </a>
-                                </div>
-                                <div class="col l4 s12 farmer-desc">
-                                    <p>Name : <%= item.name%></p>
-                                    <p>Product: <%= item.product%></p>
-                                    <p>Location: <%= item.location%></p>
-                                    <p>Exprience: <%= item.exprience%></p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col m8">
-                                <%- item.description %>  <!-- displaying the description in the farmer detail -->
-
-                                </div>
-                                <div class="col m4">
-                                     <p class=""> <strong>PRODUCTS PRODUCES</strong></p>
-                                        <% if (farmerProduct.length > 0 ) { %>
-                                            <div class="col m2">
-                                                <div class="row">
-                                                <%  for(i=0; i< farmerProduct.length; i++) {%>
-                                                    <img  class="materialboxed" src="/images/products/<%= farmerProduct[i] %>" height= "150" width="200" id="product-produce" alt="">
-                                                <% }%>
-                                                </div>
-                                            </div>
+                        <p><%= fbo.summary %></p> displaying the summary in the farmers page
+                     </div> -->
+                <!-- <% } else { %>
+                    <div class="row">
+                        <div class="col l8">
+                            <a href="/farmers/<%= fbo._id %>">
+                                <img id="farmer-info-img" src="<%= fbo.photo %>.jpg" alt="Farmer">
+                            </a>
+                        </div>
+                        <div class="col s12 l4 farmer-desc">
+                            <p>Name : <%= fbo.executive_head_name %></p>
+                            <p>Telephone: <%= fbo.executive_head_tele %></p>
+                            <p>Product: <%= fbo.products %></p>
+                            <p>Location: <%= fbo.location %></p>
+                            <p>Chiefdom: <%= fbo.chiefdom %></p>
+                            <p>District: <%= fbo.district %></p>
+                            <p>Region: <%= fbo.region %></p>
+                            <p>Exprience: <%= fbo.exprience %></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col m8">
+                          <! displaying the bio in the farmer detail -->
+                          <!-- <%- fbo.brief_bio %>
+                        </div> -->
+                        <!-- <div class="col m4">
+                             <p class=""> <strong>PRODUCTS PRODUCES</strong></p>
+                                <% if (farmerProduct.length > 0 ) { %>
+                                    <div class="col m2">
+                                        <div class="row">
+                                        <%  for(i=0; i< farmerProduct.length; i++) {%>
+                                            <img  class="materialboxed" src="/images/products/<%= farmerProduct[i] %>" height= "150" width="200" id="product-produce" alt="">
                                         <% }%>
+                                        </div>
                                     </div>
+                                <% }%>
                             </div>
-                           <div id="dis-des">
-                           </div> <i class="material-icons left prefix">chevron_left</i><a href="/farmers">go back</a>
-                        <% } %>
+                    </div>
+                   <div id="dis-des">
+                   </div> <i class="material-icons left prefix">chevron_left</i><a href="/farmers">go back</a>
+                <% } %> -->
             <% }); %> <!-- end of for each loop -->
         </div><!-- end of main row -->
     </div><!-- end of container -->

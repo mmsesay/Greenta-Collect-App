@@ -11,11 +11,13 @@ var exportFlowModel = require('../models/exportFlowModel');
 var avaProdPerDistModel = require('../models/avaProdPerDistModel');
 var avaProductForSaleModel = require('../models/avaProductsModel');
 var aboutModel = require('../models/about_model');
+var learningModel = require('../models/learning_model');
+
 
 // json data
 var marketAPIData = require('../data/marketData.json');
 var availableProductData = require('../data/ava_prod_by_district.json');
-
+var farmersData = require('../data/farmers_data.json');
 
 // custom functions
 var {isEmpty} = require('../config/customFunction');
@@ -291,7 +293,7 @@ module.exports = {
     // farmerPost controller
     farmerRegFormPost: (req,res) => {
       // getting the variables
-      const {fboName, listOfProd, location, cheifdom, district, region, totalNoOfWorkers,
+      const {fboName, listOfProd, location, chiefdom, district, region, totalNoOfWorkers,
             briefBio, execHeadName, execHeadAddress, execHeadTele, execHeadEmail, gender, uploadedFile} = req.body;
 
             // this variable will be used to validate
@@ -304,7 +306,7 @@ module.exports = {
               cboName,
               listOfProd,
               location,
-              cheifdom,
+              chiefdom,
               district,
               region,
               totalNoOfWorkers,
@@ -326,7 +328,7 @@ module.exports = {
                 fboName,
                 listOfProd,
                 location,
-                cheifdom,
+                chiefdom,
                 district,
                 region,
                 totalNoOfWorkers,
@@ -355,7 +357,7 @@ module.exports = {
                   fbo_name: fboName,
                   products: listOfProd,
                   location: location,
-                  cheifdom: cheifdom,
+                  chiefdom: chiefdom,
                   district: district,
                   region: region,
                   total_no_of_staffs: totalNoOfWorkers,
@@ -367,6 +369,18 @@ module.exports = {
                   gender : gender,
                   photo : `/images/fboUploads/${filename}`
                 });
+
+                farmersData.unshift({fboName,listOfProd,location,chiefdom,
+                                    district,region,totalNoOfWorkers,briefBio,
+                                    execHeadName,execHeadAddress,execHeadTele,
+                                    execHeadEmail, gender}); //posting the data into the api
+
+
+                // writing to the farmers json file
+                fs.writeFile('app/data/farmers_data.json', JSON.stringify(farmersData), 'utf8',
+                  function(err){
+                      console.log(err);
+                })
                 // saving the farmer detail
                 newFarmer.save()
                     .then(farmer => {
@@ -473,8 +487,9 @@ module.exports = {
           .exec()
           .then(district => {
             if (district) {
-              // update the disrict with the new product and quantity
-              avaProdPerDistModel.updateOne({_id:district._id},
+
+              // update the district with the new product and quantity
+              avaProdPerDistModel.updateOne({_id: district._id},
                   {
                     // Using $push with the $each modifier to append multiple values to the array field.
                     $push: {
@@ -552,7 +567,7 @@ module.exports = {
             newAvaProductForSaleModel.save()
                 .then(product => {
                   console.log(product);
-                  req.flash('success_msg', 'New posted successfully');
+                  req.flash('success_msg', 'New product posted successfully');
                   res.render('partials/admin/forms/availableProductForm');
                 })
                 .catch(err => {
@@ -665,13 +680,14 @@ module.exports = {
 
     // enumerator update post controller
     enumeratorUpdateRecordPost: (req, res) => {
-      const id = req.params.id;
+      // const id = req.params.id;
       // fetching all the enumerator from the enumerators model
-      enumeratorsModel.findById(id)
+      enumeratorsModel.findById(req.params.id)
         .then(enumerator => {
           // re-assigning the new data to the existing one
           enumerator.firstName = req.body.regFirstName;
           enumerator.lastName = req.body.regLastName;
+          enumerator.username = req.body.regUsername;
           enumerator.email = req.body.regEmail;
           enumerator.address = req.body.regStAddress;
           enumerator.phone = req.body.regPhone;
@@ -679,8 +695,9 @@ module.exports = {
           enumerator.state = req.body.regState;
 
           // saving the data
-          enumerator.save(updatedEnumerator => {
-              req.flash('success_msg', `Enumerator has been updated`);
+          enumerator.save()
+            .then(updatedEnumerator => {
+              req.flash('success_msg', 'Enumerator has been updated');
               res.redirect('/admin/records/enumerators');
             });
 
@@ -773,17 +790,131 @@ module.exports = {
 
              // saving the data
              about.save()
-               .then(about => {
+                .then(about => {
                  req.flash('success_msg', 'About Content Updated');
                  res.redirect('/admin/about/edit/about._id');
                  console.log(about);
-               });
+                });
           })
           .catch(err => {
               console.log(err);
           });
       }
 
+    },
+
+    // learning get controller
+    learningGet: (req, res) => {
+      // fetching the data from the database
+      learningModel.find()
+        .then(info => {
+          res.render('partials/admin/forms/learningMaterialsForm', {
+            pageTitle: "learning-page",
+            pageID: "learning-page",
+            learningInfo: info
+          });
+        });
+    },
+
+    // learning post controller
+    learningPost: (req, res) => {
+      // getting the variables
+      const { info_heading, info_content } = req.body;
+
+      // getting the id of the about
+      const id = req.params.id;
+
+      // error arrays
+      let errors = [];
+
+      // check required fields
+      if(!info_heading || !info_content){
+          errors.push({ msg: 'Please fill in the fields before publising' });
+      }
+
+      // check if we do have some errors
+      if(errors.length > 0){
+          // re-render the page
+          res.render('partials/admin/forms/learningMaterialsForm', {
+              pageTitle: "learning-page",
+              pageID: "learning-page",
+              errors,
+              info_heading,
+              info_content
+           });
+      } else {
+
+        var newLearningModel = new learningModel({
+            title : req.body.info_heading,
+            content : req.body.info_content
+        });
+
+        // check if the district name already exist
+        learningModel.findOne({ title: info_heading })
+          .then(info => {
+            if (info) {
+              req.flash('error_msg', `An info with the title ${info.title} already exist`);
+              res.redirect('/admin/learning-info');
+
+            } else {
+              // saving the data
+              newLearningModel.save()
+              .then(info => {
+                req.flash('success_msg', 'New Learning Material Posted');
+                res.redirect('/admin/learning-info');
+                console.log(info);
+              });
+            }
+          });
+      }
+    },
+
+    // learning delete controller
+    learningDelete: (req, res) => {
+      const id = req.params.id;
+      learningModel.findByIdAndDelete(id)
+          .then(info => {
+              req.flash('success_msg', `Learning information title " ${info.title} " was deleted.`);
+              res.redirect('/admin/learning-info');
+          })
+          .catch(err => {
+            console.log(err);
+          });
+    },
+
+    // learning edit get controller
+    learningEditRecordGet: (req, res) => {
+      const id = req.params.id;
+      // fetching all the learning materials from the learning model
+      learningModel.findById(id)
+        .then(info => {
+            res.render('partials/admin/forms/learningMaterialsEditForm', {fetchedInfo: info});
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+
+    // learning update post controller
+    learningUpdateRecordPost: (req, res) => {
+      const id = req.params.id;
+      // fetching all the learning info
+      learningModel.findById(id)
+        .then(info => {
+          // re-assigning the new data to the existing one
+          info.title = req.body.info_heading;
+          info.content = req.body.info_content;
+
+          // saving the data
+          info.save()
+            .then(updatedInfo => {
+              req.flash('success_msg', 'Learning Information update successfully');
+              res.redirect('/admin/learning-info');
+            });
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
 
 };

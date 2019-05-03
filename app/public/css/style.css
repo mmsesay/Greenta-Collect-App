@@ -185,7 +185,7 @@ table thead, tbody, tfoot tr th{
 
 
 /* FARMERS TABLE SECTION */
-.dispFarmers_section{
+/* .dispFarmers_section{
     display: none;
 }
 
@@ -210,7 +210,7 @@ table thead, tbody, tfoot tr th{
 
 .dispFarmers_section .container table thead{
     border: 2px solid #79c879 ;
-}
+} */
 
 /* CHART SECTION */
 .dispCharts_section {
@@ -383,6 +383,7 @@ table thead, tbody, tfoot tr th{
 /* info style */
 .info-section {
     background: linear-gradient(#34e89e, #0f3443);
+    position: relative;
 }
 
 .info-section .info {
@@ -456,12 +457,14 @@ table thead, tbody, tfoot tr th{
 .fa:hover{
 color: red;
 }
+
+
 #farmer-names{
     font-size: 0.6em;
 }
 
-.farmer h4{
-    /* margin-left: 130px; */
+.farmers-page .container .row h3{
+    font-size: 18px;
 }
 
 .farmer h5{
@@ -633,3 +636,22 @@ color: red;
 }
 
 /* END OF AVAILABLE PRODUCT BY DISTRICT STYLE */
+
+
+/* top top button */
+.to-top{
+    position: fixed;
+    /* display: none; */
+    bottom: 20px;
+    right: 20px;
+    background: #000;
+    color: #fff;
+    padding: 10px 12px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.to-top:hover{
+    background: #d7d7d7;
+    color: #000;
+}

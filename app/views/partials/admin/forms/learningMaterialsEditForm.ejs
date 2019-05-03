@@ -21,43 +21,41 @@
     <section class="content">
         <div class="container-fluid">
             <div class="block-header">
-                <h2>About Agricultural Market Information</h2>
+                <h2>Agricultural Learning Information Edit Section</h2>
             </div>
-
-            <!-- kkkkkkkk -->
+            <!-- Agricultural Learning Information Edit Section Form -->
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="header">
-                            <small>Below is the about AMIS information. Click on the edit button to change the information.</small>
+                            <small>Make your changes to the form and update the record.</small>
                         </div>
                         <div class="body">
-                            <!-- looping through the posts -->
-                            <% fetchedAbout.forEach(about => { %>
-                            <div class="row">
-                                <div class="container">
+                            <!-- message -->
+                            <% include ../messages %> 
+                            <!-- end of message -->
+                            <form method="POST" action="/admin/learning-info/edit/<%= fetchedInfo._id %>" id="aboutDisplayForm"> 
+                                <div class="row">
+                                    <div class="container">
                                     <div class="row">
                                         <div class="input-field col s12 m10">
-                                            <label for="about_heading">About Heading</label>
-                                            <input type="text" name="about_heading" disabled value="<%= about.title %>">
+                                            <label for="info_heading">Title</label>
+                                            <input type="text" name="info_heading" value=<%= fetchedInfo.title %>>
                                         </div>
                                         <div class="input-field col s12 m12">
-                                            <label for="about_content">About Content</label>
-                                            <textarea class="materialize-textarea"  disabled type="text" name="about_content"><%= about.content %>
-                                            </textarea>
+                                            <label for="info_content">Info Content goes here...</label>
+                                            <textarea class="materialize-textarea" type="text" name="info_content"><%= fetchedInfo.content %></textarea>
                                         </div>
                                     </div>
-                                    <form action="/admin/about/edit/<%= about._id %>" method="GET">
-                                        <button class="btn-small btn-warning" type="submit">Edit About</button>
-                                    </form>
+                                    <input class="btn-small btn-warning" type="submit" value="UPDATE">
+                                    </div>
                                 </div>
-                            </div>
-                            <% }); %>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- about section Form -->
+            <!-- Agricultural Learning Information Edit Section Form -->
         </div>
     </section>
 
