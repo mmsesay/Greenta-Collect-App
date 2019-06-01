@@ -125,6 +125,11 @@ router.route('/createMarketData')
     .get(adminController.marketDataGet) // isUserAuthenticated, 
     .post(adminController.marketDataPost);
 
+// creat farmer data route
+router.route('/farmerDisData')
+    .get(adminController.farmerDisDataGet) // isUserAuthenticated, 
+    .post(adminController.farmerDisDataPost);
+
 // creat market data by district route
 // router.route('/createMarketDistrictData')
 //     .get(adminController.marketDistrictDataGet) // isUserAuthenticated, 

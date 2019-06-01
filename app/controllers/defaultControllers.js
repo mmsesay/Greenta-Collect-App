@@ -9,6 +9,16 @@ var farmerModel = require('../models/farmerModel');
 var learningModel = require('../models/learning_model');
 
 var bodyParser = require('body-parser');
+//farmer by district Api
+var farmerDisDataApi = require('../data/farmerDisApi.json');
+
+// PRODUCTS JSON
+var riceData = require('../data/products/prod_rice.json');
+var cacaoData = require('../data/products/prod_cacao.json');
+var coffeeData = require('../data/products/prod_coffee.json');
+var palmoilData = require('../data/products/prod_palmoil.json');
+var cassavaData = require('../data/products/prod_cassava.json');
+// END OF PRODUCTS JSON
 
 var fs = require('fs');
 
@@ -160,6 +170,42 @@ module.exports = {
   getMarketApi: (req, res) => {
     // responsing with the data
     res.json(marketAPIData);
+  },
+
+  // rice market api get route
+  getRiceMarketApi: (req, res) => {
+    // responsing with the data
+    res.json(riceData);
+  },
+
+  // cacao market api get route
+  getCacaoMarketApi: (req, res) => {
+    // responsing with the data
+    res.json(cacaoData);
+  },
+
+  // coffee market api get route
+  getCoffeeMarketApi: (req, res) => {
+    // responsing with the data
+    res.json(coffeeData);
+  },
+
+  // palmoil market api get route
+  getPalmoilMarketApi: (req, res) => {
+    // responsing with the data
+    res.json(palmoilData);
+  },
+
+  // cassava market api get route
+  getCassavaMarketApi: (req, res) => {
+    // responsing with the data
+    res.json(cassavaData);
+  },
+
+  // market api get route
+  getfarmerDisApi: (req, res) => {
+    // responsing with the data
+    res.json(farmerDisDataApi);
   },
 
   learningGet: (req, res) => {

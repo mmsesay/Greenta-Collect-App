@@ -75,9 +75,10 @@
                                                 <td><%= order.productName %></td>
                                                 <td><%= order.quantity %></td>
                                                 <td>
-                                                    <form action="/admin/order/delete/<%= order._id %>">
-                                                        <button class="btn btn-danger" type="submit">Delete Order</button>
-                                                    </form>
+                                                    <!-- <form action="/admin/order/delete/<%= order._id %>"> -->
+                                                        <a href="/admin/order/delete/<%= order._id %>"><i class="small material-icons red-text">delete</i></a>
+                                                        <!-- <button class="btn btn-danger" type="submit">Delete Order</button> -->
+                                                    <!-- </form> -->
                                                 </td>
                                             </tr>
                                         <%});%>

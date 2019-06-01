@@ -93,31 +93,65 @@ function getMarketData(){
         // getting the table ID and prepending the row
         document.getElementById("marketTableBody").prepend(row);
 
-        // var data = row;
+        var data = [fetchedLocality,
+            fetchedDistrict,
+            fetchedProduct,
+            fetchedDate,
+            fetchedWHS_Price,
+            fetchedRET_Price]
 
-        // $(".js-exportable'").DataTable().row.add([data]).draw();
+
+        
+
+        // $(".js-exportable'").DataTable().row.add([dataSet]).draw();
 
          $(function () {
 
-            //Exportable table
-            $('.js-exportable').DataTable({
-                dom: 'Bfrtip',
-                responsive: true,
-                bJQueryUI: true,
-                destroy: true,
-                aaData: data,
-                Columns: [
-                    { data: 'locality' },
-                    { data: 'district' },
-                    { data: 'product' },
-                    { data: 'date' },
-                    { data: 'wholesale_price' },
-                    { data: 'retail_price' }
-                ],
-                buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
-                ]
-            });
+           
+            // $.ajax({
+            //     type: 'GET',
+            //     url: 'http://localhost:3000/api/riceMarketApi.json',
+            //     mimeType: 'json',
+            //     success: function(data) {
+            //         $.each(data, function(i, data) {
+            //             var body = "<tr>";
+            //             body    += "<td>" + data.district + "</td>";
+            //             body    += "<td>" + data.price + "</td>";
+            //             // body    += "<td>" + data.fetchedProduct + "</td>";
+            //             // body    += "<td>" + data.fetchedDate + "</td>";
+            //             // body    += "<td>" + data.fetchedWHS_Price + "</td>";
+            //             body    += "</tr>";
+            //             $( ".js-exportable tbody" ).append(body);
+            //         });
+            //         /*DataTables instantiation.*/
+            //         $( ".js-exportable" ).DataTable();
+            //     },
+            //     error: function() {
+            //         alert('Fail!');
+            //     }
+            // });
+
+            // //Exportable table
+            // $('.js-exportable tbody').DataTable({
+            //     dom: 'Bfrtip',
+            //     responsive: true,
+            //     bJQueryUI: true,
+            //     destroy: true,
+            //     aaData: data,
+            //     Columns: [
+            //         { data: 'locality' },
+            //         { data: 'district' },
+            //         { data: 'product' },
+            //         { data: 'date' },
+            //         { data: 'wholesale_price' },
+            //         { data: 'retail_price' }
+            //     ],
+            //     buttons: [
+            //         'copy', 'csv', 'excel', 'pdf', 'print'
+            //     ]
+            // });
+
+            // console.log(data);
         });
 
     }); 

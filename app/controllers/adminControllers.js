@@ -19,6 +19,12 @@ var marketAPIData = require('../data/marketData.json');
 var availableProductData = require('../data/ava_prod_by_district.json');
 var farmersData = require('../data/farmers_data.json');
 
+// products json 
+var riceData = require('../data/products/prod_rice.json');
+
+//import farmer Api by district
+var farmerDisApiData = require('../data/farmerDisApi.json');
+
 // custom functions
 var {isEmpty} = require('../config/customFunction');
 
@@ -319,6 +325,35 @@ module.exports = {
           });
       }else{
 
+        // instantiating a new farerModel
+        // var newFarmer = new farmerModel({
+        //   fbo_name: fboName,
+        //   products: listOfProd,
+        //   location: location,
+        //   chiefdom: chiefdom,
+        //   district: district,
+        //   region: region,
+        //   total_no_of_staffs: totalNoOfWorkers,
+        //   brief_bio: briefBio,
+        //   executive_head_name: execHeadName,
+        //   executive_head_address: execHeadAddress,
+        //   executive_head_tele : execHeadTele,
+        //   executive_head_email : execHeadEmail,
+        //   gender : gender,
+        //   photo : `/images/fboUploads/${filename}`
+        // });
+
+        // // saving the farmer detail
+        // newFarmer.save()
+        // .then(farmer => {
+        //   console.log(farmer);
+        //   req.flash('success_msg', 'New FBO registered successfully');
+        //   res.redirect('/admin/register/farmer');
+        // })
+        // .catch(err => {
+        //   console.log(err);
+        // });
+
         farmerModel.findOne({fbo_name: fboName})
           .then(fbo => {
               if(fbo) {
@@ -370,10 +405,10 @@ module.exports = {
                   photo : `/images/fboUploads/${filename}`
                 });
 
-                farmersData.unshift({fboName,listOfProd,location,chiefdom,
-                                    district,region,totalNoOfWorkers,briefBio,
-                                    execHeadName,execHeadAddress,execHeadTele,
-                                    execHeadEmail, gender}); //posting the data into the api
+                // farmersData.unshift({fboName,listOfProd,location,chiefdom,
+                //                     district,region,totalNoOfWorkers,briefBio,
+                //                     execHeadName,execHeadAddress,execHeadTele,
+                //                     execHeadEmail, gender}); //posting the data into the api
 
 
                 // writing to the farmers json file
@@ -423,64 +458,171 @@ module.exports = {
           });
       }else{
 
-          var district = req.body.district;
-          var product = req.body.product;
-          var price = parseInt(req.body.price);
+        function checkDistrict(alldistricts, district) {
+          return alldistricts.some(function(el) {
+              return el.district === district;
+          });
+        }
+      //instantiating variables ;
+        var district = req.body.district.toUpperCase();
+        var product = req.body.product.toUpperCase();
+        var price = parseInt(req.body.price);
+        var newRiceData = [...riceData]
+        console.log(newRiceData)
+
+        // check if rice was entered
+        if (product == 'RICE'){
+          if (checkDistrict(newRiceData, district)) {
+            var index = newRiceData.findIndex((data => data.district === district))
+            newRiceData[index].price += price
+
+          } else {
+            newRiceData.push({ district, price });
+          }
+        }
+
+        // writing to the rice json file
+        fs.writeFile('app/data/products/prod_rice.json', JSON.stringify(newRiceData), 'utf8',
+          function(err) {
+              console.log(err);
+          }
+        )
+
+          // marketAPIData.unshift({district,product,price}); //posting the data into the api
+
+          // fs.writeFile('app/data/marketData.json', JSON.stringify(marketAPIData), 'utf8',
+          // function(err){
+          //     console.log(err);
+          // })
+
+          req.flash('success_msg', 'You have posted a new market data');
+          res.redirect('/admin/createMarketData'); //redirecting to the create market page
+          // res.render('partials/admin/forms/marketForm');
+          // res.render('partials/admin/forms/marketForm', {
+          //   pageTitle: "postMarketData",
+          //   pageID: "postMarketData"
+          // });
+        } // closing else brace
+
+    },
+
+    //create farmer data get controller
+    farmerDisDataGet: (req, res) => {
+      // rendering the page
+      res.render('partials/admin/forms/farmerDisForm', {
+          pageTitle: "PostFarmerDisData",
+          pageID: "postfarmerdisdata"
+      });
+    },
+
+    // this is the farmer by district data post
+    farmerDisDataPost: (req, res) => {
+
+      //this variable will be used to validate data
+      var errors = req.validationErrors();
+
+      // checking if an error occur
+      if (errors) {
+          res.render('partials/admin/forms/farmerDisForm', {
+              errors: errors
+          });
+      } else {
+          function checkDistrict(alldistricts, district) {
+              return alldistricts.some(function(el) {
+                  return el.district === district;
+              });
+          }
+          //instantiating variables ;
+          var district = req.body.district.toUpperCase();
+          var nofarmers = parseInt(req.body.nofarmers);
+          var newFarmerdate = [...farmerDisApiData]
+          console.log(newFarmerdate)
+
+          if (checkDistrict(newFarmerdate, district)) {
+              var index = newFarmerdate.findIndex((data => data.district === district))
+              newFarmerdate[index].nofarmers += nofarmers
+
+          } else {
+              newFarmerdate.push({ district, nofarmers });
+          }
+
+      }
+
+      // farmerDisApiData.unshift({ district, nofarmers }); //posting the data into the api
+
+      fs.writeFile('app/data/farmerDisApi.json', JSON.stringify(newFarmerdate), 'utf8',
+          function(err) {
+              console.log(err);
+          }
+      )
+
+      req.flash('success_msg', 'You have posted a new Farmer by District data');
+      // res.redirect('/admin/createMarketData'); //redirecting to the create market page
+      // res.redirect('/admin/farmerDisData');
+      res.render('partials/admin/forms/farmerDisForm');
+      
+      console.log(` check out this ${farmerDisApiData.district}`);
+      
+    },
+
+    // create market district data get controller
+    marketDistrictDataGet: (req, res) => {
+
+      // rendering the page
+      res.render('partials/admin/forms/marketForm', {
+          pageTitle: "postMarketData",
+          pageID: "postMarketData"
+      });
+    },
+
+    // create market district data post  controller
+    marketDistrictDataPost: (req,res) => {
+
+      // this variable will be used to validate
+      var errors = req.validationErrors();
+
+      // checking if an error occurs
+      if(errors){
+          res.render('partials/admin/forms/marketForm',{
+              errors:errors
+          });
+      }else{
+
+        function checkProduct(allproducts, product) {
+          return allproducts.some(function(el) {
+              return el.product === product;
+          });
+        }
+      
+        //instantiating variables ;
+        // var district = req.body.district.toUpperCase();
+        var product = req.body.product.toUpperCase();
+        var price = parseInt(req.body.price);
+        var newMarketProductData = [...marketAPIData]
+        console.log(newMarketProductData)
+
+        if (checkProduct(newMarketProductData, product)) {
+            var index = newFarmerdate.findIndex((data => data.product === product))
+            newMarketProductData[index].product += product
+
+        } else {
+          newMarketProductData.push({ district, product });
+        }
 
           marketAPIData.unshift({district,product,price}); //posting the data into the api
 
           fs.writeFile('app/data/marketData.json', JSON.stringify(marketAPIData), 'utf8',
-          function(err){
+            function(err){
               console.log(err);
-          })
+            }
+          )
 
           req.flash('success_msg', 'You have posted a new market data');
-          // res.redirect('/admin/createMarketData'); //redirecting to the create market page
-          res.render('partials/admin/forms/marketForm');
+          res.redirect('/admin/createMarketData'); //redirecting to the create market page
+          // res.render('partials/admin/forms/marketForm');
         } //error closing else brace
 
     },
-
-    // create market district data get controller
-    // marketDistrictDataGet: (req, res) => {
-
-    //   // rendering the page
-    //   res.render('partials/admin/forms/marketForm', {
-    //       pageTitle: "postMarketData",
-    //       pageID: "postMarketData"
-    //   });
-    // },
-
-    // create market district data post  controller
-    // marketDistrictDataPost: (req,res) => {
-
-    //   // this variable will be used to validate
-    //   var errors = req.validationErrors();
-
-    //   // checking if an error occurs
-    //   if(errors){
-    //       res.render('partials/admin/forms/marketForm',{
-    //           errors:errors
-    //       });
-    //   }else{
-
-    //       var district = req.body.district;
-    //       var product = req.body.product;
-    //       var price = parseInt(req.body.price);
-
-    //       marketAPIData.unshift({district,product,price}); //posting the data into the api
-
-    //       fs.writeFile('app/data/marketData.json', JSON.stringify(marketAPIData), 'utf8',
-    //       function(err){
-    //           console.log(err);
-    //       })
-
-    //       req.flash('success_msg', 'You have posted a new market data');
-    //       // res.redirect('/admin/createMarketData'); //redirecting to the create market page
-    //       res.render('partials/admin/forms/marketForm');
-    //     } //error closing else brace
-
-    // },
 
     // availableProductForm get  controller
     availableProductFormGet: (req, res) => {
@@ -511,7 +653,6 @@ module.exports = {
               errors:errors
           });
       }else{
-
         // creating a new poject of the avaProdPerDistModel
         newAvaProdPerDistModel = new avaProdPerDistModel({
           district : district,
