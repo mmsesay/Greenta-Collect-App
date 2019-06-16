@@ -16,6 +16,7 @@
         new WOW().init();
         $('.sidenav').sidenav();
         $('select').formSelect();
+        $('.tabs').tabs();
 
         // for HTML5 "required" attribute
         $("select[required]").css({
@@ -32,7 +33,9 @@
             height: 600
         });
         $('.dropdown-trigger').dropdown({hover: true});
-        $('.parallax').parallax();
+        $('.parallax').parallax({
+            height: 200
+        });
         $('.materialboxed').materialbox();
         $('.modal').modal();
         $('.carousel').carousel();
@@ -41,12 +44,12 @@
             dots: false,
             infinite: true,
             centerMode: false,
-            slidesToShow: 3,
+            slidesToShow: 4,
             slidesToScroll: 1,
             autoplay: true,
             autoplaySpeed: 3000,
             adaptiveHeight: true,
-            // arrows: true,
+            arrows: true,
             // prevArrow: true,
             // nextArrow: true,
         });

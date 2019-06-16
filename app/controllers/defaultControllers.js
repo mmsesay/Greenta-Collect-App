@@ -224,7 +224,39 @@ module.exports = {
       .catch(err => {
         console.log(err);
       });
-  }
+  },
 
+  // products for both sale and available info
+  productsGet: (req, res) => {
 
+    var info = req.app.get('info'); // getting access to the availableProducts variable from the app.js
+    // var productData = req.app.get('availableProducts'); // getting access to the availableProducts variable from the app.js
+
+    // var fetchedCashCrops = productData.products.cash_crops; //getting the cash_crops only from the products list
+    var fetchedInfo = info.info;
+
+    // RETREVING ALL THE PRODUCTS FOR SALE FROM THE DATABASE
+    avaProductForSaleModel.find()
+        .exec()
+        .then(fetchedProduct => {
+          // RETREVING ALL THE PRODUCTS PER DISTRICT
+          avaProdPerDistModel.find()
+            .exec()
+            .then(fetchedProductPerDistrict => {
+                res.render('product_page', {
+                  pageTitle: "Products",
+                  pageID: "products",
+                  fetchedProduct: fetchedProduct,
+                  fetchedProductPerDistrict: fetchedProductPerDistrict,
+                  // info: fetchedInfo,
+                });
+            })
+          .catch(err => {
+              console.log(err);
+          });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    }
 };

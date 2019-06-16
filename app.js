@@ -35,15 +35,15 @@ firebase.initializeApp({
 
 //connecting to mongodb
 // OFFLINE CONNECTION
-mongoose.connect('mongodb://localhost/amisapp', { useNewUrlParser: true })
-    .then(() => console.log('MongoDB Local Connection Successful'))
-    .catch(err => console.log(err));
+// mongoose.connect('mongodb://localhost/amisapp', { useNewUrlParser: true })
+//     .then(() => console.log('MongoDB Local Connection Successful'))
+//     .catch(err => console.log(err));
 
 // ONLINE CONNECTION TO MONGO
-// mongoose.connect('mongodb+srv://milton:'+ process.env.MONGO_ADMIN_PW+'@amis-cluster-fsefr.mongodb.net/test?retryWrites=true',
-//     { useNewUrlParser: true })
-//     .then(() => console.log('MongoDB Connection Successful'))
-//     .catch(err => console.log(err));
+mongoose.connect('mongodb+srv://milton:'+ process.env.MONGO_ADMIN_PW+'@amis-cluster-fsefr.mongodb.net/test?retryWrites=true',
+    { useNewUrlParser: true })
+    .then(() => console.log('MongoDB Connection Successful'))
+    .catch(err => console.log(err));
 
 // getting access to the database
 var db = firebase.database();

@@ -3,7 +3,6 @@
     height: 55px;
 }
 
-
 .brand-logo{
     height: 60%;
     width: 5%;
@@ -182,6 +181,24 @@ table thead, tbody, tfoot tr th{
 .collection-item {
     color: rgb(156, 156, 156);
 }
+
+
+/* partners-parallax */
+.parallax-title {
+    color: rgb(156, 156, 156);
+    font-size: 30px;
+    margin-top: -60px;
+}
+
+.partners-parallax .slick-slider img{
+    height: 120px;
+    width: 120px;
+}
+.slick-slider{
+    height:30% !important;
+}
+
+/* end of partners-parallax */
 
 
 /* FARMERS TABLE SECTION */

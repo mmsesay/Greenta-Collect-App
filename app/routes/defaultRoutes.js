@@ -22,6 +22,10 @@ router.route('/about')
 router.route('/charts')
     .get(defaultController.chartGet);
 
+// produts page route
+router.route('/products')
+    .get(defaultController.productsGet);
+
 // make other route
 router.route('/order')
     .post(defaultController.makeOrderPost);
