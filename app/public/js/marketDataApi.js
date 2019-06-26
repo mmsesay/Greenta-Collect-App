@@ -25,7 +25,7 @@ $(function() {
                   'product': product,
                   'price': price
             },
-            success: =>(data){
+            success: => (data){
               console.log(data);
             }
         });

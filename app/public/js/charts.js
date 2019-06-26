@@ -22,19 +22,19 @@
 				},
 				theme: "light2",
  				axisY:{
-						title: "Price",
-						titleFontSize: 15,
-            valueFormatString:"LE #######.00"
-         },
- 				axisX:{
+					title: "Price",
+					titleFontSize: 15,
+					valueFormatString:"LE #######.00"
+         		},
+ 			axisX:{
 						title: "Districts",
 						titleFontSize: 15,
             valueFormatString:'string'
          },
          data: [{
             type: "column",
-	 					xValueFormatString:'string',
-	 					yValueFormatString:"LE #######.00",
+			xValueFormatString:'string',
+			yValueFormatString:"LE #######.00",
             name: "District Market Prices",
             dataPoints: dataPointsA
          }]
@@ -75,9 +75,16 @@
             valueFormatString:'string'
          },
          data: [{
-            type: "column",
-	 					xValueFormatString:'string',
-	 					yValueFormatString:"LE #######.00",
+			type: "pie",
+			startAngle: 25,
+			toolTipContent: "<b>{label}</b>: {y}%",
+			showInLegend: "true",
+			legendText: "{label}",
+			indexLabelFontSize: 16,
+			indexLabel: "{label} - {y}%",
+            // type: "rangeColumn",
+	 		xValueFormatString:'string',
+	 		yValueFormatString:"LE #######.00",
             name: "District Market Prices",
             dataPoints: dataPointsB
          }]

@@ -31,20 +31,73 @@
                             <h2>Please fill in the form</h2>
                         </div>
                         <div class="body">
-                            <form method="POST" action="/admin/createMarketData" class="marketDataApiForm">
+                            <form method="POST" action="/admin/createMarketData">
                                 <div class="row">
                                     <!-- messages -->
                                     <% include ../messages %>
                                     <!-- end of message -->
-                                    <div class="input-field col s12 m4">
+                                    <!-- <div class="input-field col s12 m4">
                                         <i class="material-icons prefix"></i>
                                         <label for="district">District</label>
                                         <input id="district" type="text" class="validate" name="district" required>
+                                    </div> -->
+                                    <!-- <div class="input-field col s12 m4">
+                                        <select id="mktDistrict" name="mktDistrict" required class="validate">
+                                            <option value="" class="gray-text" required disabled selected>Choose a District</option>
+                                            <option id="DIST_WAU">Western Area Urban</option>
+                                            <option  id="DIST_WAR">Western Area Rural</option>
+                                            <option  id="DIST_FAL">Falaba</option>
+                                            <option  id="DIST_KOI">Koinadugu</option>
+                                            <option  id="DIST_BOM">Bombali</option>
+                                            <option  id="DIST_TON">Tonkolili</option>
+                                            <option  id="DIST_KAM">Kambia</option>
+                                            <option  id="DIST_KAR">Karene</option>
+                                            <option  id="DIST_POR">Porto Loko</option>
+                                            <option  id="DIST_BO">Bo</option>
+                                            <option  id="DIST_BON">Bonthe</option>
+                                            <option  id="DIST_PUJ">Pujehun</option>
+                                            <option  id="DIST_MOY">Moyamba</option>
+                                            <option  id="DIST_KEN">Kenema</option>
+                                            <option  id="DIST_KAL">Kaliahun</option>
+                                            <option  id="DIST_KON">Kono</option>
+                                        </select>
+                                    </div> -->
+                                    <div class="col-sm-4">
+                                        <select class="form-control show-tick" name="district">
+                                            <option value="" class="gray-text" required disabled selected>Choose a District</option>
+                                            <option  name="district" id="DIST_WAU">Western Area Urban</option>
+                                            <option  name="district" id="DIST_WAR">Western Area Rural</option>
+                                            <option  name="district" id="DIST_FAL">Falaba</option>
+                                            <option  name="district" id="DIST_KOI">Koinadugu</option>
+                                            <option  name="district" id="DIST_BOM">Bombali</option>
+                                            <option  name="district" id="DIST_TON">Tonkolili</option>
+                                            <option  name="district" id="DIST_KAM">Kambia</option>
+                                            <option  name="district" id="DIST_KAR">Karene</option>
+                                            <option  name="district" id="DIST_POR">Porto Loko</option>
+                                            <option  name="district" id="DIST_BO">Bo</option>
+                                            <option  name="district" id="DIST_BON">Bonthe</option>
+                                            <option  name="district" id="DIST_PUJ">Pujehun</option>
+                                            <option  name="district" id="DIST_MOY">Moyamba</option>
+                                            <option  name="district" id="DIST_KEN">Kenema</option>
+                                            <option  name="district" id="DIST_KAL">Kaliahun</option>
+                                            <option  name="district" id="DIST_KON">Kono</option>
+                                            <option  name="district" id="Nat">National</option>
+                                        </select>
                                     </div>
-                                    <div class="input-field col s12 m4">
+                                    <div class="col-sm-4">
+                                        <select class="form-control show-tick" name="product">
+                                            <option value="" class="gray-text" required disabled selected>Choose a product</option>
+                                            <option  name="product" id="rice">Rice</option>
+                                            <option  name="product" id="cacao">Cacao</option>
+                                            <option  name="product" id="coffee">Coffe</option>
+                                            <option  name="product" id="palmoil">Palmoil</option>
+                                            <option  name="product" id="cassava">Cassava</option>
+                                        </select>
+                                    </div>
+                                    <!-- <div class="input-field col s12 m4">
                                         <label for="product">Product</label>
                                         <input id="product" type="text" class="validate" name="product" required>
-                                    </div>
+                                    </div> -->
                                     <div class="input-field col s12 m4">
                                         <label for="price">Price</label>
                                         <input id="price" type="number" class="validate" name="price" required>

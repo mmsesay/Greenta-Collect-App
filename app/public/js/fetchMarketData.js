@@ -100,6 +100,11 @@ function getMarketData(){
             fetchedWHS_Price,
             fetchedRET_Price]
 
+        setTimeout(function () {
+            $(function () {
+                $('#marketTableBody').DataTable();
+            });
+        }, 3000);
 
         
 
