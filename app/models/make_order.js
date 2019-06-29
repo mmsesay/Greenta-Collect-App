@@ -8,7 +8,7 @@ const makeOrderSchema = new Schema({
         type: String,
         required: true
     },
-    address:{ 
+    address: {
         type: String,
         required: true
     },
@@ -23,7 +23,11 @@ const makeOrderSchema = new Schema({
         type: String,
         required: true
     },
-    quantity: { 
+    quantity: {
+        type: String,
+        required: true
+    },
+    fbo: {
         type: String,
         required: true
     },
