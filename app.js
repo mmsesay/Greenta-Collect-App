@@ -40,8 +40,7 @@ firebase.initializeApp({
 //     .catch(err => console.log(err));
 
 // ONLINE CONNECTION TO MONGO
-mongoose.connect('mongodb+srv://milton:'+ process.env.MONGO_ADMIN_PW+'@amis-cluster-fsefr.mongodb.net/test?retryWrites=true',
-    { useNewUrlParser: true })
+mongoose.connect('mongodb+srv://milton:' + process.env.MONGO_ADMIN_PW + '@amis-cluster-fsefr.mongodb.net/test?retryWrites=true', { useNewUrlParser: true })
     .then(() => console.log('MongoDB Connection Successful'))
     .catch(err => console.log(err));
 
@@ -92,18 +91,18 @@ app.set('appData_4', unsponsoredData);
 // Express Validator Middleware
 // app.use(expressValidator());
 app.use(expressValidator({
-    errorFormatter: function(param, msg, value){
+    errorFormatter: function(param, msg, value) {
         var namespace = param.split('.'),
-        root = namespace.shift(),
-        formParam = root;
+            root = namespace.shift(),
+            formParam = root;
 
-        while(namespace.length) {
+        while (namespace.length) {
             formParam += '[' + namesapce.shift() + ']';
         }
         return {
-            param : formParam,
-            message : msg,
-            value : value
+            param: formParam,
+            message: msg,
+            value: value
         };
     }
 }));
@@ -139,10 +138,10 @@ app.use(fileupload());
 
 // Flash Middleware Global Variables
 app.use(function(req, res, next) {
-    res.locals.success_msg =  req.flash('success_msg');
+    res.locals.success_msg = req.flash('success_msg');
     res.locals.error_msg = req.flash('error_msg');
-    res.locals.error =  req.flash('error');
-    res.locals.user =  req.user || null;
+    res.locals.error = req.flash('error');
+    res.locals.user = req.user || null;
     next();
 });
 
@@ -155,6 +154,6 @@ app.use('/', defaultRoutes);
 app.use('/admin', adminRoutes);
 
 //listening to the 3000 port
-var server = app.listen(app.get('port'), function(){
-    console.log('listening on port ' + app.get ('port'));
+var server = app.listen(app.get('port'), function() {
+    console.log('listening on port ' + app.get('port'));
 });

@@ -5,11 +5,15 @@ const avaProductsSchema = mongoose.Schema({
     //     type: String,
     //     required: true
     // },
-    product:  {
+    product: {
         type: String,
         required: true
     },
-    photo:  {
+    photo: {
+        type: String,
+        default: ''
+    },
+    fbo: {
         type: String,
         default: ''
     },
@@ -58,10 +62,8 @@ const avaProductsSchema = mongoose.Schema({
     //     type: String,
     //     required: true
     // },
-    
+
 });
 
 //exporting the model
 var avaProducts = module.exports = mongoose.model('avaProductsForSale', avaProductsSchema);
-
-
