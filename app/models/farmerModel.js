@@ -1,56 +1,56 @@
 const mongoose = require('mongoose');
 const farmerSchema = mongoose.Schema({
 
-    fbo_name:  {
+    fbo_name: {
         type: String,
         required: true
     },
-    products:  {
+    products: {
         type: String,
         required: true
     },
-    location:  {
+    location: {
         type: String,
         required: true
     },
-    chiefdom:  {
+    chiefdom: {
         type: String
     },
-    district:  {
+    district: {
         type: String,
         required: true
     },
-    region:  {
+    region: {
         type: String,
         required: true
     },
-    total_no_of_staffs:  {
+    total_no_of_staffs: {
         type: String,
         required: true
     },
-    brief_bio:  {
+    brief_bio: {
         type: String
     },
-    executive_head_name:  {
+    executive_head_name: {
         type: String,
         required: true
     },
-    executive_head_address:  {
+    executive_head_address: {
         type: String,
         required: true
     },
-    executive_head_tele:  {
+    executive_head_tele: {
         type: String,
         required: true
     },
-    executive_head_email:  {
+    executive_head_email: {
         type: String
     },
-    gender:  {
+    gender: {
         type: String,
         required: true
     },
-    photo:  {
+    photo: {
         type: String,
         default: ''
     },
@@ -64,13 +64,12 @@ const farmerSchema = mongoose.Schema({
 var Farmer = module.exports = mongoose.model('farmers', farmerSchema);
 
 //get admin function
-module.exports.getFarmerByUsername = function(username, callback){
-    var query = {username: username};
+module.exports.getFarmerByUsername = function(username, callback) {
+    var query = { username: username };
     Farmer.findOne(query, callback);
 }
 
 //get admin function
-module.exports.getFarmerById = function(id, callback){
+module.exports.getFarmerById = function(id, callback) {
     Farmer.findById(id, callback);
 }
-

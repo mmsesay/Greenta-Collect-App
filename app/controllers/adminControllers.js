@@ -893,7 +893,7 @@ module.exports = {
 
                 // saving the data
                 fbo.save().then(updatedFbo => {
-                    req.flash('success_msg', `The FBO Head ${updatedFbo.executive_head_name} details has been updated`);
+                    req.flash('success_msg', `The FBO Head ${updatedFbo.fbo_name} details has been updated`);
                     res.redirect('/admin/records/fbos');
                 });
 
@@ -908,7 +908,7 @@ module.exports = {
         const id = req.params.id;
         farmerModel.findByIdAndDelete(id)
             .then(fbo => {
-                req.flash('success_msg', `FBO " ${fbo.executive_head_name} " was deleted successfully.`);
+                req.flash('success_msg', `FBO " ${fbo.fbo_name} " was deleted successfully.`);
                 res.redirect('/admin/records/fbos');
             })
             .catch(err => {
