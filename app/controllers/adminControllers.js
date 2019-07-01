@@ -1081,7 +1081,7 @@ module.exports = {
     // learning post controller
     learningPost: (req, res) => {
       // getting the variables
-      const { info_heading, info_content } = req.body;
+      const { info_heading, info_content, info_subContent } = req.body;
 
       // getting the id of the about
       const id = req.params.id;
@@ -1090,7 +1090,7 @@ module.exports = {
       let errors = [];
 
       // check required fields
-      if(!info_heading || !info_content){
+      if(!info_heading || !info_content || !info_subContent){
           errors.push({ msg: 'Please fill in the fields before publising' });
       }
 
@@ -1102,12 +1102,14 @@ module.exports = {
               pageID: "learning-page",
               errors,
               info_heading,
+              info_subContent,
               info_content
            });
       } else {
 
         var newLearningModel = new learningModel({
             title : req.body.info_heading,
+            subContent : req.body.info_subContent,
             content : req.body.info_content
         });
 
@@ -1165,6 +1167,7 @@ module.exports = {
         .then(info => {
           // re-assigning the new data to the existing one
           info.title = req.body.info_heading;
+          info.subContent = req.body.info_subContent;
           info.content = req.body.info_content;
 
           // saving the data

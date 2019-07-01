@@ -3,7 +3,12 @@ const mongoose = require('mongoose');
 const learningSchema = mongoose.Schema({
 
     title:  {
-        type: String
+        type: String,
+        required: true
+    },
+    subContent:  {
+        type: String,
+        required: true
     },
     content:  {
         type: String,

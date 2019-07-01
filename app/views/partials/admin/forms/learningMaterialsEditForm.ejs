@@ -42,6 +42,10 @@
                                             <label for="info_heading">Title</label>
                                             <input type="text" name="info_heading" value=<%= fetchedInfo.title %>>
                                         </div>
+                                        <div class="input-field col s12 m10">
+                                            <label for="info_subContent">Sub Content</label>
+                                            <input id="subContent" type="text" data-length="70" name="info_subContent" value=<%= fetchedInfo.subContent %>>
+                                        </div>
                                         <div class="input-field col s12 m12">
                                             <label for="info_content">Info Content goes here...</label>
                                             <textarea class="materialize-textarea" type="text" name="info_content"><%= fetchedInfo.content %></textarea>
