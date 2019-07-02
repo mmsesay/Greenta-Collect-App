@@ -42,10 +42,6 @@
                                             <label for="info_heading">Title</label>
                                             <input type="text" name="info_heading" value="">
                                         </div>
-                                        <div class="input-field col s12 m10">
-                                            <label for="subContent" name="info_subContent">Sub Content</label>
-                                            <input id="subContent" type="text" data-length="70">
-                                        </div>
                                         <div class="input-field col s12 m12">
                                             <label for="info_content">Info Content goes here...</label>
                                             <textarea class="materialize-textarea" type="text" name="info_content"></textarea>
@@ -86,7 +82,6 @@
                                     <thead>
                                         <tr>
                                             <th>TITLE</th>
-                                            <th>SUB CONTENT</th>
                                             <th>DESCRIPTION</th>
                                             <th>ACTIONS</th>
                                         </tr>
@@ -94,7 +89,6 @@
                                     <tfoot>
                                         <tr>
                                             <th>TITLE</th>
-                                            <th>SUB CONTENT</th>
                                             <th>DESCRIPTION</th>
                                             <th>ACTIONS</th>
                                         </tr>
@@ -104,12 +98,11 @@
                                         <% learningInfo.forEach(data => {%>
                                         <tr>
                                             <td><%= data.title %></td>
-                                            <td><%= data.subContent %></td>
                                             <td><%= data.content %></td>
                                             <td>
                                                 <div class="row">
-                                                    <a href="/admin/learning-info/edit/<%= data._id %>" class="btn btn-warning">Edit</a>
-                                                    <a href="/admin/learning-info/delete/<%= data._id %>" class="btn btn-danger">Delete</a>
+                                                    <a href="/admin/learning-info/edit/<%= data._id %>"><i class="small material-icons orange-text">edit</i></a>
+                                                    <a href="/admin/learning-info/delete/<%= data._id %>"><i class="small material-icons red-text">delete</i></a>
                                                 </div>
                                             </td>
                                         </tr>

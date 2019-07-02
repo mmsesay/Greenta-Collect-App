@@ -1,47 +1,129 @@
  $(document).ready(function() {
-   
-	// rice 
-	var dataPointsA = []
-   $.ajax({
-     type: 'GET',
-     url: 'http://localhost:3000/api/riceMarketApi',
-     dataType: 'json',
-     success: function(data) {
-       for (var i = 0; i < data.length; i++) {
-         dataPointsA.push({
-           label: data[i].district,
-           y: data[i].price
-         });
-       }
 
-       var chart = new CanvasJS.Chart("ricechart", {
-				 animationEnabled: true,
-				 title:{
-					text: "Rice Prices By District",
-					fontSize: 20
-				},
-				theme: "light2",
- 				axisY:{
-					title: "Price",
-					titleFontSize: 15,
-					valueFormatString:"LE #######.00"
-         		},
- 			axisX:{
-						title: "Districts",
-						titleFontSize: 15,
-            valueFormatString:'string'
-         },
-         data: [{
-            type: "column",
-			xValueFormatString:'string',
-			yValueFormatString:"LE #######.00",
-            name: "District Market Prices",
-            dataPoints: dataPointsA
-         }]
-       });
-       chart.render();
-     }
-	 });
+	// rice 
+	var dataLabelA = []
+	var dataPriceB = []
+   	$.ajax({
+		type: 'GET',
+		url: 'http://localhost:3000/api/riceMarketApi',
+		dataType: 'json',
+		success: function(data) {
+		for (var i = 0; i < data.length; i++) {
+			dataLabelA.push(
+				data[i].district
+			)
+			dataPriceB.push(
+				data[i].price
+			)
+		}
+
+		console.log(dataLabelA, dataPriceB)
+
+		var options = {
+            chart: {
+                height: 350,
+                type: 'bar',
+            },
+            plotOptions: {
+                bar: {
+                    dataLabels: {
+                        position: 'top', // top, center, bottom
+                    },
+                }
+            },
+            dataLabels: {
+                enabled: true,
+                formatter: function (val) {
+                    return val + " SLL";
+                },
+                offsetY: -20,
+                style: {
+                    fontSize: '12px',
+                    colors: ["#304758"]
+                }
+            },
+            series: [{
+                name: 'Sales Price',
+                data: dataPrice
+            }],
+            xaxis: {
+                categories: dataLabel,
+                position: 'top',
+                labels: {
+                    offsetY: -18,
+
+                },
+                axisBorder: {
+                    show: false
+                },
+                axisTicks: {
+                    show: false
+                },
+                crosshairs: {
+                    fill: {
+                        type: 'gradient',
+                        gradient: {
+                            colorFrom: '#D8E3F0',
+                            colorTo: '#BED1E6',
+                            stops: [0, 100],
+                            opacityFrom: 0.4,
+                            opacityTo: 0.5,
+                        }
+                    }
+                },
+                tooltip: {
+                    enabled: true,
+                    offsetY: -35,
+
+                }
+            },
+            fill: {
+                gradient: {
+                    shade: 'light',
+                    type: "horizontal",
+                    shadeIntensity: 0.25,
+                    gradientToColors: undefined,
+                    inverseColors: true,
+                    opacityFrom: 1,
+                    opacityTo: 1,
+                    stops: [50, 0, 100, 100]
+                },
+            },
+            yaxis: {
+                axisBorder: {
+                    show: false
+                },
+                axisTicks: {
+                    show: false,
+                },
+                labels: {
+                    show: false,
+                    formatter: function (val) {
+                        return val + " SLL";
+                    }
+                }
+
+            },
+            title: {
+                text: 'Rice Retail Prices',
+                floating: true,
+                offsetY: 320,
+                align: 'center',
+                style: {
+                    color: '#444'
+                }
+            },
+        }
+
+        var chart = new ApexCharts(
+            document.querySelector("#ricechartWP"),
+            options
+        );
+
+        chart.render();
+     	}
+	});
+
 
 	// cacao
 	var dataPointsB = []
@@ -220,180 +302,5 @@
 		});
 		chart.render();
 	  }
-	  });
-	
-
-	//  var dataPointsA = []
-	//  $.ajax({
-	//    type: 'GET',
-	//    url: 'http://localhost:3000/api/market_data_api',
-	//    dataType: 'json',
-	//    success: function(data) {
-	// 	 for (var i = 0; i < data.length; i++) {
-	// 	   dataPointsA.push({
-	// 		 label: data[i].product,
-	// 		 y: data[i].price
-	// 	   });
-	// 	 }
-  
-	// 	 var chart = new CanvasJS.Chart("farmerschart", {
-	// 			   animationEnabled: true,
-	// 			   title:{
-	// 				  text: "Product Prices",
-	// 				  fontSize: 20
-	// 			  },
-	// 			  theme: "light2",
-	// 			   axisY:{
-	// 					  title: "Price",
-	// 					  titleFontSize: 15,
-	// 		  valueFormatString:"LE #######.00"
-	// 	   },
-	// 			   axisX:{
-	// 					  title: "Products",
-	// 					  titleFontSize: 15,
-	// 		  valueFormatString:'string'
-	// 	   },
-	// 	   data: [{
-	// 		  type: "column",
-	// 					   xValueFormatString:'string',
-	// 					   yValueFormatString:"LE #######.00",
-	// 		  name: "Product Market Prices",
-	// 		  dataPoints: dataPointsA
-	// 	   }]
-	// 	 });
-	// 	 chart.render();
-	//    }
-	//    });
-
-
-	//  var dataPointsB = [];
-	// $.ajax({
-	// 	type: 'GET',
-	// 	url: 'http://localhost:3000/api/farmer_dis_api',
-	// 	dataType: 'json',
-	// 	success: function(data) {
-	// 		for (var i = 0; i < data.length; i++) {
-	// 			dataPointsB.push({
-	// 				label: data[i].district,
-	// 				y: data[i].nofarmers
-	// 			});
-	// 		}
-
-	// 		var chart = new CanvasJS.Chart("cropchart", {
-	// 			animationEnabled: true,
-	// 			title: {
-	// 				text: "Tol. Numbers of Farmers",
-	// 				fontSize: 20
-	// 			},
-	// 			theme: "light2",
-	// 			axisY: {
-	// 				title: "No. Farmers",
-	// 				titleFontSize: 15,
-	// 				valueFormatString: "#######"
-	// 			},
-	// 			axisX: {
-	// 				title: "Districts",
-	// 				titleFontSize: 15,
-	// 				valueFormatString: 'string'
-	// 			},
-	// 			data: [{
-	// 				type: "spline",
-	// 				xValueFormatString: 'string',
-	// 				yValueFormatString: "#######",
-	// 				name: "Farmers by District Chart",
-	// 				dataPoints: dataPointsB
-	// 			}]
-	// 		});
-	// 		chart.render();
-	// 	}
-	// });
-
-});
-	 
-// 	 // crop chart
-// 	var chart = new CanvasJS.Chart("cropchart", {
-// 		animationEnabled: true,
-// 		title:{
-// 			text: "Daily High Temperature at Different Locations",
-// 			fontSize: 20
-// 		},
-// 		axisX: {
-// 			valueFormatString: "DD MMM,YY"
-// 		},
-// 		axisY: {
-// 			title: "Temperature (in °C)",
-// 			includeZero: false,
-// 			suffix: " °C"
-// 		},
-// 		legend:{
-// 			cursor: "pointer",
-// 			fontSize: 16,
-// 			itemclick: toggleDataSeries
-// 		},
-// 		toolTip:{
-// 			shared: true
-// 		},
-// 		data: [{
-// 			name: "Makeni",
-// 			type: "spline",
-// 			yValueFormatString: "#0.## °C",
-// 			showInLegend: true,
-// 			dataPoints: [
-// 				{ x: new Date(2019,4,5), y: 31 },
-// 				{ x: new Date(2019,4,6), y: 31 },
-// 				{ x: new Date(2019,4,7), y: 29 },
-// 				{ x: new Date(2019,4,8), y: 29 },
-// 				{ x: new Date(2019,4,9), y: 31 },
-// 				{ x: new Date(2019,4,10), y: 30 },
-// 				{ x: new Date(2019,4,11), y: 29 }
-// 			]
-// 		},
-// 		{
-// 			name: "Bo",
-// 			type: "spline",
-// 			yValueFormatString: "#0.## °C",
-// 			showInLegend: true,
-// 			dataPoints: [
-// 				{ x: new Date(2019,4,5), y: 20 },
-// 				{ x: new Date(2019,4,6), y: 20 },
-// 				{ x: new Date(2019,4,7), y: 25 },
-// 				{ x: new Date(2019,4,8), y: 25 },
-// 				{ x: new Date(2019,4,9), y: 25 },
-// 				{ x: new Date(2019,4,10), y: 25 },
-// 				{ x: new Date(2019,4,11), y: 25 }
-// 			]
-// 		},
-// 		{
-// 			name: "Kenema",
-// 			type: "spline",
-// 			yValueFormatString: "#0.## °C",
-// 			showInLegend: true,
-// 			dataPoints: [
-// 				{ x: new Date(2019,4,5), y: 22 },
-// 				{ x: new Date(2019,4,6), y: 19 },
-// 				{ x: new Date(2019,4,7), y: 23 },
-// 				{ x: new Date(2019,4,8), y: 24 },
-// 				{ x: new Date(2019,4,9), y: 24 },
-// 				{ x: new Date(2019,4,10), y: 23 },
-// 				{ x: new Date(2019,4,11), y: 23 }
-// 			]
-// 		}]
-// 	});
-// 	chart.render();
-
-// 	function toggleDataSeries(e){
-// 		if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-// 			e.dataSeries.visible = false;
-// 		}
-// 		else{
-// 			e.dataSeries.visible = true;
-// 		}
-// 		chart.render();
-// 	}
-
-	
-
-// });
-
-// farmer Display by district chart
-
+	});
+ });

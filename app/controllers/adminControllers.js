@@ -114,11 +114,9 @@ module.exports = {
                             password: req.body.password,
                             photo: `/adminsProfilePhotos/${filename}`
                         });
-
-<<<<<<< HEAD
                     // hashing the password
                     bcrypt.genSalt(10, function(err, salt){
-                      bcrypt.hash(newAdmin.password, salt, (err, hash) => {
+                        crypt.hash(newAdmin.password, salt, (err, hash) => {
                           if(err) throw err;
                           // set password to hash
                           newAdmin.password = hash;
@@ -131,27 +129,10 @@ module.exports = {
                             })
                             .catch(err => {
                                 console.log(err);
-=======
-                        // hashing the password
-                        bcrypt.genSalt(10, function(err, salt) {
-                            bcrypt.hash(newAdmin.password, salt, (err, hash) => {
-                                if (err) throw err;
-                                // set password to hash
-                                newAdmin.password = hash;
-                                newAdmin.save()
-                                    .then(admin => {
-                                        req.flash('success_msg', 'You have just registered a new administrator');
-                                        res.redirect('/admin/register/admin');
-                                        console.log(admin + '=>' + 'registration successful');
-
-                                    })
-                                    .catch(err => {
-                                        console.log(err);
-                                    });
->>>>>>> lovel-fixes
                             });
                         });
-                    }
+                    });
+                }
                 })
                 .catch(err => {
                     console.log(err);
@@ -362,35 +343,6 @@ module.exports = {
             });
         } else {
 
-            // instantiating a new farerModel
-            // var newFarmer = new farmerModel({
-            //   fbo_name: fboName,
-            //   products: listOfProd,
-            //   location: location,
-            //   chiefdom: chiefdom,
-            //   district: district,
-            //   region: region,
-            //   total_no_of_staffs: totalNoOfWorkers,
-            //   brief_bio: briefBio,
-            //   executive_head_name: execHeadName,
-            //   executive_head_address: execHeadAddress,
-            //   executive_head_tele : execHeadTele,
-            //   executive_head_email : execHeadEmail,
-            //   gender : gender,
-            //   photo : `/images/fboUploads/${filename}`
-            // });
-
-            // // saving the farmer detail
-            // newFarmer.save()
-            // .then(farmer => {
-            //   console.log(farmer);
-            //   req.flash('success_msg', 'New FBO registered successfully');
-            //   res.redirect('/admin/register/farmer');
-            // })
-            // .catch(err => {
-            //   console.log(err);
-            // });
-
             farmerModel.findOne({ fbo_name: fboName })
                 .then(fbo => {
                     if (fbo) {
@@ -442,12 +394,6 @@ module.exports = {
                             photo: `/images/fboUploads/${filename}`
                         });
 
-                        // farmersData.unshift({fboName,listOfProd,location,chiefdom,
-                        //                     district,region,totalNoOfWorkers,briefBio,
-                        //                     execHeadName,execHeadAddress,execHeadTele,
-                        //                     execHeadEmail, gender}); //posting the data into the api
-
-
                         // writing to the farmers json file
                         fs.writeFile('app/data/farmers_data.json', JSON.stringify(farmersData), 'utf8',
                                 function(err) {
@@ -474,7 +420,6 @@ module.exports = {
 
     // create market data get controller
     marketDataGet: (req, res) => {
-<<<<<<< HEAD
       // rendering the page
       res.render('partials/admin/forms/marketForm', {
           pageTitle: "postMarketData",
@@ -615,148 +560,6 @@ module.exports = {
             pageTitle: "postMarketData",
             pageID: "postMarketData"
           });
-=======
-        // rendering the page
-        res.render('partials/admin/forms/marketForm', {
-            pageTitle: "postMarketData",
-            pageID: "postMarketData"
-        });
-    },
-
-    // create market data post  controller
-    marketDataPost: (req, res) => {
-
-        // this variable will be used to validate
-        var errors = req.validationErrors();
-
-        // checking if an error occurs
-        if (errors) {
-            res.render('partials/admin/forms/marketForm', {
-                errors: errors
-            });
-        } else {
-
-            function checkDistrict(alldistricts, district) {
-                return alldistricts.some(function(el) {
-                    return el.district === district;
-                });
-            }
-            //instantiating variables ;
-            var district = req.body.district.toUpperCase();
-            var product = req.body.product.toUpperCase();
-            var price = parseInt(req.body.price);
-
-            // rest operators
-            var newRiceData = [...riceData]
-            var newCassavaData = [...cassavaData]
-            var newPalmoilData = [...palmoilData]
-            var newCacaoData = [...cacaoData]
-            var newCoffeeData = [...coffeeData]
-
-
-            switch (product) {
-                case 'RICE':
-                    if (checkDistrict(newRiceData, district)) {
-                        var index = newRiceData.findIndex((data => data.district === district))
-                        newRiceData[index].price += price
-
-                    } else {
-                        newRiceData.push({ district, price });
-                    }
-
-                    // writing to the rice json file
-                    fs.writeFile('app/data/products/prod_rice.json', JSON.stringify(newRiceData), 'utf8',
-                        function(err) {
-                            console.log(err);
-                        }
-                    )
-                    break;
-
-                    // cassava case
-                case 'CASSAVA':
-                    if (checkDistrict(newCassavaData, district)) {
-                        var index = newCassavaData.findIndex((data => data.district === district))
-                        newCassavaData[index].price += price
-
-                    } else {
-                        newCassavaData.push({ district, price });
-                    }
-
-                    // writing to the cassava json file
-                    fs.writeFile('app/data/products/prod_cassava.json', JSON.stringify(newCassavaData), 'utf8',
-                        function(err) {
-                            console.log(err);
-                        }
-                    )
-                    break;
-
-                    // palmoil case
-                case 'PALMOIL':
-                    if (checkDistrict(newPalmoilData, district)) {
-                        var index = newPalmoilData.findIndex((data => data.district === district))
-                        newPalmoilData[index].price += price
-
-                    } else {
-                        newRiceData.push({ district, price });
-                    }
-
-                    // writing to the palmoil json file
-                    fs.writeFile('app/data/products/prod_palmoil.json', JSON.stringify(newPalmoilData), 'utf8',
-                        function(err) {
-                            console.log(err);
-                        }
-                    )
-                    break;
-
-                    // cacao case
-                case 'CACAO':
-                    if (checkDistrict(newCacaoData, district)) {
-                        var index = newCacaoData.findIndex((data => data.district === district))
-                        newCacaoData[index].price += price
-
-                    } else {
-                        newCacaoData.push({ district, price });
-                    }
-
-                    // writing to the cacao json file
-                    fs.writeFile('app/data/products/prod_cacao.json', JSON.stringify(newCacaoData), 'utf8',
-                        function(err) {
-                            console.log(err);
-                        }
-                    )
-                    break;
-
-                    // coffee case
-                case 'COFFEE':
-                    if (checkDistrict(newCoffeeData, district)) {
-                        var index = newCoffeeData.findIndex((data => data.district === district))
-                        newCoffeeData[index].price += price
-
-                    } else {
-                        newCoffeeData.push({ district, price });
-                    }
-
-                    // writing to the coffee json file
-                    fs.writeFile('app/data/products/prod_coffee.json', JSON.stringify(newCoffeeData), 'utf8',
-                        function(err) {
-                            console.log(err);
-                        }
-                    )
-                    break;
-
-                default:
-                    console.log("input a product");
-                    break;
-            }
-
-            req.flash('success_msg', 'You have posted a new market data');
-            // res.redirect('/admin/createMarketData'); //redirecting to the create market page
-            // res.render('partials/admin/forms/marketForm');
-            res.render('partials/admin/forms/marketForm', {
-                pageTitle: "postMarketData",
-                pageID: "postMarketData"
-            });
->>>>>>> lovel-fixes
         } // closing else brace
 
     },
@@ -1255,43 +1058,8 @@ module.exports = {
 
     // learning post controller
     learningPost: (req, res) => {
-<<<<<<< HEAD
-      // getting the variables
-      const { info_heading, info_content, info_subContent } = req.body;
-
-      // getting the id of the about
-      const id = req.params.id;
-
-      // error arrays
-      let errors = [];
-
-      // check required fields
-      if(!info_heading || !info_content || !info_subContent){
-          errors.push({ msg: 'Please fill in the fields before publising' });
-      }
-
-      // check if we do have some errors
-      if(errors.length > 0){
-          // re-render the page
-          res.render('partials/admin/forms/learningMaterialsForm', {
-              pageTitle: "learning-page",
-              pageID: "learning-page",
-              errors,
-              info_heading,
-              info_subContent,
-              info_content
-           });
-      } else {
-
-        var newLearningModel = new learningModel({
-            title : req.body.info_heading,
-            subContent : req.body.info_subContent,
-            content : req.body.info_content
-        });
-=======
         // getting the variables
         const { info_heading, info_content } = req.body;
->>>>>>> lovel-fixes
 
         // getting the id of the about
         const id = req.params.id;
@@ -1369,22 +1137,6 @@ module.exports = {
 
     // learning update post controller
     learningUpdateRecordPost: (req, res) => {
-<<<<<<< HEAD
-      const id = req.params.id;
-      // fetching all the learning info
-      learningModel.findById(id)
-        .then(info => {
-          // re-assigning the new data to the existing one
-          info.title = req.body.info_heading;
-          info.subContent = req.body.info_subContent;
-          info.content = req.body.info_content;
-
-          // saving the data
-          info.save()
-            .then(updatedInfo => {
-              req.flash('success_msg', 'Learning Information update successfully');
-              res.redirect('/admin/learning-info');
-=======
         const id = req.params.id;
         // fetching all the learning info
         learningModel.findById(id)
@@ -1402,7 +1154,6 @@ module.exports = {
             })
             .catch(err => {
                 console.log(err);
->>>>>>> lovel-fixes
             });
     }
 

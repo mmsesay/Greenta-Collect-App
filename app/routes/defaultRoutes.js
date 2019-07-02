@@ -19,7 +19,7 @@ router.route('/about')
     .get(defaultController.aboutGet);
 
 // chart page route
-router.route('/charts')
+router.route('/prices')
     .get(defaultController.chartGet);
 
 // produts page route

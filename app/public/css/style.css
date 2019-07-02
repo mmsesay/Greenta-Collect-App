@@ -430,7 +430,8 @@ tfoot tr th {
 
 .info-section {
     background: linear-gradient(#34e89e, #0f3443);
-    position: relative;
+    /* position: relative;*/
+    margin-top: -132px;
 }
 
 .info-section .info {
@@ -452,15 +453,8 @@ tfoot tr th {
     height: 270px !important;
 }
 
-<<<<<<< HEAD
-
 .info-section .info .card:hover{
     transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
-=======
-.info-section .info .card:hover {
-    transform: scale(1.1);
-    /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
->>>>>>> lovel-fixes
 }
 
 .info-section .info .card i {
@@ -480,6 +474,8 @@ tfoot tr th {
 .info-section .info .card-content p {
     color: #000000;
     opacity: 0.5;
+    max-height: 23.5% !important;
+    overflow: hidden !important;
 }
 
 

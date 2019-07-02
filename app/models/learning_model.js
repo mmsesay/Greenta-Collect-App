@@ -6,10 +6,6 @@ const learningSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    subContent:  {
-        type: String,
-        required: true
-    },
     content:  {
         type: String,
         required: true
