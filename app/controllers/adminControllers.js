@@ -19,12 +19,35 @@ var marketAPIData = require('../data/marketData.json');
 var availableProductData = require('../data/ava_prod_by_district.json');
 var farmersData = require('../data/farmers_data.json');
 
-// products json 
-var riceData = require('../data/products/prod_rice.json');
-var cassavaData = require('../data/products/prod_cassava.json');
-var coffeeData = require('../data/products/prod_coffee.json');
-var palmoilData = require('../data/products/prod_palmoil.json');
-var cacaoData = require('../data/products/prod_cacao.json');
+// wholesale products json 
+var riceWholesaleData = require('../data/wholesale/prod_rice.json');
+var cassavaWholesaleData = require('../data/wholesale/prod_cassava.json');
+var coffeeWholesaleData = require('../data/wholesale/prod_coffee.json');
+var palmoilWholesaleData = require('../data/wholesale/prod_palmoil.json');
+var cacaoWholesaleData = require('../data/wholesale/prod_cacao.json');
+var sweetpotatoWholesaleData = require('../data/wholesale/prod_sweetpotato.json');
+var groundnutWholesaleData = require('../data/wholesale/prod_groundnut.json');
+var maizeWholesaleData = require('../data/wholesale/prod_maize.json');
+
+// retail products json 
+var riceRetailData = require('../data/retail/prod_rice.json');
+var cassavaRetailData = require('../data/retail/prod_cassava.json');
+var coffeeRetailData = require('../data/retail/prod_coffee.json');
+var palmoilRetailData = require('../data/retail/prod_palmoil.json');
+var cacaoRetailData = require('../data/retail/prod_cacao.json');
+var sweetpotatoRetailData = require('../data/retail/prod_sweetpotato.json');
+var groundnutRetailData = require('../data/retail/prod_groundnut.json');
+var maizeRetailData = require('../data/retail/prod_maize.json');
+
+// retail products json 
+var riceFarmGateData = require('../data/farmGate/prod_rice.json');
+var cassavaFarmGateData = require('../data/farmGate/prod_cassava.json');
+var coffeeFarmGateData = require('../data/farmGate/prod_coffee.json');
+var palmoilFarmGateData = require('../data/farmGate/prod_palmoil.json');
+var cacaoFarmGateData = require('../data/farmGate/prod_cacao.json');
+var sweetpotatoFarmGateData = require('../data/farmGate/prod_sweetpotato.json');
+var groundnutFarmGateData = require('../data/farmGate/prod_groundnut.json');
+var maizeFarmGateData = require('../data/farmGate/prod_maize.json');
 
 //import farmer Api by district
 var farmerDisApiData = require('../data/farmerDisApi.json');
@@ -427,8 +450,8 @@ module.exports = {
       });
     },
 
-    // create market data post  controller
-    marketDataPost: (req,res) => {
+    // create wholesale data post controller
+    wholesaleDataPost: (req,res) => {
 
       // this variable will be used to validate
       var errors = req.validationErrors();
@@ -451,102 +474,166 @@ module.exports = {
         var price = parseInt(req.body.price);
 
         // rest operators
-        var newRiceData = [...riceData]
-        var newCassavaData = [...cassavaData]
-        var newPalmoilData = [...palmoilData]
-        var newCacaoData = [...cacaoData]
-        var newCoffeeData = [...coffeeData]
+        var newRiceData = [...riceWholesaleData]
+        var newCassavaData = [...cassavaWholesaleData]
+        var newPalmoilData = [...palmoilWholesaleData]
+        var newCacaoData = [...cacaoWholesaleData]
+        var newCoffeeData = [...coffeeWholesaleData]
+        var newSweetpotatoData = [...sweetpotatoWholesaleData]
+        var newGroundnutData = [...groundnutWholesaleData]
+        var newMaizeData = [...maizeWholesaleData]
 
 
         switch(product) {
             case 'Rice':
                   if (checkDistrict(newRiceData, district)) {
                     var index = newRiceData.findIndex((data => data.district === district))
-                    newRiceData[index].price += price
+                    newRiceData[index].price = price
+                    // newRiceData[index].price += price
         
                   } else {
                     newRiceData.push({ district, price });
                   }
 
                   // writing to the rice json file
-                  fs.writeFile('app/data/products/prod_rice.json', JSON.stringify(newRiceData), 'utf8',
+                  fs.writeFile('app/data/wholesale/prod_rice.json', JSON.stringify(newRiceData), 'utf8',
                     function(err) {
                         console.log(err);
                     }
                   )
                 break;
 
-              // cassava case
-              case 'Cassava':
-                  if (checkDistrict(newCassavaData, district)) {
-                    var index = newCassavaData.findIndex((data => data.district === district))
-                    newCassavaData[index].price += price
-        
-                  } else {
-                    newCassavaData.push({ district, price });
-                  }
-  
-                  // writing to the cassava json file
-                  fs.writeFile('app/data/products/prod_cassava.json', JSON.stringify(newCassavaData), 'utf8',
-                    function(err) {
-                        console.log(err);
-                    }
-                  )
-                break;
+            // cassava case
+            case 'Cassava':
+                if (checkDistrict(newCassavaData, district)) {
+                var index = newCassavaData.findIndex((data => data.district === district))
+                newCassavaData[index].price = price
+                // newCassavaData[index].price += price
+    
+                } else {
+                newCassavaData.push({ district, price });
+                }
+
+                // writing to the cassava json file
+                fs.writeFile('app/data/wholesale/prod_cassava.json', JSON.stringify(newCassavaData), 'utf8',
+                function(err) {
+                    console.log(err);
+                })
+            break;
               
-              // palmoil case
-              case 'Palmoil':
-                  if (checkDistrict(newPalmoilData, district)) {
-                    var index = newPalmoilData.findIndex((data => data.district === district))
-                    newPalmoilData[index].price += price
-        
-                  } else {
-                    newPalmoilData.push({ district, price });
-                  }
+            // palmoil case
+            case 'Palmoil':
+                if (checkDistrict(newPalmoilData, district)) {
+                var index = newPalmoilData.findIndex((data => data.district === district))
+                newPalmoilData[index].price = price
+                // newPalmoilData[index].price += price
+    
+                } else {
+                newPalmoilData.push({ district, price });
+                }
 
-                  // writing to the palmoil json file
-                  fs.writeFile('app/data/products/prod_palmoil.json', JSON.stringify(newPalmoilData), 'utf8',
-                    function(err) {
-                        console.log(err);
-                    }
-                  )
-                break;
+                // writing to the palmoil json file
+                fs.writeFile('app/data/wholesale/prod_palmoil.json', JSON.stringify(newPalmoilData), 'utf8',
+                function(err) {
+                    console.log(err);
+                }
+                )
+            break;
               
-              // cacao case
-              case 'Cacao':
-                  if (checkDistrict(newCacaoData, district)) {
-                    var index = newCacaoData.findIndex((data => data.district === district))
-                    newCacaoData[index].price += price
-        
-                  } else {
-                    newCacaoData.push({ district, price });
-                  }
+            // cacao case
+            case 'Cacao':
+                if (checkDistrict(newCacaoData, district)) {
+                var index = newCacaoData.findIndex((data => data.district === district))
+                newCacaoData[index].price = price
+                // newCacaoData[index].price += price
+    
+                } else {
+                newCacaoData.push({ district, price });
+                }
 
-                  // writing to the cacao json file
-                  fs.writeFile('app/data/products/prod_cacao.json', JSON.stringify(newCacaoData), 'utf8',
-                    function(err) {
-                        console.log(err);
-                    }
-                  )
-                break;
+                // writing to the cacao json file
+                fs.writeFile('app/data/wholesale/prod_cacao.json', JSON.stringify(newCacaoData), 'utf8',
+                function(err) {
+                    console.log(err);
+                }
+                )
+            break;
 
-              // coffee case
-              case 'Coffee':
-                  if (checkDistrict(newCoffeeData, district)) {
-                    var index = newCoffeeData.findIndex((data => data.district === district))
-                    newCoffeeData[index].price += price
-        
-                  } else {
-                    newCoffeeData.push({ district, price });
-                  }
+            // coffee case
+            case 'Coffee':
+                if (checkDistrict(newCoffeeData, district)) {
+                var index = newCoffeeData.findIndex((data => data.district === district))
+                newCoffeeData[index].price = price
+                // newCoffeeData[index].price += price
+    
+                } else {
+                newCoffeeData.push({ district, price });
+                }
 
-                  // writing to the coffee json file
-                  fs.writeFile('app/data/products/prod_coffee.json', JSON.stringify(newCoffeeData), 'utf8',
-                    function(err) {
-                        console.log(err);
-                    }
-                  )
-                break;
+                // writing to the coffee json file
+                fs.writeFile('app/data/wholesale/prod_coffee.json', JSON.stringify(newCoffeeData), 'utf8',
+                function(err) {
+                    console.log(err);
+                }
+                )
+            break;
+
+            // maize case
+            case 'Maize':
+                if (checkDistrict(newMaizeData, district)) {
+                var index = newMaizeData.findIndex((data => data.district === district))
+                newMaizeData[index].price = price
+                // newMaizeData[index].price += price
+    
+                } else {
+                newMaizeData.push({ district, price });
+                }
+
+                // writing to the coffee json file
+                fs.writeFile('app/data/wholesale/prod_maize.json', JSON.stringify(newMaizeData), 'utf8',
+                function(err) {
+                    console.log(err);
+                }
+                )
+            break;
+
+                // sweet potato case
+            case 'Sweet Potato':
+                if (checkDistrict(newSweetpotatoData, district)) {
+                var index = newSweetpotatoData.findIndex((data => data.district === district))
+                newSweetpotatoData[index].price = price
+                // newSweetpotatoData[index].price += price
+    
+                } else {
+                newSweetpotatoData.push({ district, price });
+                }
+
+                // writing to the cacao json file
+                fs.writeFile('app/data/wholesale/prod_sweetpotato.json', JSON.stringify(newSweetpotatoData), 'utf8',
+                function(err) {
+                    console.log(err);
+                }
+                )
+            break;
+    
+            // groundnut case
+            case 'Groundnut':
+                if (checkDistrict(newGroundnutData, district)) {
+                var index = newGroundnutData.findIndex((data => data.district === district))
+                    newGroundnutData[index].price = price
+                    // newGroundnutData[index].price += price
+    
+                } else {
+                    newGroundnutData.push({ district, price });
+                }
+
+                // writing to the coffee json file
+                fs.writeFile('app/data/wholesale/prod_groundnut.json', JSON.stringify(newGroundnutData), 'utf8',
+                function(err) {
+                    console.log(err);
+                }
+                )
+            break;
 
             default:
                 console.log("input a product");
@@ -563,6 +650,410 @@ module.exports = {
         } // closing else brace
 
     },
+
+    // create retail data post controller
+    retailDataPost: (req,res) => {
+
+        // this variable will be used to validate
+        var errors = req.validationErrors();
+  
+        // checking if an error occurs
+        if(errors){
+            res.render('partials/admin/forms/marketForm',{
+                errors:errors
+            });
+        }else{
+  
+          function checkDistrict(alldistricts, district) {
+            return alldistricts.some(function(el) {
+                return el.district === district;
+            });
+          }
+        //instantiating variables ;
+          var district = req.body.district;
+          var product = req.body.product; //.toUpperCase();
+          var price = parseInt(req.body.price);
+  
+          // rest operators
+            var newRiceData = [...riceRetailData]
+            var newCassavaData  = [...cassavaRetailData]
+            var newPalmoilData = [...coffeeRetailData]
+            var newCacaoData = [...palmoilRetailData]
+            var newCoffeeData = [...cacaoRetailData]
+            var newSweetpotatoData = [...sweetpotatoRetailData]
+            var newGroundnutData = [...groundnutRetailData]
+            var newMaizeData = [...maizeRetailData]
+
+  
+          switch(product) {
+                case 'Rice':
+                    if (checkDistrict(newRiceData, district)) {
+                      var index = newRiceData.findIndex((data => data.district === district))
+                      newRiceData[index].price = price
+                      // newRiceData[index].price += price
+          
+                    } else {
+                      newRiceData.push({ district, price });
+                    }
+  
+                    // writing to the rice json file
+                    fs.writeFile('app/data/retail/prod_rice.json', JSON.stringify(newRiceData), 'utf8',
+                      function(err) {
+                          console.log(err);
+                      }
+                    )
+                  break;
+  
+                // cassava case
+                case 'Cassava':
+                    if (checkDistrict(newCassavaData, district)) {
+                      var index = newCassavaData.findIndex((data => data.district === district))
+                      newCassavaData[index].price = price
+                      // newCassavaData[index].price += price
+          
+                    } else {
+                      newCassavaData.push({ district, price });
+                    }
+    
+                    // writing to the cassava json file
+                    fs.writeFile('app/data/retail/prod_cassava.json', JSON.stringify(newCassavaData), 'utf8',
+                      function(err) {
+                          console.log(err);
+                      }
+                    )
+                  break;
+                
+                // palmoil case
+                case 'Palmoil':
+                    if (checkDistrict(newPalmoilData, district)) {
+                      var index = newPalmoilData.findIndex((data => data.district === district))
+                      newPalmoilData[index].price = price
+                      // newPalmoilData[index].price += price
+          
+                    } else {
+                      newPalmoilData.push({ district, price });
+                    }
+  
+                    // writing to the palmoil json file
+                    fs.writeFile('app/dataretail/prod_palmoil.json', JSON.stringify(newPalmoilData), 'utf8',
+                      function(err) {
+                          console.log(err);
+                      }
+                    )
+                  break;
+                
+                // cacao case
+                case 'Cacao':
+                    if (checkDistrict(newCacaoData, district)) {
+                      var index = newCacaoData.findIndex((data => data.district === district))
+                      newCacaoData[index].price = price
+                      // newCacaoData[index].price += price
+          
+                    } else {
+                      newCacaoData.push({ district, price });
+                    }
+  
+                    // writing to the cacao json file
+                    fs.writeFile('app/data/retail/prod_cacao.json', JSON.stringify(newCacaoData), 'utf8',
+                      function(err) {
+                          console.log(err);
+                      }
+                    )
+                  break;
+  
+                // coffee case
+                case 'Coffee':
+                    if (checkDistrict(newCoffeeData, district)) {
+                      var index = newCoffeeData.findIndex((data => data.district === district))
+                      newCoffeeData[index].price = price
+                      // newCoffeeData[index].price += price
+          
+                    } else {
+                      newCoffeeData.push({ district, price });
+                    }
+  
+                    // writing to the coffee json file
+                    fs.writeFile('app/data/retail/prod_coffee.json', JSON.stringify(newCoffeeData), 'utf8',
+                      function(err) {
+                          console.log(err);
+                      }
+                    )
+                break;
+  
+                // maize case
+                case 'Maize':
+                    if (checkDistrict(newMaizeData, district)) {
+                    var index = newMaizeData.findIndex((data => data.district === district))
+                    newMaizeData[index].price = price
+                    // newMaizeData[index].price += price
+        
+                    } else {
+                    newMaizeData.push({ district, price });
+                    }
+
+                    // writing to the coffee json file
+                    fs.writeFile('app/data/retail/prod_maize.json', JSON.stringify(newMaizeData), 'utf8',
+                    function(err) {
+                        console.log(err);
+                    }
+                    )
+                break;
+  
+                    // sweet potato case
+                case 'Sweet Potato':
+                    if (checkDistrict(newSweetpotatoData, district)) {
+                    var index = newSweetpotatoData.findIndex((data => data.district === district))
+                    newSweetpotatoData[index].price = price
+                    // newSweetpotatoData[index].price += price
+        
+                    } else {
+                    newSweetpotatoData.push({ district, price });
+                    }
+
+                    // writing to the cacao json file
+                    fs.writeFile('app/data/retail/prod_sweetpotato.json', JSON.stringify(newSweetpotatoData), 'utf8',
+                    function(err) {
+                        console.log(err);
+                    }
+                    )
+                break;
+      
+                // groundnut case
+                case 'Groundnut':
+                    if (checkDistrict(newGroundnutData, district)) {
+                    var index = newGroundnutData.findIndex((data => data.district === district))
+                    newGroundnutData[index].price = price
+                    // newGroundnutData[index].price += price
+        
+                    } else {
+                    newGroundnutData.push({ district, price });
+                    }
+
+                    // writing to the coffee json file
+                    fs.writeFile('app/data/retail/prod_groundnut.json', JSON.stringify(newGroundnutData), 'utf8',
+                    function(err) {
+                        console.log(err);
+                    }
+                    )
+                break;
+  
+              default:
+                  console.log("input a product");
+                  break;
+          }
+  
+            req.flash('success_msg', 'You have posted a new market data');
+            // res.redirect('/admin/createMarketData'); //redirecting to the create market page
+            // res.render('partials/admin/forms/marketForm');
+            res.render('partials/admin/forms/marketForm', {
+              pageTitle: "postMarketData",
+              pageID: "postMarketData"
+            });
+          } // closing else brace
+  
+      },
+
+      // create farm gate data post controller
+    farmGateDataPost: (req,res) => {
+
+        // this variable will be used to validate
+        var errors = req.validationErrors();
+  
+        // checking if an error occurs
+        if(errors){
+            res.render('partials/admin/forms/marketForm',{
+                errors:errors
+            });
+        }else{
+  
+          function checkDistrict(alldistricts, district) {
+            return alldistricts.some(function(el) {
+                return el.district === district;
+            });
+          }
+        //instantiating variables ;
+          var district = req.body.district;
+          var product = req.body.product; //.toUpperCase();
+          var price = parseInt(req.body.price);
+  
+          // rest operators
+        var newRiceData = [...riceFarmGateData]
+        var newCassavaData = [...cassavaFarmGateData]
+        var newPalmoilData = [...coffeeFarmGateData]
+        var newCacaoData = [...palmoilFarmGateData]
+        var newCoffeeData = [...cacaoFarmGateData]
+        var newSweetpotatoData = [...sweetpotatoFarmGateData]
+        var newGroundnutData = [...groundnutFarmGateData]
+        var newMaizeData = [...maizeFarmGateData]
+  
+  
+          switch(product) {
+                case 'Rice':
+                    if (checkDistrict(newRiceData, district)) {
+                      var index = newRiceData.findIndex((data => data.district === district))
+                      newRiceData[index].price = price
+                      // newRiceData[index].price += price
+          
+                    } else {
+                      newRiceData.push({ district, price });
+                    }
+  
+                    // writing to the rice json file
+                    fs.writeFile('app/data/farmGate/prod_rice.json', JSON.stringify(newRiceData), 'utf8',
+                      function(err) {
+                          console.log(err);
+                      }
+                    )
+                break;
+  
+                // cassava case
+                case 'Cassava':
+                    if (checkDistrict(newCassavaData, district)) {
+                      var index = newCassavaData.findIndex((data => data.district === district))
+                      newCassavaData[index].price = price
+                      // newCassavaData[index].price += price
+          
+                    } else {
+                      newCassavaData.push({ district, price });
+                    }
+    
+                    // writing to the cassava json file
+                    fs.writeFile('app/data/farmGate/prod_cassava.json', JSON.stringify(newCassavaData), 'utf8',
+                      function(err) {
+                          console.log(err);
+                      }
+                    )
+                break;
+                
+                // palmoil case
+                case 'Palmoil':
+                    if (checkDistrict(newPalmoilData, district)) {
+                      var index = newPalmoilData.findIndex((data => data.district === district))
+                      newPalmoilData[index].price = price
+                      // newPalmoilData[index].price += price
+          
+                    } else {
+                      newPalmoilData.push({ district, price });
+                    }
+  
+                    // writing to the palmoil json file
+                    fs.writeFile('app/datafarmGate/prod_palmoil.json', JSON.stringify(newPalmoilData), 'utf8',
+                      function(err) {
+                          console.log(err);
+                      }
+                    )
+                break;
+                
+                // cacao case
+                case 'Cacao':
+                    if (checkDistrict(newCacaoData, district)) {
+                      var index = newCacaoData.findIndex((data => data.district === district))
+                      newCacaoData[index].price = price
+                      // newCacaoData[index].price += price
+          
+                    } else {
+                      newCacaoData.push({ district, price });
+                    }
+  
+                    // writing to the cacao json file
+                    fs.writeFile('app/data/farmGate/prod_cacao.json', JSON.stringify(newCacaoData), 'utf8',
+                      function(err) {
+                          console.log(err);
+                      }
+                    )
+                break;
+  
+                // coffee case
+                case 'Coffee':
+                    if (checkDistrict(newCoffeeData, district)) {
+                      var index = newCoffeeData.findIndex((data => data.district === district))
+                      newCoffeeData[index].price = price
+                      // newCoffeeData[index].price += price
+          
+                    } else {
+                      newCoffeeData.push({ district, price });
+                    }
+  
+                    // writing to the coffee json file
+                    fs.writeFile('app/data/farmGate/prod_coffee.json', JSON.stringify(newCoffeeData), 'utf8',
+                      function(err) {
+                          console.log(err);
+                      }
+                    )
+                break;
+  
+                  // maize case
+                case 'Maize':
+                    if (checkDistrict(newMaizeData, district)) {
+                    var index = newMaizeData.findIndex((data => data.district === district))
+                    newMaizeData[index].price = price
+                    // newMaizeData[index].price += price
+        
+                    } else {
+                    newMaizeData.push({ district, price });
+                    }
+
+                    // writing to the coffee json file
+                    fs.writeFile('app/data/farmGate/prod_maize.json', JSON.stringify(newMaizeData), 'utf8',
+                    function(err) {
+                        console.log(err);
+                    }
+                    )
+                break;
+  
+                // sweet potato case
+                case 'Sweet Potato':
+                    if (checkDistrict(newSweetpotatoData, district)) {
+                    var index = newSweetpotatoData.findIndex((data => data.district === district))
+                    newSweetpotatoData[index].price = price
+                    // newSweetpotatoData[index].price += price
+        
+                    } else {
+                    newSweetpotatoData.push({ district, price });
+                    }
+
+                    // writing to the cacao json file
+                    fs.writeFile('app/data/farmGate/prod_sweetpotato.json', JSON.stringify(newSweetpotatoData), 'utf8',
+                    function(err) {
+                        console.log(err);
+                    }
+                    )
+                break;
+      
+                // groundnut case
+                case 'Groundnut':
+                    if (checkDistrict(newGroundnutData, district)) {
+                    var index = newGroundnutData.findIndex((data => data.district === district))
+                    newGroundnutData[index].price = price
+                    // newGroundnutData[index].price += price
+        
+                    } else {
+                    newGroundnutData.push({ district, price });
+                    }
+
+                    // writing to the coffee json file
+                    fs.writeFile('app/data/farmGate/prod_groundnut.json', JSON.stringify(newGroundnutData), 'utf8',
+                    function(err) {
+                        console.log(err);
+                    }
+                    )
+                break;
+  
+              default:
+                  console.log("input a product");
+                  break;
+          }
+  
+            req.flash('success_msg', 'You have posted a new market data');
+            res.redirect('/admin/createMarketData'); //redirecting to the create market page
+            // res.render('partials/admin/forms/marketForm');
+            // res.render('partials/admin/forms/marketForm', {
+            //   pageTitle: "postMarketData",
+            //   pageID: "postMarketData"
+            // });
+          } // closing else brace
+  
+      },
 
     //create farmer data get controller
     farmerDisDataGet: (req, res) => {

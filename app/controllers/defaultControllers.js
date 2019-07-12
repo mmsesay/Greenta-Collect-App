@@ -12,12 +12,35 @@ var bodyParser = require('body-parser');
 //farmer by district Api
 var farmerDisDataApi = require('../data/farmerDisApi.json');
 
-// PRODUCTS JSON
-var riceData = require('../data/products/prod_rice.json');
-var cacaoData = require('../data/products/prod_cacao.json');
-var coffeeData = require('../data/products/prod_coffee.json');
-var palmoilData = require('../data/products/prod_palmoil.json');
-var cassavaData = require('../data/products/prod_cassava.json');
+// WHOLESALE PRODUCTS JSON
+var riceDataWP = require('../data/wholesale/prod_rice.json');
+var cacaoDataWP = require('../data/wholesale/prod_cacao.json');
+var coffeeDataWP = require('../data/wholesale/prod_coffee.json');
+var palmoilDataWP = require('../data/wholesale/prod_palmoil.json');
+var cassavaDataWP = require('../data/wholesale/prod_cassava.json');
+var sweetPotatoDataWP = require('../data/wholesale/prod_sweetpotato.json');
+var maizeDataWP = require('../data/wholesale/prod_maize.json');
+var groundnutDataWP = require('../data/wholesale/prod_groundnut.json');
+
+// RETAIL PRODUCTS JSON
+var riceDataRP = require('../data/retail/prod_rice.json');
+var cacaoDataRP = require('../data/retail/prod_cacao.json');
+var coffeeDataRP = require('../data/retail/prod_coffee.json');
+var palmoilDataRP = require('../data/retail/prod_palmoil.json');
+var cassavaDataRP = require('../data/retail/prod_cassava.json');
+var sweetPotatoDataRP = require('../data/retail/prod_sweetpotato.json');
+var maizeDataRP = require('../data/retail/prod_maize.json');
+var groundnutDataRP = require('../data/retail/prod_groundnut.json');
+
+// FARM GATE PRODUCTS JSON
+var riceDataFG = require('../data/farmGate/prod_rice.json');
+var cacaoDataFG = require('../data/farmGate/prod_cacao.json');
+var coffeeDataFG = require('../data/farmGate/prod_coffee.json');
+var palmoilDataFG = require('../data/farmGate/prod_palmoil.json');
+var cassavaDataFG = require('../data/farmGate/prod_cassava.json');
+var sweetPotatoDataFG = require('../data/farmGate/prod_sweetpotato.json');
+var maizeDataFG = require('../data/farmGate/prod_maize.json');
+var groundnutDataFG = require('../data/farmGate/prod_groundnut.json');
 // END OF PRODUCTS JSON
 
 var fs = require('fs');
@@ -166,41 +189,166 @@ module.exports = {
 
     },
 
-    // market api get route
-    getMarketApi: (req, res) => {
-        // responsing with the data
-        res.json(marketAPIData);
-    },
+// market api get route
+getMarketApi: (req, res) => {
+    // responsing with the data
+    res.json(marketAPIData);
+},
 
-    // rice market api get route
-    getRiceMarketApi: (req, res) => {
-        // responsing with the data
-        res.json(riceData);
-    },
+///////////////////////////////////////////////////////////////////////////
+// WHOLESALE PRICES GET CONTROLLER
+//////////////////////////////////////////////////////////////////////////
+// rice market api get route
+getRiceWP: (req, res) => {
+    // responsing with the data
+    res.json(riceDataWP);
+},
 
-    // cacao market api get route
-    getCacaoMarketApi: (req, res) => {
-        // responsing with the data
-        res.json(cacaoData);
-    },
+// cacao market api get route
+getCacaoWP: (req, res) => {
+    // responsing with the data
+    res.json(cacaoDataWP);
+},
 
-    // coffee market api get route
-    getCoffeeMarketApi: (req, res) => {
-        // responsing with the data
-        res.json(coffeeData);
-    },
+// coffee market api get route
+getCoffeeWP: (req, res) => {
+    // responsing with the data
+    res.json(coffeeDataWP);
+},
 
-    // palmoil market api get route
-    getPalmoilMarketApi: (req, res) => {
-        // responsing with the data
-        res.json(palmoilData);
-    },
+// palmoil market api get route
+getPalmoilWP: (req, res) => {
+    // responsing with the data
+    res.json(palmoilDataWP);
+},
 
-    // cassava market api get route
-    getCassavaMarketApi: (req, res) => {
-        // responsing with the data
-        res.json(cassavaData);
-    },
+// cassava market api get route
+getCassavaWP: (req, res) => {
+    // responsing with the data
+    res.json(cassavaDataWP);
+},
+
+// sweetpotato market api get route
+getSweetpotatoWP: (req, res) => {
+    // responsing with the data
+    res.json(sweetPotatoDataWP);
+},
+
+// groundnut market api get route
+getGroundnutWP: (req, res) => {
+    // responsing with the data
+    res.json(groundnutDataWP);
+},
+
+// maize market api get route
+getMaizeWP: (req, res) => {
+    // responsing with the data
+    res.json(maizeDataWP);
+},
+
+///////////////////////////////////////////////////////////////////////////
+// RETAIL PRICES GET CONTROLLER
+//////////////////////////////////////////////////////////////////////////
+// rice market api get route
+getRiceRP: (req, res) => {
+    // responsing with the data
+    res.json(riceDataRP);
+},
+
+// cacao market api get route
+getCacaoRP: (req, res) => {
+    // responsing with the data
+    res.json(cacaoDataRP);
+},
+
+// coffee market api get route
+getCoffeeRP: (req, res) => {
+    // responsing with the data
+    res.json(coffeeDataRP);
+},
+
+// palmoil market api get route
+getPalmoilRP: (req, res) => {
+    // responsing with the data
+    res.json(palmoilDataRP);
+},
+
+// cassava market api get route
+getCassavaRP: (req, res) => {
+    // responsing with the data
+    res.json(cassavaDataRP);
+},
+
+// sweetpotatoe market api get route
+getSweetpotatoRP: (req, res) => {
+    // responsing with the data
+    res.json(sweetPotatoDataRP);
+},
+
+// groundnut market api get route
+getGroundnutRP: (req, res) => {
+    // responsing with the data
+    res.json(groundnutDataRP);
+},
+
+// maize market api get route
+getMaizeRP: (req, res) => {
+    // responsing with the data
+    res.json(maizeDataRP);
+},
+
+///////////////////////////////////////////////////////////////////////////
+// FARM GATE PRICES GET CONTROLLER
+//////////////////////////////////////////////////////////////////////////
+// rice market api get route
+getRiceFG: (req, res) => {
+    // responsing with the data
+    res.json(riceDataFG);
+},
+
+// cacao market api get route
+getCacaoFG: (req, res) => {
+    // responsing with the data
+    res.json(cacaoDataFG);
+},
+
+// coffee market api get route
+getCoffeeFG: (req, res) => {
+    // responsing with the data
+    res.json(coffeeDataFG);
+},
+
+// palmoil market api get route
+getPalmoilFG: (req, res) => {
+    // responsing with the data
+    res.json(palmoilDataFG);
+},
+
+// cassava market api get route
+getCassavaFG: (req, res) => {
+    // responsing with the data
+    res.json(cassavaDataFG);
+},
+
+// sweetpotatoe market api get route
+getSweetpotatoFG: (req, res) => {
+    // responsing with the data
+    res.json(sweetPotatoDataFG);
+},
+
+// groundnut market api get route
+getGroundnutFG: (req, res) => {
+    // responsing with the data
+    res.json(groundnutDataFG);
+},
+
+// maize market api get route
+getMaizeFG: (req, res) => {
+    // responsing with the data
+    res.json(maizeDataFG);
+},
+    
+
 
     // market api get route
     getfarmerDisApi: (req, res) => {

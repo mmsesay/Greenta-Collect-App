@@ -123,17 +123,24 @@ router.route('/register/farmer')
 // creat market data route
 router.route('/createMarketData')
     .get(adminController.marketDataGet) // isUserAuthenticated, 
-    .post(adminController.marketDataPost);
+
+// wholesale post routess
+router.route('/create_wholesale')
+    .post(adminController.wholesaleDataPost);
+
+// retail post routess
+router.route('/create_retail')
+    .post(adminController.retailDataPost);
+
+// farmgate post routess
+router.route('/create_farm_gate')
+    .post(adminController.farmGateDataPost);
 
 // creat farmer data route
 router.route('/farmerDisData')
     .get(adminController.farmerDisDataGet) // isUserAuthenticated, 
     .post(adminController.farmerDisDataPost);
 
-// creat market data by district route
-// router.route('/createMarketDistrictData')
-//     .get(adminController.marketDistrictDataGet) // isUserAuthenticated, 
-//     .post(adminController.marketDistrictDataPost);
 
 // post request product view route
 router.route('/post/new/product')

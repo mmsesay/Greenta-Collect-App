@@ -36,19 +36,25 @@
         $('.modal').modal();
         $('.carousel').carousel();
 
-
+        // hiding the farmGate and the retail prcies by deafult
+        $('.farmgateContainer').hide();
+        $('.retailContainer').hide();
+        
+        // wholesale click button
         $('.wholesale').click(function(){
             $('.wholesaleContainer').show();
             $('.retailContainer').hide();
             $('.farmgateContainer').hide();
         });
 
+        // retail click button
         $('.retail').click(function(){
             $('.retailContainer').show();
             $('.wholesaleContainer').hide();
             $('.farmgateContainer').hide();
         });
 
+        // farmgate click button
         $('.farmgate').click(function(){
             $('.farmgateContainer').show();
             $('.wholesaleContainer').hide();
