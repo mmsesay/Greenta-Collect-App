@@ -19,8 +19,10 @@ function getMarketData() {
         var fetchedRET_Unit = snap.child("retail_unit").val();
         // var fetchedRET_Weight = snap.child("retail_weight").val();
         var fetchedRET_Price = snap.child("retail_price").val();
-
-        // console.log(fetchedDistrict+ ' ' + fetchedWHS_Price);
+        var fetchedFG_Unit = snap.child("farmgate_unit").val();
+        // var fetchedFG_Weight = snap.child("farmgate_weight").val();
+        var fetchedFG_Price = snap.child("farmgate_price").val();
+        // console.log(fetchedDistrict+ ' ' + fetchedFG_Price);
 
         var row = document.createElement("tr");
 
@@ -40,7 +42,9 @@ function getMarketData() {
         cell_10 = document.createElement("td");
         // cell_11 = document.createElement("td");
         cell_12 = document.createElement("td");
-
+        cell_13 = document.createElement("td");
+        // cell_11 = document.createElement("td");
+        cell_14 = document.createElement("td");
 
         // creating and assigning the TextNodes to the table
         var cellText = document.createTextNode(fetchedLocality);
@@ -56,7 +60,9 @@ function getMarketData() {
         var cellText_10 = document.createTextNode(fetchedRET_Unit);
         // var cellText_11 = document.createTextNode(fetchedRET_Weight);
         var cellText_12 = document.createTextNode(fetchedRET_Price);
-
+        var cellText_13 = document.createTextNode(fetchedFG_Unit);
+        // var cellText_11 = document.createTextNode(fetchedFG_Weight);
+        var cellText_14 = document.createTextNode(fetchedFG_Price);
 
         // appending the TextNodes to the cells 
         cell.appendChild(cellText);
@@ -72,6 +78,9 @@ function getMarketData() {
         cell_10.appendChild(cellText_10);
         // cell_11.appendChild(cellText_11);
         cell_12.appendChild(cellText_12);
+        cell_13.appendChild(cellText_13);
+        // cell_11.appendChild(cellText_11);
+        cell_14.appendChild(cellText_14);
 
         // appending the cells to the rows
         row.appendChild(cell);
@@ -87,7 +96,9 @@ function getMarketData() {
         row.appendChild(cell_10);
         // row.appendChild(cell_11);
         row.appendChild(cell_12);
-
+        row.appendChild(cell_13);
+        // row.appendChild(cell_11);
+        row.appendChild(cell_14);
         // console.log(row);
 
         // getting the table ID and prepending the row
@@ -105,8 +116,8 @@ function getMarketData() {
         ]
 
 
-        setTimeout(function () {
-            $(function () {
+        setTimeout(function() {
+            $(function() {
                 $('#marketTableBody').DataTable();
             });
         }, 3000);

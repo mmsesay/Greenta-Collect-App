@@ -8,8 +8,8 @@ function getTradeFlowData() {
 
     rootRef.on("child_added", function(snap) {
         var fetchedProduct = snap.child("product").val();
-        var fetchedQuantity = snap.child("quantity").val();
-        var fetchedPrice = snap.child("price").val();
+        var fetchedTonage = snap.child("tonage").val();
+        var fetchedValue = snap.child("value").val();
 
         //var fetchedLocality = snap.child("locality").val();
         // var fetchedChiefdom = snap.child("chiefdom").val();
@@ -17,7 +17,7 @@ function getTradeFlowData() {
         // var fetchedRegion = snap.child("region").val();
         //var fetchedEnumerator = snap.child("enumerator").val();
         var fetchedDate = snap.child("date").val();
-        // var fetchedLocaFrom = snap.child("locality_from").val();
+        var fetchedLocaFrom = snap.child("locality_from").val();
         //var fetchedChiefdomFrom = snap.child("chiefdom_from").val();
         var fetchedDistFrom = snap.child("district_from").val();
         //var fetchedCountryFrom = snap.child("country_from").val();
@@ -41,7 +41,7 @@ function getTradeFlowData() {
         // cell_4 = document.createElement("td");
         //cell_5 = document.createElement("td");
         cell_6 = document.createElement("td");
-        // cell_7 = document.createElement("td");
+        cell_7 = document.createElement("td");
         //cell_8 = document.createElement("td");
         cell_9 = document.createElement("td");
         //cell_10 = document.createElement("td");
@@ -53,8 +53,8 @@ function getTradeFlowData() {
 
         // creating and assigning the TextNodes to the table
         var cellAddText1 = document.createTextNode(fetchedProduct);
-        var cellAddText2 = document.createTextNode(fetchedQuantity);
-        var cellAddText3 = document.createTextNode(fetchedPrice);
+        var cellAddText2 = document.createTextNode(fetchedTonage);
+        var cellAddText3 = document.createTextNode(fetchedValue);
 
         //var cellText = document.createTextNode(fetchedLocality);
         // var cellText_2 = document.createTextNode(fetchedChiefdom);
@@ -62,7 +62,7 @@ function getTradeFlowData() {
         // var cellText_4 = document.createTextNode(fetchedRegion);
         //var cellText_5 = document.createTextNode(fetchedEnumerator);
         var cellText_6 = document.createTextNode(fetchedDate);
-        // var cellText_7 = document.createTextNode(fetchedLocaFrom);
+        var cellText_7 = document.createTextNode(fetchedLocaFrom);
         //var cellText_8 = document.createTextNode(fetchedChiefdomFrom);
         var cellText_9 = document.createTextNode(fetchedDistFrom);
         //var cellText_10 = document.createTextNode(fetchedCountryFrom);
@@ -84,7 +84,7 @@ function getTradeFlowData() {
         // cell_4.appendChild(cellText_4);
         //cell_5.appendChild(cellText_5);
         cell_6.appendChild(cellText_6);
-        // cell_7.appendChild(cellText_7);
+        cell_7.appendChild(cellText_7);
         //cell_8.appendChild(cellText_8);
         cell_9.appendChild(cellText_9);
         //cell_10.appendChild(cellText_10);
@@ -106,7 +106,7 @@ function getTradeFlowData() {
         // row.appendChild(cell_4);
         //row.appendChild(cell_5);
         row.appendChild(cell_6);
-        // row.appendChild(cell_7);
+        row.appendChild(cell_7);
         //row.appendChild(cell_8);
         row.appendChild(cell_9);
         //row.appendChild(cell_10);
@@ -117,6 +117,12 @@ function getTradeFlowData() {
 
         // getting the table ID and prepending the row
         document.getElementById("tradeFlowTableBody").prepend(row);
+
+        setTimeout(function() {
+            $(function() {
+                $('#tradeFlowTableBody').DataTable();
+            });
+        }, 3000);
     });
 
 }
