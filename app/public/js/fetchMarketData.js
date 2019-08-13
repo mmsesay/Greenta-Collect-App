@@ -19,6 +19,9 @@ function getMarketData() {
         var fetchedRET_Unit = snap.child("retail_unit").val();
         // var fetchedRET_Weight = snap.child("retail_weight").val();
         var fetchedRET_Price = snap.child("retail_price").val();
+        var fetchedFAM_Unit = snap.child("farmgate_unit").val();
+        // var fetchedFAM_Weight = snap.child("farm_weight").val();
+        var fetchedFAM_Price = snap.child("farmgate_price").val();
 
         // console.log(fetchedDistrict+ ' ' + fetchedWHS_Price);
 
@@ -40,6 +43,8 @@ function getMarketData() {
         cell_10 = document.createElement("td");
         // cell_11 = document.createElement("td");
         cell_12 = document.createElement("td");
+        cell_13 = document.createElement("td");
+        cell_14 = document.createElement("td");
 
 
         // creating and assigning the TextNodes to the table
@@ -56,6 +61,8 @@ function getMarketData() {
         var cellText_10 = document.createTextNode(fetchedRET_Unit);
         // var cellText_11 = document.createTextNode(fetchedRET_Weight);
         var cellText_12 = document.createTextNode(fetchedRET_Price);
+        var cellText_13 = document.createTextNode(fetchedFAM_Unit);
+        var cellText_14 = document.createTextNode(fetchedFAM_Price);
 
 
         // appending the TextNodes to the cells 
@@ -72,6 +79,8 @@ function getMarketData() {
         cell_10.appendChild(cellText_10);
         // cell_11.appendChild(cellText_11);
         cell_12.appendChild(cellText_12);
+        cell_13.appendChild(cellText_13);
+        cell_14.appendChild(cellText_14);
 
         // appending the cells to the rows
         row.appendChild(cell);
@@ -87,6 +96,8 @@ function getMarketData() {
         row.appendChild(cell_10);
         // row.appendChild(cell_11);
         row.appendChild(cell_12);
+        row.appendChild(cell_13);
+        row.appendChild(cell_14);
 
         // console.log(row);
 
@@ -101,7 +112,9 @@ function getMarketData() {
             fetchedWHS_Unit,
             fetchedWHS_Price,
             fetchedRET_Unit,
-            fetchedRET_Price
+            fetchedRET_Price,
+            fetchedFAM_Unit,
+            fetchedFAM_Price
         ]
 
 
